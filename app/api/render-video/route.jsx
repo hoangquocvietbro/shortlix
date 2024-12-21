@@ -17,8 +17,7 @@ export async function POST(req) {
     const storageRef = ref(storage, `video-files/${uniqueId}.mp4`);
 
     await writeFile(jsonFilePath, JSON.stringify({ audioFileUrl, captions, imageList, script, durationInFrames, fps }));
-    const command = `npx remotion render remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${width} --height=${height}`;
-
+    const command = `node_modules/.bin/remotion render remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${width} --height=${height}`;
     console.log("command", command);
 
     const execPromise = (command) => {
