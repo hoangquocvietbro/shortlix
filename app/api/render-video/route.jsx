@@ -17,6 +17,11 @@ export async function POST(req) {
     const storageRef = ref(storage, `video-files/${uniqueId}.mp4`);
 
     await writeFile(jsonFilePath, JSON.stringify({ audioFileUrl, captions, imageList, script, durationInFrames, fps }));
+
+    const command1 = `npm install remotion`;
+
+    await execPromise(command);
+
     const command = `remotion render /var/task/.next/server/remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${width} --height=${height}`;
 
     console.log("command", command);
@@ -34,7 +39,7 @@ export async function POST(req) {
         });
       });
     };
-
+    await execPromise(command1);
     await execPromise(command);
 
     const videoBuffer = await readFile(videoFilePath);
