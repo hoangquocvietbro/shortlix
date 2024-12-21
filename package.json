@@ -26,7 +26,6 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
     "@remotion/cli": "4.0.220",
-    "@remotion/compositor-win32-x64-msvc": "^4.0.237",
     "@remotion/player": "4.0.220",
     "@remotion/renderer": "4.0.220",
     "assemblyai": "^4.7.0",
