@@ -17,7 +17,8 @@ export async function POST(req) {
     const storageRef = ref(storage, `video-files/${uniqueId}.mp4`);
 
     await writeFile(jsonFilePath, JSON.stringify({ audioFileUrl, captions, imageList, script, durationInFrames, fps }));
-    const command = `node_modules/.bin/remotion render remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${width} --height=${height}`;
+    const command = `npx remotion render remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${width} --height=${height}`;
+
     console.log("command", command);
 
     const execPromise = (command) => {
@@ -47,8 +48,8 @@ export async function POST(req) {
     })
     .where(eq(VideoData.id, Number(videoId))); // Loại bỏ `?.` nếu `VideoData` luôn tồn tại
 
-    return NextResponse.json({ 'result': 'success', 'videoFilePath': downloadFirebaseUrl });
+    return NextResponse.json({ 'result': 'success', 'videoFilePath': __dirname });
   } catch (e) {
-    return NextResponse.json({ 'Error': e.message });
+    return NextResponse.json({ 'Error': __dirname });
   }
 }
