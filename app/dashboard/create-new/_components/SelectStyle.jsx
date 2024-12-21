@@ -27,7 +27,7 @@ function SelectStyle({ onUserSelect }) {
     },
     {
       name: "Water Color Art",
-      image: "/waterColor.jpg", // Retained
+      image: "/watercolor.jpg", // Retained
     },
     {
       name: "Cartoon Style",
@@ -35,7 +35,7 @@ function SelectStyle({ onUserSelect }) {
     },
     {
       name: "Comic Style",
-      image: "/Comic-art.png", // Retained
+      image: "/comic-art.png", // Retained
     },
     {
       name: "GTA Style",
