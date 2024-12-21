@@ -12,8 +12,8 @@ export async function POST(req) {
   try {
     const { videoId, audioFileUrl, captions, imageList, script, durationInFrames, fps, width, height } = await req.json()
     const uniqueId = uuidv4();
-    const jsonFilePath = `${uniqueId}.json`;
-    const videoFilePath = `public/${uniqueId}.mp4`;
+    const jsonFilePath = `/tmp/${uniqueId}.json`;
+    const videoFilePath = `/tmp/${uniqueId}.mp4`;
     const storageRef = ref(storage, `video-files/${uniqueId}.mp4`);
 
     await writeFile(jsonFilePath, JSON.stringify({ audioFileUrl, captions, imageList, script, durationInFrames, fps }));
@@ -48,7 +48,7 @@ export async function POST(req) {
     })
     .where(eq(VideoData.id, Number(videoId))); // Loại bỏ `?.` nếu `VideoData` luôn tồn tại
 
-    return NextResponse.json({ 'result': 'success', 'videoFilePath': `${uniqueId}.mp4` });
+    return NextResponse.json({ 'result': 'success', 'videoFilePath': downloadFirebaseUrl });
   } catch (e) {
     return NextResponse.json({ 'Error': e.message });
   }
