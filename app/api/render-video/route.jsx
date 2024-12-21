@@ -18,7 +18,7 @@ export async function POST(req) {
 
     await writeFile(jsonFilePath, JSON.stringify({ audioFileUrl, captions, imageList, script, durationInFrames, fps }));
     const command = `remotion render /var/task/.next/server/remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${width} --height=${height}`;
-    const commandv = `npm install remotion`
+
     console.log("command", command);
 
     const execPromise = (command) => {
@@ -35,7 +35,6 @@ export async function POST(req) {
       });
     };
 
-    await execPromise(commandv);
     await execPromise(command);
 
     const videoBuffer = await readFile(videoFilePath);
