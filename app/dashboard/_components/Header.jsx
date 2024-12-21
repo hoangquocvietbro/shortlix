@@ -26,24 +26,30 @@ function Header() {
   const menuOption = [
     {
       id: 1,
-      name: "Dashboard",
+      name: "Dashboard (your greatest video)",
       path: "/dashboard",
       icon: <PanelsTopLeft />,
     },
     {
       id: 2,
-      name: "Create New",
-      path: "/dashboard/create-new",
+      name: "Create Image",
+      path: "/dashboard/create-image",
       icon: <FileVideo />,
     },
     {
       id: 3,
+      name: "Create Video",
+      path: "/dashboard/create-video",
+      icon: <FileVideo />,
+    },
+    {
+      id: 4,
       name: "Voice Generation",
       path: "/dashboard/voice",
       icon: <AudioLines />,
     },
     {
-      id: 4,
+      id: 5,
       name: "Buy Credits",
       path: "/dashboard/buy-credits",
       icon: <CircleDollarSign />,

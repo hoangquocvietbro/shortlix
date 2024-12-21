@@ -8,13 +8,18 @@ export const Users = pgTable('users', {
   subscription: boolean("subscription").default(false),
   credits: integer("credits").default(30)
 });
+export const ImageData = pgTable('imageData', {
+  id: serial("id").primaryKey(),
+  imagePrompt: varchar("imagePrompt", { length: 255 }).notNull(),
+  imageBase64: varchar("imageBase64").notNull(),
+});
 export const VideoData = pgTable('videoData', {
   id: serial("id").primaryKey(),
   script: json("script").notNull(),
   audioFileUrl: varchar("audioFileUrl").notNull(),
   captions: json("captions").notNull(),
   imageList: varchar("imageList").array(),
-  createBy: varchar("createBy").notNull(),
+  createdBy: varchar("createdBy").notNull(),
   downloadUrl: varchar("downloadUrl"),
 
 });

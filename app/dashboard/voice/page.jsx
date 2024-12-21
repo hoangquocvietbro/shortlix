@@ -34,7 +34,7 @@ function VoiceGeneration() {
         <h2 className="font-bold text-3xl text-primary">
           Your Voice Generations
         </h2>
-        <Link href={"/dashboard/create-new"}>
+        <Link href={"/dashboard/create-video"}>
           <Button className="font-bold">+ Create New </Button>
         </Link>
       </div>

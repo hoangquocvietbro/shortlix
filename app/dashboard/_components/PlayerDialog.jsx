@@ -54,8 +54,66 @@ function PlayerDialog({ playVideo, videoId }) {
       setLoading(false);
     }
   };
-  const expoertVideo = () => {
-    toast.warning("Exporting video is not supported yet !");
+  const renderVideo = async () => {
+    if (!videoData) {
+      toast.error("No video data available to export!");
+      return;
+    }
+  
+    try {
+      const response = await fetch('/api/render-video', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          videoId: videoData.id,
+          script: videoData.script,
+          imageList: videoData.imageList,
+          audioFileUrl: videoData.audioFileUrl,
+          captions: videoData.captions,
+          durationInFrames: Number(durationInFrame.toFixed(0)), // Pass the dynamic duration
+          fps: 30, // You can make this dynamic as well
+          width: 300, // You can make this dynamic as well
+          height: 374 // You can make this dynamic as well
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to generate video');
+      }
+  
+      const result = await response.json();
+      const videoFilePath = result.videoFilePath;
+      // Create a download link
+      const link = document.createElement('a');
+      link.href = videoFilePath;
+      link.download = 'exported_video.mp4';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  
+      toast.success("Video exported successfully!");
+    } catch (error) {
+      console.error("Error exporting video:", error);
+      toast.error("Failed to export video.");
+    }
+  };
+  const handleDownload = () => {
+    if (!videoData?.downloadUrl) {
+      toast.error("No download URL available!");
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.href = videoData.downloadUrl;
+    link.target = "_blank"
+    link.download = 'exported_video.mp4';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast.success("Video downloaded successfully!");
   };
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -67,14 +125,23 @@ function PlayerDialog({ playVideo, videoId }) {
             <DialogTitle className="flex text-center text-xl font-bold my-5 ml-14">
               {videoData ? "Your video is ready!" : "Your video is not found!"}
             </DialogTitle>
+            
           )}
+
           <DialogDescription className="w-full h-full">
             {loading ? (
-              <span className=" flex items-center justify-center text-center">
+              <span className=" flex">
                 Loading video data...
               </span>
             ) : videoData ? (
               <>
+                                          {videoData.downloadUrl ? (
+                    <>
+                      <Button onClick={handleDownload} className=" flex items-center justify-center text-center">Download</Button>
+                    </>
+                  ) : (
+                    <div></div>
+                  )}
                 <Player
                   className="w-full h-full mr-20 mx-auto rounded-md"
                   ref={videoRef}
@@ -102,7 +169,17 @@ function PlayerDialog({ playVideo, videoId }) {
                   >
                     Cancel
                   </Button>
-                  <Button onClick={expoertVideo}>Export</Button>
+                  {videoData.downloadUrl ? (
+                    <>
+                      <Button                     
+                        variant="outline"
+                        className="bg-transparent dark:border-primary text-gray-300 hover:text-primary hover:bg-transparent" 
+                        onClick={renderVideo}>Re-render</Button>
+                    </>
+                  ) : (
+                    <Button onClick={renderVideo}>Render</Button>
+                  )}
+                  
                  
                 </div>
               </>

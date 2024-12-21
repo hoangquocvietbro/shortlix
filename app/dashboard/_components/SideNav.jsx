@@ -1,8 +1,9 @@
 "use client";
-import { AudioLines,CircleDollarSign,FileVideo, PanelsTopLeft } from "lucide-react";
+import { AudioLines,CircleDollarSign,Delete,FileImage,FileVideo, Languages, PanelsTopLeft } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import RemotionVideo from "./RemotionVideo";
 
 function SideNav() {
   const menuOption = [
@@ -14,18 +15,42 @@ function SideNav() {
     },
     {
       id: 2,
-      name: "Create New",
-      path: "/dashboard/create-new",
-      icon: <FileVideo />,
+      name: "Create Image",
+      path: "/dashboard/create-image",
+      icon: <FileImage/>,
     },
     {
       id: 3,
+      name: "Create Video",
+      path: "/dashboard/create-video",
+      icon: <FileVideo />,
+    },
+    {
+      id: 4,
       name: "Voice Generation",
       path: "/dashboard/voice",
       icon: <AudioLines />,
     },
     {
-      id: 4,
+      id: 5,
+      name: "Video Translate",
+      path: "/dashboard/video-translate",
+      icon: <Languages />,
+    },
+    {
+      id: 6,
+      name: "Manga's Review Translate",
+      path: "/dashboard/mangas-review-translate",
+      icon: <Languages />,
+    },
+    {
+      id: 7,
+      name: "Remove Video Logo",
+      path: "/dashboard/remove-watermark",
+      icon: <Delete />,
+    },
+    {
+      id: 8,
       name: "Buy Credits",
       path: "/dashboard/buy-credits",
       icon: <CircleDollarSign />,

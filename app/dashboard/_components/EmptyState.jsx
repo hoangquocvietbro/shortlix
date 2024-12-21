@@ -28,7 +28,7 @@ function EmptyState({ title, message, buttonTitle, isVideo = true }) {
         />
       )}
 
-      <Link href={"/dashboard/create-new"}>
+      <Link href={"/dashboard/create-video"}>
         <Button className='font-bold'>Create New {buttonTitle}</Button>
       </Link>
     </div>
