@@ -6,7 +6,7 @@ import { Composition, getInputProps } from "remotion";
 const defaultProps = {
     script: [], 
     imageList: [],
-    audioFileUrl: '',
+    audioFileUrl: [],
     captions: [],
     setDurationInFrame: () => {}
   };

@@ -22,7 +22,7 @@ function CreateImage() {
         model,
       });
       setImageUrl(response.data.result);
-      console.log(response.data.result)
+      //console.log(response.data.result)
     } catch (error) {
       console.error("Error generating image:", error);
     } finally {

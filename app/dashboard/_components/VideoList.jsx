@@ -29,8 +29,8 @@ function VideoList({ videoList }) {
               durationInFrames={120}
               fps={30}
               inputProps={{
-                ...video,
-                setDurationInFrame: (value) => console.log(value),
+                ...video
+              
               }}
               className="rounded-xl "
             />

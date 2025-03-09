@@ -1,4 +1,5 @@
-import { boolean, integer, json, pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import { decimal } from "drizzle-orm/mysql-core";
+import { boolean, integer, json, pgTable, serial, timestamp, varchar,numeric } from "drizzle-orm/pg-core";
 
 export const Users = pgTable('users', {
   id: serial("id").primaryKey(),
@@ -6,7 +7,7 @@ export const Users = pgTable('users', {
   email: varchar("email").notNull(),
   imageUrl: varchar("imageUrl").notNull(),
   subscription: boolean("subscription").default(false),
-  credits: integer("credits").default(30)
+  credits: integer("credits").default(30),
 });
 export const ImageData = pgTable('imageData', {
   id: serial("id").primaryKey(),
@@ -16,12 +17,27 @@ export const ImageData = pgTable('imageData', {
 export const VideoData = pgTable('videoData', {
   id: serial("id").primaryKey(),
   script: json("script").notNull(),
-  audioFileUrl: varchar("audioFileUrl").notNull(),
-  captions: json("captions").notNull(),
+  audioFileUrl: varchar("audioFileUrl").array(),
+  captions: json("captions"),
+  captionsList: json("captionsList"),
   imageList: varchar("imageList").array(),
   createdBy: varchar("createdBy").notNull(),
   downloadUrl: varchar("downloadUrl"),
-
+  animationType: varchar('animationType'),
+  captionPosition: varchar('captionPosition'),
+  captionColor: varchar('captionColor'),
+  captionSize: varchar('captionSize'),
+  captionFont: varchar('captionFont').default(50),
+  showCaptions: boolean('showCaptions').default(true),
+  captionBold: boolean('captionBold'),
+  captionItalic: boolean('captionItalic'),
+  captionUppercase: boolean('captionUppercase'),
+  width:integer('width').default(720),
+  height:integer('height').default(1280),
+  languageCode: varchar("languageCode"),
+  ssmlGender: varchar("ssmlGender"),
+  rate: numeric("rate").default(0),
+  pitch: numeric("pitch").default(0),
 });
 export const Voices = pgTable("voices", {
   id: serial("id").primaryKey(),
@@ -30,8 +46,9 @@ export const Voices = pgTable("voices", {
   language: varchar("language"), // Language of the voice
   gender: varchar("gender"), // Gender of the voice
   voiceTitle: varchar("voiceTitle"), // Title of the voice
+  rate: numeric("rate").default(0),
+  pitch: numeric("pitch").default(0),
   createdAt: timestamp("created_at").defaultNow(), // Timestamp when the voice was generated
   updatedAt: timestamp("updated_at").defaultNow(), // Timestamp for last update
-
 });
 

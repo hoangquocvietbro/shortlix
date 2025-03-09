@@ -10,7 +10,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import CustomLoading from "./CustomLoading";
+import CustomLoading from "../../../../components/ui/CustomLoading";
 import { db } from "configs/db";
 import { eq } from "drizzle-orm";
 import { useUser } from "@clerk/nextjs";
@@ -19,6 +19,7 @@ import { UserDetailContext } from "app/_context/UserDetailContext";
 import { Users, Voices } from "configs/schema";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "configs/FierbaseConfig";
+import { v4 as uuidv4 } from "uuid";
 
 function SelectVoice({ onUserSelect }) {
   const defaultText = "Hello! This is a test of the voice generation feature."; // Default text
@@ -26,11 +27,15 @@ function SelectVoice({ onUserSelect }) {
   const [selectedOption, setSelectedOption] = useState("Default Text"); // State for selecting text option
   const [customText, setCustomText] = useState(defaultText); // State for custom text input
   const [selectedLanguage, setSelectedLanguage] = useState("en-US"); // Default language
-  const [selectedGender, setSelectedGender] = useState("NEUTRAL"); // Default gender
+  const [selectedGender, setSelectedGender] = useState("Male"); // Default gender
   const [audioUrl, setAudioUrl] = useState(null); // State to hold audio URL
   const [isGeneratingVoice, setIsGeneratingVoice] = useState(false); // State to indicate if voice is being generated
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
   const { user } = useUser();
+
+  const [speechRate, setSpeechRate] = useState(0); // Default speech rate
+  const [pitch, setPitch] = useState(0); // Default pitch
+
   // Handle form submission
   const handleSubmit = async () => {
     setIsGeneratingVoice(true);
@@ -42,9 +47,12 @@ function SelectVoice({ onUserSelect }) {
     try {
       // Call API to convert the text to speech with selected language and gender
       const response = await axios.post("/api/generate-audio", {
+        id: uuidv4(),
         text: textToConvert,
         languageCode: selectedLanguage,
         ssmlGender: selectedGender,
+        rate: speechRate,
+        pitch: pitch
       });
       // Get the first two words of the text for the title
       const title = textToConvert.split(" ").slice(0, 5).join(" ");
@@ -57,6 +65,8 @@ function SelectVoice({ onUserSelect }) {
         language: selectedLanguage || null, // Save selected language or null
         gender: selectedGender || null, // Save selected grandeur or null
         voiceTitle: title || null, // Save the title if you add it to your schema
+        rate: speechRate,
+        pitch:pitch,
       });
 
       await updateUserCredits();
@@ -84,13 +94,14 @@ function SelectVoice({ onUserSelect }) {
         .set({ credits: userDetail.credits - 1 }) // Deduct 1 credit for each generation
         .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress)); // Update based on user's email
 
-      console.log("Credits updated:", result);
+      //console.log("Credits updated:", result);
 
       // Update user details in local state
       setUserDetail((prev) => ({
         ...prev,
         credits: prev.credits - 1,
       }));
+    
     } catch (error) {
       console.error("Error updating user credits:", error);
     }
@@ -122,15 +133,15 @@ function SelectVoice({ onUserSelect }) {
     { code: "pl-PL", label: "Polish" },
     { code: "cs-CZ", label: "Czech" },
     { code: "ro-RO", label: "Romanian" },
+    { code: "fil-PH", label: "Filipino" },
     { code: "th-TH", label: "Thai" },
     { code: "vi-VN", label: "Vietnamese" },
     // Add more languages as needed
   ];
   // List of available voice genders
   const genders = [
-    { value: "MALE", label: "Male" },
-    { value: "FEMALE", label: "Female" },
-    { value: "NEUTRAL", label: "Neutral" },
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" }
   ];
 
   return (
@@ -142,6 +153,28 @@ function SelectVoice({ onUserSelect }) {
       <p className="text-gray-400 mt-5">
         the testing voice generation feature takes 1 credit for each generation.
       </p>
+      {/* Language Selection */}
+      <h2 className="font-bold text-lg text-primary">Language</h2>
+      <p className="text-gray-400 mt-2">Select language for your video</p>
+      <div className="flex flex-wrap gap-2 my-5">
+        {languages.map((language, idx) => (
+          <Button
+            key={idx}
+            className={`border-gray-400 font-bold hover:text-black  ${
+              selectedLanguage === language.code
+                ? "bg-primary text-black "
+                : "bg-neutral-900 text-gray-300"
+            }`}
+            onClick={() => {
+              setSelectedLanguage(language?.code),
+                onUserSelect("voiceLanguage", language?.code);
+            }}
+            aria-pressed={selectedLanguage === language.code} // Accessibility feature
+          >
+            {language.label}
+          </Button>
+        ))}
+      </div>
       <h2 className="font-bold text-lg text-primary my-5">
         Select Text Option
       </h2>
@@ -155,7 +188,7 @@ function SelectVoice({ onUserSelect }) {
               Default Text for test the voice
             </SelectItem>
             <SelectItem value="Custom Text">
-              Custom Text for test the voice
+              Custom Text for               test the voice
             </SelectItem>
           </SelectContent>
         </Select>
@@ -192,35 +225,12 @@ function SelectVoice({ onUserSelect }) {
           </span>
         </div>
       )}
-      {/* Language Selection */}
-      <h2 className="font-bold text-lg text-primary">Language</h2>
-      <p className="text-gray-400 mt-2">Select language for your video</p>
-      <div className="flex flex-wrap gap-2 my-5">
-        {languages.map((language, idx) => (
-          <Button
-            key={idx}
-            className={`border-gray-400 font-bold hover:text-black  ${
-              selectedLanguage === language.code
-                ? "bg-primary text-black "
-                : "bg-neutral-900 text-gray-300"
-            }`}
-            onClick={() => {
-              setSelectedLanguage(language?.code),
-                onUserSelect("voiceLanguage", language?.code);
-            }}
-            aria-pressed={selectedLanguage === language.code} // Accessibility feature
-          >
-            {language.label}
-          </Button>
-        ))}
-      </div>
-
       {/* Voice Gender Selection */}
       <h2 className="font-bold text-lg text-primary">Voice Gender</h2>
       <p className="text-gray-400 mt-2">Select Voice Gender for your video</p>
       <div className="my-3">
         <Select
-          defaultValue="MALE"
+          defaultValue="Male"
           onValueChange={(value) => {
             setSelectedGender(value);
             onUserSelect("voiceGender",value);
@@ -245,6 +255,68 @@ function SelectVoice({ onUserSelect }) {
           </SelectContent>
         </Select>
       </div>
+      {/* Speech Rate Adjustment (%) */}
+      <div className="my-5">
+        <h2 className="font-bold text-lg text-primary">Speech Rate Adjustment (%)</h2>
+        <p className="text-gray-400 mt-2">Adjust the speed of the speech ( -50% to 50%)</p>
+        <div className="flex items-center gap-2 mt-2">
+          <span className="text-gray-400">-50</span>
+          <input
+            type="range"
+            min="-50"
+            max="50"
+            value={speechRate}
+            onChange={(e) => {
+                setSpeechRate(Number(e.target.value));
+                onUserSelect("speechRate", Number(e.target.value));
+            }}
+            className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+          />
+           <span className="text-gray-400">50</span>
+          <input
+            type="number"
+            min="-50"
+            max="50"
+            value={speechRate}
+            onChange={(e) => {
+                 setSpeechRate(Number(e.target.value));
+                 onUserSelect("speechRate", Number(e.target.value));
+            }}
+             className="w-[60px] bg-neutral-800 border border-gray-400 rounded-md p-1 text-white"
+          />
+        </div>
+      </div>
+      {/* Pitch Adjustment (Hz)*/}
+       <div className="my-5">
+        <h2 className="font-bold text-lg text-primary">Pitch Adjustment (Hz)</h2>
+        <p className="text-gray-400 mt-2">Adjust the pitch of the speech ( -20 Hz to 20 Hz )</p>
+        <div className="flex items-center gap-2 mt-2">
+          <span className="text-gray-400">-20</span>
+          <input
+            type="range"
+            min="-20"
+            max="20"
+            value={pitch}
+            onChange={(e) => {
+              setPitch(Number(e.target.value));
+              onUserSelect("pitch", Number(e.target.value));
+            }}
+             className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+          />
+          <span className="text-gray-400">20</span>
+          <input
+              type="number"
+              min="-20"
+              max="20"
+             value={pitch}
+              onChange={(e) => {
+                 setPitch(Number(e.target.value));
+                  onUserSelect("pitch", Number(e.target.value));
+                }}
+                className="w-[60px] bg-neutral-800 border border-gray-400 rounded-md p-1 text-white"
+              />
+        </div>
+      </div>
 
       {/* Button to trigger text-to-speech */}
       <Button className="mt-5 font-bold" onClick={handleSubmit}>
@@ -254,7 +326,7 @@ function SelectVoice({ onUserSelect }) {
       {audioUrl && (
         <div className="mt-5">
           <h2 className="font-bold text-xl text-primary">Generated Speech</h2>
-          <audio controls className="my-5">
+          <audio key={audioUrl} controls className="my-5">
             <source src={audioUrl} type="audio/mp3" />
             Your browser does not support the audio element.
           </audio>
@@ -274,3 +346,4 @@ function SelectVoice({ onUserSelect }) {
 }
 
 export default SelectVoice;
+

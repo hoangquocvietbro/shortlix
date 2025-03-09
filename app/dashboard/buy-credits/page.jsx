@@ -61,7 +61,7 @@ function BuyCredits() {
         .set({ subscription: true })
         .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
 
-      console.log("Updated user subscription:", result);
+      //console.log("Updated user subscription:", result);
 
       // Update context and state
       setIsSubscribed(true);
@@ -86,7 +86,7 @@ function BuyCredits() {
         .set({ credits: userDetail.credits + amount })
         .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
 
-      console.log("Updated user credits:", result); // Debug log
+      //console.log("Updated user credits:", result); // Debug log
 
       // Update user detail in context
       setUserDetail((prev) => ({

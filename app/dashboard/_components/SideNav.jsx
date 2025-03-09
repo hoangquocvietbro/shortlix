@@ -31,24 +31,24 @@ function SideNav() {
       path: "/dashboard/voice",
       icon: <AudioLines />,
     },
-    {
-      id: 5,
-      name: "Video Translate",
-      path: "/dashboard/video-translate",
-      icon: <Languages />,
-    },
-    {
-      id: 6,
-      name: "Manga's Review Translate",
-      path: "/dashboard/mangas-review-translate",
-      icon: <Languages />,
-    },
-    {
-      id: 7,
-      name: "Remove Video Logo",
-      path: "/dashboard/remove-watermark",
-      icon: <Delete />,
-    },
+    // {
+    //   id: 5,
+    //   name: "Video Translate",
+    //   path: "/dashboard/create-video",
+    //   icon: <Languages />,
+    // },
+    // {
+    //   id: 6,
+    //   name: "Manga's Review Translate",
+    //   path: "/dashboard/create-video",
+    //   icon: <Languages />,
+    // },
+    // {
+    //   id: 7,
+    //   name: "Remove Video Logo",
+    //   path: "/dashboard/create-video",
+    //   icon: <Delete />,
+    // },
     {
       id: 8,
       name: "Buy Credits",

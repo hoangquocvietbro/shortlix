@@ -10,17 +10,19 @@ import { storage } from "configs/FierbaseConfig";
 
 export async function POST(req) {
   try {
-    const { videoId, audioFileUrl, captions, imageList, script, durationInFrames, fps, width, height } = await req.json()
+    //console.log("aaa")
+    const inputProps = await req.json()
     const uniqueId = uuidv4();
-    const jsonFilePath = `/tmp/${uniqueId}.json`;
-    const videoFilePath = `/tmp/${uniqueId}.mp4`;
+    const jsonFilePath = `public/${uniqueId}.json`;
+    const videoFilePath = `public/${uniqueId}.mp4`;
     const storageRef = ref(storage, `video-files/${uniqueId}.mp4`);
-
+    //console.log("bbbb")
     
-    await writeFile(jsonFilePath, JSON.stringify({ audioFileUrl, captions, imageList, script, durationInFrames, fps }));
-    const command = `remotion render remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${width} --height=${height}`;
-
-    console.log("command", command);
+    await writeFile(jsonFilePath, JSON.stringify(inputProps));
+    //console.log("dddd")
+    const command = `remotion render remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${inputProps.width} --height=${inputProps.height}`;
+    //console.log("cccc")
+    //console.log("command", command);
 
     const execPromise = (command) => {
       return new Promise((resolve, reject) => {
@@ -29,7 +31,7 @@ export async function POST(req) {
             console.error(`exec error: ${error}`);
             reject(new Error(`Render failed: ${stderr}`));
           } else {
-            console.log(`stdout: ${stdout}`);
+            //console.log(`stdout: ${stdout}`);
             resolve(stdout);
           }
         });

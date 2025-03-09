@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',  // Protect dashboard
@@ -9,6 +10,14 @@ export default clerkMiddleware((auth, req) => {
   // Only protect routes that are matched by `isProtectedRoute`
   if (isProtectedRoute(req)) {
     auth().protect()
+    const response = NextResponse.next();
+
+    // Set the cookie with SameSite and Secure attributes
+    response.cookies.set({
+      sameSite: 'None',
+      secure: true,
+    });
+
   }
 })
 

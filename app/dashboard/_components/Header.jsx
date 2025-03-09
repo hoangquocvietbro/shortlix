@@ -26,7 +26,7 @@ function Header() {
   const menuOption = [
     {
       id: 1,
-      name: "Dashboard (your greatest video)",
+      name: "Dashboard",
       path: "/dashboard",
       icon: <PanelsTopLeft />,
     },
