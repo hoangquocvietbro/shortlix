@@ -1,0 +1,467 @@
+{
+    "id": 66,
+    "script": [
+        {
+            "imagePrompt": "A swirling vortex of vibrant colors, reminiscent of a nebula, with streaks of gold, purple, and teal.  The center is a bright white point of light, radiating outwards. Style: Digital Art, hyperrealistic, cinematic lighting.",
+            "ContentText": "The void.  A canvas of infinite potential.  Where chaos births creation."
+        },
+        {
+            "imagePrompt": "From the white light, a single, intricate geometric shape blossoms – a dodecahedron, rendered in gleaming chrome, reflecting the nebula's colors.  The background is still the swirling nebula, but now less chaotic, more focused on the shape.",
+            "ContentText": "A seed of thought. A single spark ignites the darkness. The first brushstroke of the infinite."
+        },
+        {
+            "imagePrompt": "The chrome dodecahedron explodes into a million fragments, each a miniature version of itself, scattering across the now-darker background. These fragments glow with internal light, revealing intricate details. Style: Digital Art, high detail, particle effects.",
+            "ContentText": "Expansion.  Unfolding.  The boundless possibilities branch out."
+        },
+        {
+            "imagePrompt": "From the scattered fragments, complex, surreal landscapes begin to coalesce.  Imagine impossible architecture, floating islands, bioluminescent flora and fauna, all rendered in vibrant, otherworldly colors. Style: Digital Art, surreal, vibrant, intricate detail. Focus on a single, awe-inspiring landscape.",
+            "ContentText": "Worlds unbound.  Dreams given form.  The birth of the extraordinary."
+        },
+        {
+            "imagePrompt": "The camera slowly pulls back, revealing that the surreal landscapes are just one small section of a vast, infinite canvas teeming with countless similar scenes. The overall palette shifts to a more serene, cosmic blue. Style: Digital Art, vast scale, cosmic perspective, serene, awe-inspiring.",
+            "ContentText": "And beyond... the endless tapestry of the random.  The AI's boundless imagination."
+        }
+    ],
+    "audioFileUrl": [
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2F1bbb5cca-cade-488b-b294-d4d72f18af0a.mp3?alt=media&token=1338bfce-93d6-4e02-a60b-4cf0446bc5db",
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2F1d53558b-7191-4620-8d8e-7182ab6a93ab.mp3?alt=media&token=01440ccd-e32e-4611-aab1-1d9a947eef98",
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2Ffb8d7789-053e-41f2-9417-e78fb9d75d25.mp3?alt=media&token=8448cae2-cb7b-49fb-bc5e-9ef6eeb847b5",
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2F2d358496-232c-4fd3-b004-43fe10cf164a.mp3?alt=media&token=b3fb1eb1-935f-43b3-85c6-78b36221db6e",
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2Fbb22dcc7-02e7-4657-be20-20e983b6f7dd.mp3?alt=media&token=cf1f8a4a-9d20-406a-afd9-163cf072af97"
+    ],
+    "captions": [
+        {
+            "text": "The",
+            "start": 5728,
+            "end": 5888,
+            "confidence": 0.99077,
+            "speaker": null
+        },
+        {
+            "text": "void,",
+            "start": 5888,
+            "end": 6424,
+            "confidence": 0.95457,
+            "speaker": null
+        },
+        {
+            "text": "a",
+            "start": 6536,
+            "end": 6760,
+            "confidence": 0.99309,
+            "speaker": null
+        },
+        {
+            "text": "canvas",
+            "start": 6784,
+            "end": 7320,
+            "confidence": 0.99688,
+            "speaker": null
+        },
+        {
+            "text": "of",
+            "start": 7384,
+            "end": 7656,
+            "confidence": 0.99986,
+            "speaker": null
+        },
+        {
+            "text": "infinite",
+            "start": 7712,
+            "end": 8232,
+            "confidence": 0.79811,
+            "speaker": null
+        },
+        {
+            "text": "potential",
+            "start": 8280,
+            "end": 8920,
+            "confidence": 0.9997,
+            "speaker": null
+        },
+        {
+            "text": "where",
+            "start": 9064,
+            "end": 9368,
+            "confidence": 0.99974,
+            "speaker": null
+        },
+        {
+            "text": "chaos",
+            "start": 9408,
+            "end": 9800,
+            "confidence": 0.95241,
+            "speaker": null
+        },
+        {
+            "text": "births",
+            "start": 9864,
+            "end": 10344,
+            "confidence": 0.98893,
+            "speaker": null
+        },
+        {
+            "text": "creation.",
+            "start": 10376,
+            "end": 10568,
+            "confidence": 0.9987,
+            "speaker": null
+        },
+        {
+            "end": 11136,
+            "start": null
+        },
+        {
+            "text": "A",
+            "start": 12712,
+            "end": 12824,
+            "confidence": 0.9972,
+            "speaker": null
+        },
+        {
+            "text": "seed",
+            "start": 12824,
+            "end": 13024,
+            "confidence": 0.91278,
+            "speaker": null
+        },
+        {
+            "text": "of",
+            "start": 13040,
+            "end": 13232,
+            "confidence": 0.99979,
+            "speaker": null
+        },
+        {
+            "text": "thought.",
+            "start": 13272,
+            "end": 13712,
+            "confidence": 0.99803,
+            "speaker": null
+        },
+        {
+            "text": "A",
+            "start": 13832,
+            "end": 14064,
+            "confidence": 0.99523,
+            "speaker": null
+        },
+        {
+            "text": "single",
+            "start": 14088,
+            "end": 14464,
+            "confidence": 0.99984,
+            "speaker": null
+        },
+        {
+            "text": "spark",
+            "start": 14528,
+            "end": 14960,
+            "confidence": 0.99501,
+            "speaker": null
+        },
+        {
+            "text": "ignites",
+            "start": 15056,
+            "end": 15648,
+            "confidence": 0.67871,
+            "speaker": null
+        },
+        {
+            "text": "the",
+            "start": 15680,
+            "end": 15824,
+            "confidence": 0.99986,
+            "speaker": null
+        },
+        {
+            "text": "darkness,",
+            "start": 15848,
+            "end": 16544,
+            "confidence": 0.99251,
+            "speaker": null
+        },
+        {
+            "text": "the",
+            "start": 16688,
+            "end": 16992,
+            "confidence": 0.98863,
+            "speaker": null
+        },
+        {
+            "text": "first",
+            "start": 17032,
+            "end": 17376,
+            "confidence": 0.99982,
+            "speaker": null
+        },
+        {
+            "text": "brushstroke",
+            "start": 17464,
+            "end": 18304,
+            "confidence": 0.51809,
+            "speaker": null
+        },
+        {
+            "text": "of",
+            "start": 18368,
+            "end": 18544,
+            "confidence": 0.99988,
+            "speaker": null
+        },
+        {
+            "text": "the",
+            "start": 18568,
+            "end": 18704,
+            "confidence": 0.98139,
+            "speaker": null
+        },
+        {
+            "text": "infinite.",
+            "start": 18728,
+            "end": 18992,
+            "confidence": 0.96119,
+            "speaker": null
+        },
+        {
+            "end": 19536,
+            "start": null
+        },
+        {
+            "text": "Expansion",
+            "start": 17736,
+            "end": 18568,
+            "confidence": 0.773,
+            "speaker": null
+        },
+        {
+            "text": "unfolding,",
+            "start": 18672,
+            "end": 19584,
+            "confidence": 0.94383,
+            "speaker": null
+        },
+        {
+            "text": "the",
+            "start": 19680,
+            "end": 19936,
+            "confidence": 0.99821,
+            "speaker": null
+        },
+        {
+            "text": "boundless",
+            "start": 19976,
+            "end": 20448,
+            "confidence": 0.99996,
+            "speaker": null
+        },
+        {
+            "text": "possibilities",
+            "start": 20512,
+            "end": 21200,
+            "confidence": 0.97397,
+            "speaker": null
+        },
+        {
+            "text": "branch",
+            "start": 21328,
+            "end": 21760,
+            "confidence": 0.99975,
+            "speaker": null
+        },
+        {
+            "text": "out.",
+            "start": 21808,
+            "end": 21896,
+            "confidence": 0.99971,
+            "speaker": null
+        },
+        {
+            "end": 22440,
+            "start": null
+        },
+        {
+            "text": "Worlds",
+            "start": 22848,
+            "end": 23104,
+            "confidence": 0.90507,
+            "speaker": null
+        },
+        {
+            "text": "unbound.",
+            "start": 23104,
+            "end": 23760,
+            "confidence": 0.73312,
+            "speaker": null
+        },
+        {
+            "text": "Dreams",
+            "start": 23880,
+            "end": 24344,
+            "confidence": 0.94381,
+            "speaker": null
+        },
+        {
+            "text": "given",
+            "start": 24376,
+            "end": 24664,
+            "confidence": 0.9745,
+            "speaker": null
+        },
+        {
+            "text": "form.",
+            "start": 24736,
+            "end": 25208,
+            "confidence": 0.952,
+            "speaker": null
+        },
+        {
+            "text": "The",
+            "start": 25328,
+            "end": 25608,
+            "confidence": 0.9994,
+            "speaker": null
+        },
+        {
+            "text": "birth",
+            "start": 25648,
+            "end": 25960,
+            "confidence": 0.59275,
+            "speaker": null
+        },
+        {
+            "text": "of",
+            "start": 26024,
+            "end": 26200,
+            "confidence": 0.99976,
+            "speaker": null
+        },
+        {
+            "text": "the",
+            "start": 26224,
+            "end": 26408,
+            "confidence": 0.99937,
+            "speaker": null
+        },
+        {
+            "text": "extraordinary.",
+            "start": 26448,
+            "end": 27128,
+            "confidence": 0.99606,
+            "speaker": null
+        },
+        {
+            "end": 27720,
+            "start": null
+        },
+        {
+            "text": "And",
+            "start": 28960,
+            "end": 29120,
+            "confidence": 0.99647,
+            "speaker": null
+        },
+        {
+            "text": "beyond",
+            "start": 29120,
+            "end": 29800,
+            "confidence": 0.76898,
+            "speaker": null
+        },
+        {
+            "text": "the",
+            "start": 29960,
+            "end": 30280,
+            "confidence": 0.99887,
+            "speaker": null
+        },
+        {
+            "text": "endless",
+            "start": 30320,
+            "end": 30664,
+            "confidence": 0.99981,
+            "speaker": null
+        },
+        {
+            "text": "tapestry",
+            "start": 30712,
+            "end": 31176,
+            "confidence": 0.99993,
+            "speaker": null
+        },
+        {
+            "text": "of",
+            "start": 31208,
+            "end": 31352,
+            "confidence": 0.9979,
+            "speaker": null
+        },
+        {
+            "text": "the",
+            "start": 31376,
+            "end": 31512,
+            "confidence": 0.99818,
+            "speaker": null
+        },
+        {
+            "text": "random,",
+            "start": 31536,
+            "end": 32056,
+            "confidence": 0.97888,
+            "speaker": null
+        },
+        {
+            "text": "the",
+            "start": 32168,
+            "end": 32440,
+            "confidence": 0.9969,
+            "speaker": null
+        },
+        {
+            "text": "AI's",
+            "start": 32480,
+            "end": 33240,
+            "confidence": 0.78522,
+            "speaker": null
+        },
+        {
+            "text": "boundless",
+            "start": 33320,
+            "end": 33832,
+            "confidence": 0.99992,
+            "speaker": null
+        },
+        {
+            "text": "imagination.",
+            "start": 33896,
+            "end": 34200,
+            "confidence": 0.99982,
+            "speaker": null
+        },
+        {
+            "end": 34992,
+            "start": null
+        }
+    ],
+    "imageList": [
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2F1740530731174.png?alt=media&token=d31c9579-5923-4772-a5b0-cb329619a4a7",
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2F1740530743993.png?alt=media&token=2264951f-c4b8-4590-b2eb-4730469b7561",
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2F1740530766622.png?alt=media&token=9a482f68-7e69-4313-9836-5a613324c432",
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2F1740530781670.png?alt=media&token=d8fd5ae5-c2a2-489b-ad36-48a84cfce639",
+        "https://firebasestorage.googleapis.com/v0/b/ai-room-redesign-be7fa.appspot.com/o/ai-short-video-files%2F1740530812596.png?alt=media&token=dfeabe75-c3ea-4c84-aa2e-ad4b13deffe8"
+    ],
+    "createdBy": "hoangquocviettech@gmail.com",
+    "downloadUrl": null,
+    "animationType": null,
+    "captionPosition": "top",
+    "captionColor": "#0f4841",
+    "captionSize": 51,
+    "captionFont": "Arial Black",
+    "showCaptions": true,
+    "captionBold": null,
+    "captionItalic": null,
+    "captionUppercase": null,
+    "width": 720,
+    "height": 1080,
+    "durationInFrame": 1049
+}
