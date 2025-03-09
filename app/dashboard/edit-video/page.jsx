@@ -7,13 +7,21 @@ import { eq } from "drizzle-orm";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import axios from "axios";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "configs/FierbaseConfig";
 import { v4 as uuidv4 } from 'uuid';
+import CustomLoading from "../../../components/ui/CustomLoading";
 function EditVideoPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const videoId = searchParams.get("videoId");
+    const [isGeneratingScript, setIsGeneratingScript] = useState(false);
+    const [isUploadImage, setIsUploadImage] = useState(false);
+    const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+    const [isGeneratingCaptions, setIsGeneratingCaptions] = useState(false);
+    const [isGeneratingImages, setIsGeneratingImages] = useState(false);
+    const [isSavingVideoData, setIsSavingVideoData] = useState(false);
     const [video, setVideo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [script, setScript] = useState([]);
@@ -22,6 +30,25 @@ function EditVideoPage() {
     const [captionsList, setCaptionsList] = useState([]);
     const [dummyState, setDummyState] = useState(0); // Force re-render
 
+    function flattenCaptions(captions) {
+        let flatCaptions = [];
+        let preLastEndTime = 0;
+    
+        for (const group of captions) {
+            
+            for (const item of group) {
+                if (item.start !== null) {
+                    item.start =item.start + preLastEndTime; // Gán start mới từ lastEndTime
+                    item.end = item.end + preLastEndTime;
+                }
+                flatCaptions.push(item);
+                 // Cập nhật lastEndTime
+            }
+            preLastEndTime += group[group.length-1].end;
+        }
+    
+        return flatCaptions;
+    }
     useEffect(() => {
         if (videoId) {
             fetchVideoData(videoId);
@@ -35,8 +62,8 @@ function EditVideoPage() {
                 setVideo(result[0]);
                 setScript(result[0].script);
                 setImageList(result[0].imageList);
-                setCaptionsList(result[0].audioFileUrl);
-                setAudioFileUrls(result[0].captionsList);
+                setCaptionsList(result[0].captionsList);
+                setAudioFileUrls(result[0].audioFileUrl);
             } else {
                 console.log("Video not found");
             }
@@ -73,6 +100,7 @@ function EditVideoPage() {
         }
     };
     const regenerateImage = async (index) => {
+        setIsGeneratingImages(true);
         const imagePrompt = script[index].imagePrompt;
         try {
             const response = await fetch("/api/generate-image", {
@@ -80,7 +108,10 @@ function EditVideoPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ prompt: imagePrompt }),
+                body: JSON.stringify({ prompt: imagePrompt,
+                    width: video?.width,
+                    height: video?.height
+                 }),
             });
             if (!response.ok) {
                 throw new Error("Failed to generate image");
@@ -96,20 +127,21 @@ function EditVideoPage() {
             console.error("Error generating image:", error);
             toast.error("Failed to generate image.");
         }
+        setIsGeneratingImages(false);
     };
 
     const generateAudio = async (text) => {
-
+        setIsGeneratingAudio(true);
 
                 const id = uuidv4();
                 try {
                   const res = await axios.post("/api/generate-audio", {
-                    text: item.ContentText,
+                    text: text,
                     id: id,
-                    languageCode: video?.voiceLanguage,
-                    ssmlGender: video?.voiceGender,
-                    rate: video?.rate,
-                    pitch: video?.pitch
+                    languageCode: video?.languageCode,
+                    ssmlGender: video?.ssmlGender,
+                    rate: Number(video?.rate),
+                    pitch: Number(video?.pitch)
                   });
           
                   const audioFileUrl = res?.data?.result;
@@ -123,13 +155,15 @@ function EditVideoPage() {
                     }
                 }
 
+        setIsGeneratingAudio(true);
     };
 
     const generateCaption = async (audioFileUrl) => {
+        setIsGeneratingCaptions(true);
         try {
             const result = await axios.post("/api/generate-caption", {
-                audioFileUrl: fileUrls[i],
-                language_code: formData?.voiceLanguage,
+                audioFileUrl: audioFileUrl,
+                language_code: video?.voiceLanguage,
               });
               
               const captionData=result?.data?.result
@@ -140,29 +174,33 @@ function EditVideoPage() {
             toast.error("Failed to generate caption.");
             return null;
         }
+        setIsGeneratingCaptions(false);
     };
 
     const saveChanges = async () => {
         try {
-            // 1. Identify changed contentText values and generate new audio/captions
-            const updatedAudioFileUrls = [];
-            const updatedCaptionsLists = [];
+            // Create an array to hold all the promises
+            const promises = video?.script.map(async (originContent, index) => {
+                if (originContent.ContentText !== script[index]["ContentText"].trim()) {
+                    const audioFileUrl = await generateAudio(script[index].ContentText);
+                    audioFileUrls[index] = audioFileUrl;
+                    const caption = await generateCaption(audioFileUrl);
+                    captionsList[index] = caption;
+                    console.log(`Generated audio and caption for index ${index}`);
+                    return { audioFileUrl, caption }; // Return the results if needed
+                }
+            });
 
-            for (let i = 0; i < script.length; i++) {
-                // Generate new audio and captions for each contentText
-                const audioFileUrl = await generateAudio(script[i].ContentText);
-                const captions = await generateCaption(script[i].ContentText);
+            // Wait for all promises to resolve
+            await Promise.all(promises);
 
-                updatedAudioFileUrls.push(audioFileUrl);
-                updatedCaptionsLists.push(captions);
-            }
-
-            // 2. Update the database with the new script, audio URLs, and captions
+            // Update the database with the new script, audio URLs, and captions
+            setIsSavingVideoData(true)
             await db
                 .update(VideoData)
-                .set({ script: script, imageList: imageList, audioFileUrl: updatedAudioFileUrls, captionsList: updatedCaptionsLists })
+                .set({ script: script, imageList: imageList, audioFileUrl: audioFileUrls, captionsList: captionsList,captions: flattenCaptions(video?.captionsList) })
                 .where(eq(VideoData.id, videoId));
-
+            setIsSavingVideoData(false)
             toast.success("Video updated successfully!");
             router.push("/dashboard"); // Redirect to dashboard after saving
         } catch (error) {
@@ -170,9 +208,11 @@ function EditVideoPage() {
             toast.error("Failed to update video.");
         }
     };
+
     // Placeholder function for image upload
 
     const uploadImage = async (file) => {
+        setIsUploadImage(true)
         try {
             const storageRef = ref(storage, `images/${uuidv4()}-${file.name}`); // Use UUID to avoid filename conflicts
             const snapshot = await uploadBytes(storageRef, file);
@@ -184,6 +224,7 @@ function EditVideoPage() {
             toast.error("Failed to upload image to Firebase Storage.");
             return null;
         }
+        setIsUploadImage(false)
     };
     if (loading) {
         return <div>Loading...</div>;
@@ -234,6 +275,29 @@ function EditVideoPage() {
             <Button onClick={saveChanges} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Save Changes
             </Button>
+            <CustomLoading
+        loading={
+          isUploadImage||
+          isGeneratingImages ||
+          isGeneratingAudio ||
+          isGeneratingCaptions ||
+          isSavingVideoData
+        }
+        title={" Video"}
+        message={
+              isUploadImage
+            ? "Uploading image file..."
+            :  isGeneratingAudio
+            ? "Generating audio file..."
+            : isGeneratingCaptions
+            ? "Generating captions..."
+            : isGeneratingImages
+            ? "Generating images..."
+            : isSavingVideoData
+            ? " Saving video data..."
+            : ""
+        }
+      />
         </div>
     );
 }

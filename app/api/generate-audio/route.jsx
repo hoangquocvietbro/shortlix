@@ -35,7 +35,7 @@ export async function POST(req) {
     // Update download link to database
     return NextResponse.json({ result: downloadUrl });
   } catch (error) {
-    console.error("Error generating audio:", error);
-    return NextResponse.json({ error: "Failed to generate audio" }, { status: 500 });
+    console.error(`Error generating audio: ${error}`);
+    return NextResponse.json({ error: `Failed to generate audio ${error}` }, { status: 500 });
   }
 }

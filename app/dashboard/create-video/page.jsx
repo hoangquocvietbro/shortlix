@@ -48,6 +48,27 @@ function CreateNew() {
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
   const { user } = useUser();
 
+
+  function flattenCaptions(captions) {
+    let flatCaptions = [];
+    let preLastEndTime = 0;
+
+    for (const group of captions) {
+        
+        for (const item of group) {
+            if (item.start !== null) {
+                item.start =item.start + preLastEndTime; // Gán start mới từ lastEndTime
+                item.end = item.end + preLastEndTime;
+            }
+            flatCaptions.push(item);
+             // Cập nhật lastEndTime
+        }
+        preLastEndTime += group[group.length-1].end;
+    }
+
+    return flatCaptions;
+}
+
   const onHandleInputChange = (fielName, fielValue) => {
     // ////console.log(fielName, fielValue);
     setFormData((prev) => ({ ...prev, [fielName]: fielValue }));
@@ -118,9 +139,7 @@ function CreateNew() {
   //! GENERATE AUDIO CAPTION
   const generateAudioCaption = async (fileUrls, videoScriptData) => {
     setIsGeneratingCaptions(true);
-    let captionsLst =[];
     let allCaptions = [];
-    let preAudioDuration=0
     for(let i=0; i<fileUrls.length;i++){
       const result = await axios.post("/api/generate-caption", {
         audioFileUrl: fileUrls[i],
@@ -132,20 +151,7 @@ function CreateNew() {
         const duration =await getAudioDurationInSeconds(fileUrls[i])
         //console.log(`duration audio ${i}: ${duration}`)
         captionData.push({"end": duration*1000})
-        captionsLst.push({captionData})
-        ////console.log(`Caption audio ${i}: ${JSON.stringify(captionData, null, 2)}`)
-          for(let i=0; i<captionData.length;i++)
-            {
-
-             captionData[i].start=Number(captionData[i].start)+preAudioDuration
-             captionData[i].end=Number(captionData[i].end)+preAudioDuration
-            }
-
-              
-          preAudioDuration+=duration*1000          
-          ////console.log("caption data:"+JSON.stringify(captionData, null, 2))
-          allCaptions.push(captionData);
-          ////console.log("caption data:"+JSON.stringify(allCaptions, null, 2))
+        allCaptions.push(captionData);
        }
     }
 
@@ -192,10 +198,7 @@ const generateVideoImages = async (videoScriptData) => {
 const saveVideoData = async (videoData) => {
   setIsSavingVideoData(true);
   try {
-    let videoCaptions =[]
-    videoData?.captionsList.map((item)=> {videoCaptions.push(...item)})
-    console.log(captionsList)
-    console.log(videoCaptions)
+    let videoCaptions =flattenCaptions(videoData?.captionsList)
     const result = await db
       .insert(VideoData)
       .values({
