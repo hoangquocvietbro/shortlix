@@ -12,6 +12,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "configs/FierbaseConfig";
 import { v4 as uuidv4 } from 'uuid';
 import CustomLoading from "../../../components/ui/CustomLoading";
+import { getAudioDurationInSeconds } from "@remotion/media-utils";
 function EditVideoPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -167,6 +168,12 @@ function EditVideoPage() {
               });
               
               const captionData=result?.data?.result
+              console.log(captionData)
+              if (captionData) {
+                const duration =await getAudioDurationInSeconds(audioFileUrl)
+                //console.log(`duration audio ${i}: ${duration}`)
+                captionData.push({"end": duration*1000})
+               }
               return captionData;
 
         } catch (error) {
@@ -193,12 +200,12 @@ function EditVideoPage() {
 
             // Wait for all promises to resolve
             await Promise.all(promises);
-
+            console.log(captionsList)
             // Update the database with the new script, audio URLs, and captions
             setIsSavingVideoData(true)
             await db
                 .update(VideoData)
-                .set({ script: script, imageList: imageList, audioFileUrl: audioFileUrls, captionsList: captionsList,captions: flattenCaptions(video?.captionsList) })
+                .set({ script: script, imageList: imageList, audioFileUrl: audioFileUrls, captionsList: captionsList,captions: flattenCaptions(captionsList) })
                 .where(eq(VideoData.id, videoId));
             setIsSavingVideoData(false)
             toast.success("Video updated successfully!");

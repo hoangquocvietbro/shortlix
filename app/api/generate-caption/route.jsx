@@ -18,6 +18,7 @@ export async function POST(req) {
 
 
     const transcript = await client.transcripts.transcribe(data);
+    //transcript.words.push({"end":transcript.audio_duration*1000})
     return NextResponse.json({ result: transcript.words });
   } catch (error) {
     console.error("Error during transcription:", error); // Log the error for debugging
