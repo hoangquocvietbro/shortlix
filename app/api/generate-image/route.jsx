@@ -3,7 +3,7 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { NextResponse } from "next/server";
 import fetch from 'node-fetch';
 
-const MAX_RETRIES = 15; // Maximum retries (15 * 20s = 5 min)
+const MAX_RETRIES = 5; // Maximum retries (15 * 20s = 5 min)
 const RETRY_DELAY = 20000; // 20 seconds in milliseconds
 
 export async function POST(req) {
@@ -12,7 +12,7 @@ export async function POST(req) {
 
     // Configure pollinations.ai URL
     const imageUrl = `https://pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=${width}&height=${height}&model=${model}&seed=30&nologo=true&enhance=false`;
-    //console.log(imageUrl);
+    console.log(imageUrl);
 
     let retries = 0;
     let response;
