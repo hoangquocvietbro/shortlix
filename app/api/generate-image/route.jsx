@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import fetch from 'node-fetch';
 
 const MAX_RETRIES = 5; // Maximum retries (15 * 20s = 5 min)
-const RETRY_DELAY = 20000; // 20 seconds in milliseconds
+const RETRY_DELAY = 200; // 20 seconds in milliseconds
 
 export async function POST(req) {
   try {
