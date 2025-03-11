@@ -29,6 +29,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
     "@remotion/cli": "4.0.220",
+    "@remotion/lambda": "^4.0.220",
     "@remotion/media-utils": "^4.0.220",
     "@remotion/player": "4.0.220",
     "@remotion/preload": "4.0.220",
