@@ -29,7 +29,7 @@ function VideoSettings({ videoData, onVideoDataChange }) {
   return (
     <div>
       <label htmlFor="animationType" className="mr-2 text-white">Animation:</label>
-      <select
+      <select style={{width: 136}}
         id="animationType"
         value={videoData.animationType || "zoom"}
         onChange={(e) => onVideoDataChange({ ...videoData, animationType: e.target.value })}
@@ -45,7 +45,7 @@ function VideoSettings({ videoData, onVideoDataChange }) {
       {/* Dimensions */}
       <br />
       <label htmlFor="dimension" className="mr-2 text-white">Dimensions:</label>
-      <select
+      <select style={{width: 136}}
         id="dimension"
         value={
           videoData.width === 720 && videoData.height === 1280 ? "portrait" :

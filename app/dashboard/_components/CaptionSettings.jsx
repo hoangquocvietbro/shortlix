@@ -50,7 +50,7 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
                 />
             {/* ... (Other settings similarly structured) ... */}
             <label htmlFor="captionPosition" className="mr-2 text-white">Caption Position:</label>
-            <select
+            <select style={{width: 136}}
                 id="captionPosition"
                 value={videoData.captionPosition || "bottom"}
                 onChange={(e) => onVideoDataChange({ ...videoData, captionPosition: e.target.value })}
@@ -63,7 +63,7 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
             {/* ... (Other caption settings follow the same pattern) ... */}
             <br></br>
             <label htmlFor="captionSize" className="mr-2 text-white">Caption Size:</label>
-            <input
+            <input style={{width: 136}}
                 type="number"
                 id="captionSize"
                 value={videoData.captionSize || 50} // Default size if not provided
@@ -90,7 +90,7 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
             <label htmlFor="captionFont" className="mr-2 text-white">
                 Caption Font:
             </label>
-            <select style={{width:136}}
+            <select style={{width: 136}}
                 id="captionFont"
                 value={videoData.captionFont || fonts[0]} // Default to first font
                 onChange={(e) => onVideoDataChange({ ...videoData, captionFont: e.target.value })}
