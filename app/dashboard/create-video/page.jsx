@@ -166,71 +166,22 @@ function CreateNew() {
     );
 };
 //! GENERATE VIDEO IMAGES
-// const generateVideoImages = async (videoScriptData) => {
-//   setIsGeneratingImages(true);
-//   let images = [];
-
-//   for (const element of videoScriptData) {
-//     try {
-//       const result = await axios.post("/api/generate-image", {
-//         prompt: element.imagePrompt,
-//         width: formData.dimensions.width,
-//         height: formData.dimensions.height,
-//       });
-//       ////console.log(result?.data?.result);
-//       images.push(result?.data?.result);
-//     } catch (error) {
-//       ////console.log(error);
-//       setIsGeneratingImages(false);
-//     }
-//   }
-
-//   setVideoData((prev) => ({
-//     ...prev,
-//     imageList: images,
-//     width: formData.dimensions.width,
-//     height: formData.dimensions.height,
-//   }));
-//   setImageList(images);
-//   setIsGeneratingImages(false);
-// };
-
 const generateVideoImages = async (videoScriptData) => {
   setIsGeneratingImages(true);
   let images = [];
 
   for (const element of videoScriptData) {
-    let attempt = 0;
-    let success = false;
-    let imageResult = null;
-
-    while (attempt < 5 && !success) {
-      try {
-        const result = await axios.post("/api/generate-image", {
-          prompt: element.imagePrompt,
-          width: formData.dimensions.width,
-          height: formData.dimensions.height,
-        });
-
-        if (result?.data?.result) {
-          imageResult = result.data.result;
-          success = true;
-        } else {
-          throw new Error("Invalid response data");
-        }
-      } catch (error) {
-        attempt++;
-        if (attempt < 5) {
-          console.warn(`Attempt ${attempt} failed. Retrying...`);
-          await new Promise((resolve) => setTimeout(resolve, 1000)); // Đợi 1 giây trước khi thử lại
-        } else {
-          console.error("Failed to generate image after 5 attempts", error);
-        }
-      }
-    }
-
-    if (imageResult) {
-      images.push(imageResult);
+    try {
+      const result = await axios.post("/api/generate-image", {
+        prompt: element.imagePrompt,
+        width: formData.dimensions.width,
+        height: formData.dimensions.height,
+      });
+      ////console.log(result?.data?.result);
+      images.push(result?.data?.result);
+    } catch (error) {
+      ////console.log(error);
+      setIsGeneratingImages(false);
     }
   }
 
@@ -243,6 +194,55 @@ const generateVideoImages = async (videoScriptData) => {
   setImageList(images);
   setIsGeneratingImages(false);
 };
+
+// const generateVideoImages = async (videoScriptData) => {
+//   setIsGeneratingImages(true);
+//   let images = [];
+
+//   for (const element of videoScriptData) {
+//     let attempt = 0;
+//     let success = false;
+//     let imageResult = null;
+
+//     while (attempt < 5 && !success) {
+//       try {
+//         const result = await axios.post("/api/generate-image", {
+//           prompt: element.imagePrompt,
+//           width: formData.dimensions.width,
+//           height: formData.dimensions.height,
+//         });
+
+//         if (result?.data?.result) {
+//           imageResult = result.data.result;
+//           success = true;
+//         } else {
+//           throw new Error("Invalid response data");
+//         }
+//       } catch (error) {
+//         attempt++;
+//         if (attempt < 5) {
+//           console.warn(`Attempt ${attempt} failed. Retrying...`);
+//           await new Promise((resolve) => setTimeout(resolve, 1000)); // Đợi 1 giây trước khi thử lại
+//         } else {
+//           console.error("Failed to generate image after 5 attempts", error);
+//         }
+//       }
+//     }
+
+//     if (imageResult) {
+//       images.push(imageResult);
+//     }
+//   }
+
+//   setVideoData((prev) => ({
+//     ...prev,
+//     imageList: images,
+//     width: formData.dimensions.width,
+//     height: formData.dimensions.height,
+//   }));
+//   setImageList(images);
+//   setIsGeneratingImages(false);
+// };
 
 //! SAVE VIDEO DATA TO DATABASE
 const saveVideoData = async (videoData) => {
