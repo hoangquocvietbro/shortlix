@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 
+
 function PlayerDialog({ playVideo, videoId }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [videoData, setVideoData] = useState(null);
@@ -174,8 +175,8 @@ function PlayerDialog({ playVideo, videoId }) {
   return (
     <div>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent className="bg-neutral-800 border-primary rounded-md flex flex-col items-center justify-center pl-28">
-          <DialogHeader>
+        <DialogContent className="bg-neutral-800 border-primary rounded-md flex flex-col items-center justify-center">
+          <DialogHeader style={{width: 356}}>
             {loading ? (
               <span className="text-center">Loading video data...</span>
             ) : (
