@@ -25,7 +25,6 @@ export default function Home() {
     <div className="flex justify-center items-center mt-5">
       {/* <ThemeToggle /> */}
       <div>
-      <p>Checking authentication...</p>
        {/* Optionally display a loading spinner here */}
       </div>
       {/* <Link href={"/sign-in"}>
