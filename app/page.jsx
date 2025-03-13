@@ -4,28 +4,36 @@ import Link from "next/link";
 // import { ThemeToggle } from "../components/(mode-provider)/themeToggle";
 import { useAuth, UserButton } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { userId } = useAuth();
-  if (userId) {
-    redirect("/dashboard");
-  }
+  const { userId, isLoaded } = useAuth();
+
+  useEffect(() => {
+    if (isLoaded && userId) {
+      redirect("/dashboard");
+    }
+
+    if (isLoaded && !userId) {
+        redirect("/sign-in");
+    }
+  }, [userId, isLoaded]);
+
+
+  // Render a loading state or placeholder while checking authentication
   return (
     <div className="flex justify-center items-center mt-5">
       {/* <ThemeToggle /> */}
-      <Link href={"/sign-in"}>
+      <div>
+      <p>Checking authentication...</p>
+       {/* Optionally display a loading spinner here */}
+      </div>
+      {/* <Link href={"/sign-in"}>
         <Button> SIGN IN </Button>
         <UserButton />
-      </Link>
+      </Link> */}
       
       {/* Embed another site using an iframe */}
-      <iframe sandbox="allow-same-origin allow-scripts"
-        src="https://fastest-ge79.onrender.com/" // Replace with the URL you want to embed
-        width="100%"
-        height="500px"
-        style={{ border: 'none' }}
-      ></iframe>
     </div>
   );
 }
-
