@@ -149,11 +149,14 @@ function Home() {
   function PiInit(){
     switch (process.env.NEXT_PUBLIC_MODE){
       case 'sandbox':
-        window.Pi.init({ version:'2.0',sandbox:false})
+        window.Pi.init({ version:'2.0',sandbox:true})
         //console.log(window.Pi);
         setPiInitialized(true);  // Set the state to indicate SDK is initialized
         // Now that Pi is initialized, you can attempt authentication.
-
+      case 'product':
+        window.Pi.init({ version:'2.0',sandbox:false})
+        //console.log(window.Pi);
+        setPiInitialized(true);  // Set the state to indicate SDK is initialized
         break; // Corrected: Add break to prevent fall-through
       default:
         //console.log("Pi environment mode not specified or invalid.");
