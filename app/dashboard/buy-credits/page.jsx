@@ -1,3 +1,4 @@
+// pearCreateFile: app/dashboard/buy-credits/page.jsx
 "use client";
 import React, { useState, useEffect, useContext } from "react";
 import { useUser } from "@clerk/nextjs";
@@ -26,11 +27,19 @@ function BuyCredits() {
   const [loading, setLoading] = useState(true);
   const [isSelectedOption, setIsSelectedOption] = useState(false);
   const [selectedCreditsOption, setSelectedCreditsOption] = useState(null);
+  const [piInitialized, setPiInitialized] = useState(false);
 
   // Fetch user data if user is logged in
   useEffect(() => {
     if (user) {
       getUserDetail();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    // Only initialize Pi SDK if the user is available
+    if (user) {
+      PiInit();
     }
   }, [user]);
 
@@ -109,6 +118,151 @@ function BuyCredits() {
     setIsSelectedOption(true); // Open the dialog
   };
 
+  // Pi Network Payment Handling
+  const handlePiPayment = async (creditsOption) => {
+    if (!piInitialized) {
+      toast.error("Pi Network SDK not initialized.");
+      return;
+    }
+
+    const amount = creditsOption.amount; // Price in Pi
+    const credits = creditsOption.credits; // Credits to grant
+    const pi_username = userDetail?.pi_username; // Recipient username
+
+    try {
+      const payment = await window.Pi.createPayment({
+        amount: amount,
+        memo: `Purchase of ${credits} credits`,
+        metadata: { credits: credits, email: user?.primaryEmailAddress?.emailAddress }, // Store relevant data
+      });
+
+      console.log("Payment created:", payment);
+
+      // Optional:  Implement a function to handle incomplete payments found on page load
+      //onIncompletePaymentFound(payment);
+
+      // Call approve payment to backend
+      await approvePaymentOnServer(payment.identifier);
+
+    } catch (error) {
+      console.error("Error starting Pi Payment:", error);
+      toast.error("Failed to initiate Pi Network payment.");
+    }
+  };
+
+  //Pi Approve payment
+  const approvePaymentOnServer = async (paymentId) => {
+    try {
+      const response = await fetch('/api/approve-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ paymentId: paymentId }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('Payment approved on server:', data);
+        // Payment approved successfully
+      } else {
+        console.error('Error approving payment on server:', data.error);
+        // Handle error case
+      }
+    } catch (error) {
+      console.error('Error communicating with server:', error);
+      // Handle network or other errors
+    }
+  };
+
+  //Pi Complete Payment
+  const completePaymentOnServer = async (paymentId) => {
+    // Implement function to call /api/complete-payment, send txid
+
+    try {
+      // Simulate getting txid.  In real app, it should be filled by user
+      const txid = "example_txid";
+      const response = await fetch('/api/complete-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ paymentId: paymentId, txid: txid }),
+      });
+
+      const data = await response.json();
+
+      if (        data.success) {
+        console.log('Payment completed on server:', data);
+        // Payment completed successfully
+        toast.success("Payment completed successfully!");
+         // Optionally, refresh user credits
+         getUserDetail();
+      } else {
+        console.error('Error completing payment on server:', data.error);
+        // Handle error case
+        toast.error(`Payment completion failed: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error communicating with server:', error);
+      // Handle network or other errors
+      toast.error("Failed to communicate with the server.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  //Pi Cancel Payment
+  const cancelPaymentOnServer = async (paymentId) => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/cancel-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ paymentId: paymentId }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('Payment cancelled on server:', data);
+        // Payment cancelled successfully
+        toast.success("Payment cancelled successfully!");
+      } else {
+        console.error('Error cancelling payment on server:', data.error);
+        // Handle error case
+        toast.error(`Payment cancellation failed: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error communicating with server:', error);
+      // Handle network or other errors
+      toast.error("Failed to communicate with the server.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const PiInit = () => {
+    switch (process.env.NEXT_PUBLIC_MODE) {
+      case 'sandbox':
+        window.Pi.init({ version: '2.0', sandbox: true })
+        //console.log(window.Pi);
+        setPiInitialized(true);  // Set the state to indicate SDK is initialized
+        // Now that Pi is initialized, you can attempt authentication.
+        break;
+      case 'product':
+        window.Pi.init({ version: '2.0', sandbox: false })
+        //console.log(window.Pi);
+        setPiInitialized(true);  // Set the state to indicate SDK is initialized
+        break; // Corrected: Add break to prevent fall-through
+      default:
+        //console.log("Pi environment mode not specified or invalid.");
+    }
+
+  }
+
   if (loading) return <p>Loading...</p>;
 
   const creditsOption = [
@@ -141,7 +295,7 @@ function BuyCredits() {
         with your current credits.
       </p>
       <p className="text-gray-400 mt-3 font-semibold">
-        Subscription Status:{" "}
+      Subscription Status:{" "}
         <span
           className={`animate-pulse ${
             isSubscribed ? "text-green-500" : "text-red-500"
@@ -198,12 +352,18 @@ function BuyCredits() {
                 <p className="text-xs text-gray-500">
                   For ${option.amount} (~${costPerCredit} per credit)
                 </p>
+                 <button
+                    onClick={() => handlePiPayment(option)}
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Pay with Pi
+                  </button>
               </CardFooter>
             </Card>
           );
         })}
       </div>
-
+{/* 
       <CustomBuy
         isSelected={isSelectedOption}
         setIsSelected={setIsSelectedOption}
@@ -211,9 +371,10 @@ function BuyCredits() {
         message={`You are about to purchase ${selectedCreditsOption?.credits} credits for $${selectedCreditsOption?.amount}.`}
         creditsOption={selectedCreditsOption}
         handlePurchaseCredits={handlePurchaseCredits} // Pass this function from parent
-      />
+      /> */}
     </div>
   );
 }
 
 export default BuyCredits;
+
