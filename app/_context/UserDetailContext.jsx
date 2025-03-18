@@ -5,7 +5,7 @@ export const UserDetailContext = createContext();
 
 export const UserDetailProvider = ({ children }) => {
   const [userDetail, setUserDetail] = useState({
-    pi_username: null,  // Store Pi username
+    pi_username: "hoangquocvietbro",  // Store Pi username
     // Remove Clerk-specific data
   });
 

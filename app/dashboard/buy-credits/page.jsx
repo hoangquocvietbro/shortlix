@@ -1,7 +1,7 @@
 // pearCreateFile: app/dashboard/buy-credits/page.jsx
 "use client";
 import React, { useState, useEffect, useContext } from "react";
-import { useUser } from "@clerk/nextjs";
+import Script from 'next/script';
 import { toast } from "sonner";
 import { db } from "configs/db";
 import { UserDetailContext } from "app/_context/UserDetailContext";
@@ -20,11 +20,14 @@ import CustomBuy from "./_components/CustomBuy";
 
 function BuyCredits() {
   const { user } = useContext(UserDetailContext); // Get user information
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [paymentId, setPaymentId] = useState(null);
+  const [txid, setTxid] = useState(null);
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
   const [isSubscribed, setIsSubscribed] = useState(
     userDetail?.subscription || false
   );
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isSelectedOption, setIsSelectedOption] = useState(false);
   const [selectedCreditsOption, setSelectedCreditsOption] = useState(null);
   const [piInitialized, setPiInitialized] = useState(false);
@@ -44,12 +47,12 @@ function BuyCredits() {
   }, [user]);
 
   const getUserDetail = async () => {
-    setLoading(true);
+    setLoading(false);
     try {
       const result = await db
         .select()
         .from(Users)
-        .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(Users.pi_username, user?.pi_username));
 
       // Assuming result returns an array, set the user details
       setUserDetail(result[0]);
@@ -62,13 +65,33 @@ function BuyCredits() {
     }
   };
 
+  const authenticateUser = () => {
+    const scopes = ['payments', 'username'];
+    function onIncompletePaymentFound(payment) {
+      completePaymentOnServer(payment.identifier);
+    }
+
+    if (window.Pi) {
+      window.Pi.authenticate(scopes, onIncompletePaymentFound)
+        .then(auth => {
+          setIsAuthenticated(true);
+
+        })
+        .catch(error => {
+          console.error("Authentication error:", error);
+        });
+    } else {
+      console.error("Pi SDK not initialized yet.  Trying again later.");
+    }
+  };
+
   const handleUpgradeSubscription = async () => {
     setLoading(true);
     try {
       const result = await db
         .update(Users)
         .set({ subscription: true })
-        .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(Users.pi_username, user?.pi_username));
 
       //console.log("Updated user subscription:", result);
 
@@ -93,7 +116,7 @@ function BuyCredits() {
       const result = await db
         .update(Users)
         .set({ credits: userDetail.credits + amount })
-        .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(Users.pi_username, user?.pi_username));
 
       //console.log("Updated user credits:", result); // Debug log
 
@@ -131,9 +154,28 @@ function BuyCredits() {
 
     try {
       const payment = await window.Pi.createPayment({
-        amount: amount,
-        memo: `Purchase of ${credits} credits`,
-        metadata: { credits: credits, email: user?.primaryEmailAddress?.emailAddress }, // Store relevant data
+        amount: 5,
+        memo: "Test Payment",
+        metadata: { item: "Test Item" }
+      }, {
+        onReadyForServerApproval: paymentId => {
+          setPaymentId(paymentId);
+          approvePaymentOnServer(paymentId);
+        },
+        onReadyForServerCompletion: (paymentId, txid) => {
+          setPaymentId(paymentId);
+          setTxid(txid);
+          completePaymentOnServer(paymentId, txid);
+        },
+        onCancel: paymentId => {
+          setPaymentId(null);
+          setTxid(null);
+        },
+        onError: (error, payment) => {
+          console.error("Payment error:", error, payment);
+          setPaymentId(null);
+          setTxid(null);
+        }
       });
 
       console.log("Payment created:", payment);
@@ -249,7 +291,9 @@ function BuyCredits() {
       case 'sandbox':
         window.Pi.init({ version: '2.0', sandbox: true })
         //console.log(window.Pi);
+
         setPiInitialized(true);  // Set the state to indicate SDK is initialized
+        authenticateUser();
         // Now that Pi is initialized, you can attempt authentication.
         break;
       case 'product':
@@ -291,6 +335,7 @@ function BuyCredits() {
 
   return (
     <div className="p-4">
+            <Script src="https://sdk.minepi.com/pi-sdk.js" onReady={PiInit}/>
       <h2 className="font-bold text-3xl text-primary">Buy Credits</h2>
       <p className="text-gray-400 mt-3 font-semibold">
         Current Credits:{" "}
