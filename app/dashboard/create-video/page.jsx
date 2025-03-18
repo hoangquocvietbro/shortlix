@@ -46,7 +46,7 @@ function CreateNew() {
   const [videoId, setVideoId] = useState(1);
   const { videoData, setVideoData } = useVideoData(); // Access videoData from cont
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
-  const { user } = useUser();
+  const { user } = useContext(UserDetailContext);
 
 
   function flattenCaptions(captions) {

@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import React, { useContext,useEffect, useState } from "react";
 import { db } from "configs/db";
 import { Voices } from "configs/schema";
 import { eq,  } from "drizzle-orm";
 import EmptyState from "../_components/EmptyState";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { UserDetailContext } from "app/_context/UserDetailContext";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trash2 } from "lucide-react";
 import {
@@ -26,7 +26,7 @@ const DEFAULT_ITEMS_PER_PAGE = 6;
 const PAGE_SIZE_OPTIONS = [3, 6, 9, 12];
 
 function VoiceGeneration() {
-    const { user } = useUser();
+    const { user } = useContext(UserDetailContext);
     const [voiceGenerations, setVoiceGenerations] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);

@@ -7,14 +7,14 @@ import VideoList from "./_components/VideoList";
 import { db } from "configs/db";
 import { VideoData } from "configs/schema";
 import { eq, desc } from "drizzle-orm";
-import { useUser } from "@clerk/nextjs";
+import { UserDetailContext } from "app/_context/UserDetailContext"; // Import UserDetailContext
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const DEFAULT_VIDEOS_PER_PAGE = 6;
 const PAGE_SIZE_OPTIONS = [6, 12, 24];
 
 function Dashboard() {
-  const { user } = useUser();
+  const { user } = useContext(UserDetailContext);
   const [videoList, setVideoList] = useState([]);
   const [page, setPage] = useState(1);
   const [totalVideos, setTotalVideos] = useState(0);

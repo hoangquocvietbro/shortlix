@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext,useEffect, useState } from "react";
 import Header from "./_components/Header";
 import SideNav from "./_components/SideNav";
 import { VideoDataContext } from "app/_context/VideoDataContext";
 import { UserDetailContext } from "app/_context/UserDetailContext";
-import { useUser } from "@clerk/nextjs";
 import { db } from "configs/db";
 import { Users } from "configs/schema";
 import { eq } from "drizzle-orm";
@@ -12,7 +11,7 @@ import { eq } from "drizzle-orm";
 function DashboradLayout({ children }) {
   const [videoData, setVideoData] = useState([]);
   const [userDetail, setUserDetail] = useState([]);
-  const { user } = useUser();
+  const { user } = useContext(UserDetailContext);
   useEffect(() => {
     user && getUserDetail();
   }, [user]);

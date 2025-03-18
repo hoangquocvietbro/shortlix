@@ -18,7 +18,7 @@ import Image from "next/image";
 import CustomBuy from "./_components/CustomBuy";
 
 function BuyCredits() {
-  const { user } = useUser(); // Get user information
+  const { user } = useContext(UserDetailContext); // Get user information
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
   const [isSubscribed, setIsSubscribed] = useState(
     userDetail?.subscription || false

@@ -31,7 +31,7 @@ function SelectVoice({ onUserSelect }) {
   const [audioUrl, setAudioUrl] = useState(null); // State to hold audio URL
   const [isGeneratingVoice, setIsGeneratingVoice] = useState(false); // State to indicate if voice is being generated
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
-  const { user } = useUser();
+  const { user } = useContext(UserDetailContext);
 
   const [speechRate, setSpeechRate] = useState(0); // Default speech rate
   const [pitch, setPitch] = useState(0); // Default pitch

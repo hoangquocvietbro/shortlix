@@ -3,9 +3,10 @@ import { boolean, integer, json, pgTable, serial, timestamp, varchar,numeric } f
 
 export const Users = pgTable('users', {
   id: serial("id").primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email").notNull(),
-  imageUrl: varchar("imageUrl").notNull(),
+  pi_username: varchar('pi_username'),
+  name: varchar("name", { length: 255 }),
+  email: varchar("email"),
+  imageUrl: varchar("imageUrl"),
   subscription: boolean("subscription").default(false),
   credits: integer("credits").default(30),
 });

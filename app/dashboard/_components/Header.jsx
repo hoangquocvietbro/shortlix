@@ -1,5 +1,4 @@
 "use client";
-import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import {
@@ -77,7 +76,7 @@ function Header() {
             {userDetail?.credits}
           </h2>
         </div>
-        <UserButton />
+
         <button
           className="md:hidden p-4"
           onClick={toggleSidebar}

@@ -30,7 +30,7 @@ function SelectVoice({ onUserSelect }) {
   const [audioUrl, setAudioUrl] = useState(null); // State to hold audio URL
   const [isGeneratingVoice, setIsGeneratingVoice] = useState(false); // State to indicate if voice is being generated
   const { userDetail, setUserDetail } = useContext(UserDetailContext);
-  const { user } = useUser();
+  const { user } = useContext(UserDetailContext);
   // Handle form submission
   const handleSubmit = async () => {
     setIsGeneratingVoice(true);
