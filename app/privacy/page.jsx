@@ -7,7 +7,7 @@ const PrivacyPage = () => {
       <h1 className="text-2xl font-bold mb-4">Privacy Policy</h1>
       <p>Effective Date: 3/18/2025</p>
 
-      <div className="text-gray-700">
+      <div className="">
         <ol className="list-decimal pl-5">
           <li>
             <strong>Introduction</strong>
