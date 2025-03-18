@@ -2,6 +2,8 @@
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import {
+  Cookie,
+  ReceiptText,
   FileVideo,
   PanelsTopLeft,
   Menu,
@@ -52,6 +54,18 @@ function Header() {
       name: "Buy Credits",
       path: "/dashboard/buy-credits",
       icon: <CircleDollarSign />,
+    },
+    {
+      id: 6,
+      name: "Terms of Service",
+      path: "/terms",
+      icon: <ReceiptText />,
+    },
+    {
+      id: 7,
+      name: "Privacy Policy",
+      path: "/privacy",
+      icon: <Cookie />,
     },
   ];
 

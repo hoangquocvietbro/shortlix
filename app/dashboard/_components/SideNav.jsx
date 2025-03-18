@@ -1,5 +1,5 @@
 "use client";
-import { AudioLines,CircleDollarSign,Delete,FileImage,FileVideo, Languages, PanelsTopLeft } from "lucide-react";
+import {Cookie, ReceiptText, AudioLines,CircleDollarSign,Delete,FileImage,FileVideo, Languages, PanelsTopLeft } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -50,10 +50,23 @@ function SideNav() {
     //   icon: <Delete />,
     // },
     {
-      id: 8,
+      id: 5,
       name: "Buy Credits",
       path: "/dashboard/buy-credits",
       icon: <CircleDollarSign />,
+    },
+    ,
+    {
+      id: 6,
+      name: "Terms of Service",
+      path: "/terms",
+      icon: <ReceiptText />,
+    },
+    {
+      id: 7,
+      name: "Privacy Policy",
+      path: "/privacy",
+      icon: <Cookie />,
     },
   ];
   const pathName = usePathname();

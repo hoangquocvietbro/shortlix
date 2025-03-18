@@ -266,13 +266,27 @@ function BuyCredits() {
   if (loading) return <p>Loading...</p>;
 
   const creditsOption = [
-    { id: 1, amount: 2.99, credits: 30 },
-    { id: 2, amount: 4.99, credits: 70 },
-    { id: 3, amount: 9.99, credits: 150 },
-    { id: 4, amount: 14.99, credits: 300 },
-    { id: 5, amount: 29.99, credits: 750 },
-    { id: 6, amount: 49.99, credits: 1500 },
-    { id: 7, amount: 99.99, credits: 3500 },
+    { "id": 1, "amount": 0.50, "credits": 50 },
+    { "id": 2, "amount": 0.75, "credits": 75 },
+    { "id": 3, "amount": 1.00, "credits": 100 },
+    { "id": 4, "amount": 1.50, "credits": 160 },
+    { "id": 5, "amount": 2.00, "credits": 220 },
+    { "id": 6, "amount": 2.50, "credits": 280 },
+    { "id": 7, "amount": 3.00, "credits": 350 },
+    { "id": 8, "amount": 3.50, "credits": 420 },
+    { "id": 9, "amount": 4.00, "credits": 500 },
+    { "id": 10, "amount": 4.50, "credits": 580 },
+    { "id": 11, "amount": 5.00, "credits": 670 },
+    { "id": 12, "amount": 5.50, "credits": 760 },
+    { "id": 13, "amount": 6.00, "credits": 860 },
+    { "id": 14, "amount": 6.50, "credits": 960 },
+    { "id": 15, "amount": 7.00, "credits": 1070 },
+    { "id": 16, "amount": 7.50, "credits": 1180 },
+    { "id": 17, "amount": 8.00, "credits": 1300 },
+    { "id": 18, "amount": 8.50, "credits": 1420 },
+    { "id": 19, "amount": 9.00, "credits": 1550 },
+    { "id": 20, "amount": 9.50, "credits": 1680 },
+    { "id": 21, "amount": 10.00, "credits": 1820 }
   ];
 
   return (
