@@ -10,7 +10,7 @@ export function middleware(request) {
 export const config = {
   matcher: [
     // Skip Next.js internals, static files, and exclude /sign-in and /sign-up
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest|terms|privacy)).*)',
     // Always run for API routes
     '/(api|trpc)(.*)',
   ],
