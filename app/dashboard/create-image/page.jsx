@@ -73,7 +73,7 @@ function CreateImage() {
             <option value="1820">1820</option>
             <option value="1920">1920</option>
           </select>
-          <select
+          <select style={{width: 100}}
             value={model}
             onChange={(e) => setModel(e.target.value)}
             className="border p-2"

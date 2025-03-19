@@ -40,7 +40,7 @@ function BuyCredits() {
       const result = await db
         .select()
         .from(Users)
-        .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(Users.pi_username, user?.pi_username));
 
       // Assuming result returns an array, set the user details
       setUserDetail(result[0]);
@@ -59,7 +59,7 @@ function BuyCredits() {
       const result = await db
         .update(Users)
         .set({ subscription: true })
-        .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(Users.pi_username, user?.pi_username));
 
       //console.log("Updated user subscription:", result);
 
@@ -84,7 +84,7 @@ function BuyCredits() {
       const result = await db
         .update(Users)
         .set({ credits: userDetail.credits + amount })
-        .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(Users.pi_username, user?.pi_username));
 
       //console.log("Updated user credits:", result); // Debug log
 

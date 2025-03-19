@@ -55,6 +55,7 @@ function BuyCredits() {
         .where(eq(Users.pi_username, user?.pi_username));
 
       // Assuming result returns an array, set the user details
+      console.log(result[0])
       setUserDetail(result[0]);
       setIsSubscribed(result[0]?.subscription); // Update isSubscribed state
     } catch (error) {

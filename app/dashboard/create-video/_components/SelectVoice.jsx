@@ -92,7 +92,7 @@ function SelectVoice({ onUserSelect }) {
       const result = await db
         .update(Users)
         .set({ credits: userDetail.credits - 1 }) // Deduct 1 credit for each generation
-        .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress)); // Update based on user's email
+        .where(eq(Users.pi_username, user?.pi_username)); // Update based on user's email
 
       //console.log("Credits updated:", result);
 
@@ -180,7 +180,7 @@ function SelectVoice({ onUserSelect }) {
       </h2>
       <div className="my-3">
         <Select defaultValue="Default Text" onValueChange={setSelectedOption}>
-          <SelectTrigger className="w-[250px] border-gray-400">
+          <SelectTrigger className="border-gray-400">
             <SelectValue placeholder="Select Text Option" />
           </SelectTrigger>
           <SelectContent className="bg-neutral-800 border-gray-400">

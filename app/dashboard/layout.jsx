@@ -19,7 +19,7 @@ function DashboradLayout({ children }) {
     const result = await db
       .select()
       .from(Users)
-      .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
+      .where(eq(Users.pi_username, user?.pi_username));
       setUserDetail(result[0]);
   };
   return (

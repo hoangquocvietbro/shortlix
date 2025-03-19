@@ -82,7 +82,7 @@ function SelectVoice({ onUserSelect }) {
       const result = await db
         .update(Users)
         .set({ credits: userDetail.credits - 1 }) // Deduct 1 credit for each generation
-        .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress)); // Update based on user's email
+        .where(eq(Users.pi_username, user?.pi_username)); // Update based on user's email
 
       //console.log("Credits updated:", result);
 

@@ -33,7 +33,7 @@ function Dashboard() {
       const result = await db
         .select({ count: VideoData.id })
         .from(VideoData)
-        .where(eq(VideoData.createdBy, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(VideoData.createdBy, user?.pi_username));
 
       setTotalVideos(result.length);
     } catch (error) {
@@ -49,7 +49,7 @@ function Dashboard() {
       const result = await db
         .select()
         .from(VideoData)
-        .where(eq(VideoData.createdBy, user?.primaryEmailAddress?.emailAddress))
+        .where(eq(VideoData.createdBy, user?.pi_username))
         .orderBy(desc(VideoData.id))
         .limit(videosPerPage)
         .offset(offset);

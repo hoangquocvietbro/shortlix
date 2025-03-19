@@ -257,7 +257,7 @@ const saveVideoData = async (videoData) => {
         captions: videoCaptions,
         captionsList: videoData?.captionsList,
         imageList: videoData?.imageList,
-        createdBy: user?.primaryEmailAddress?.emailAddress,
+        createdBy: user?.pi_username,
         downloadURL: "",
         animationType: videoData?.animationType,
         captionPosition: videoData?.captionPosition,
@@ -307,7 +307,7 @@ const updateUserCredits = async () => {
   const result = await db
     .update(Users)
     .set({ credits: userDetail?.credits - 10 })
-    .where(eq(Users.email, user?.primaryEmailAddress?.emailAddress));
+    .where(eq(Users.pi_username, user?.pi_username));
   ////console.log(result);
   setUserDetail((prev) => ({
     ...prev,
