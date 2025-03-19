@@ -371,7 +371,7 @@ function BuyCredits() {
                   Add {option.credits} Credits
                 </CardTitle>
                 <CardDescription className="mt-10 text-center">
-                  Purchase {option.credits} credits for {`$${option.amount}`}.
+                  Purchase {option.credits} credits for {`${option.amount}𝜋`}.
                   <div className="flex flex-row items-center justify-center mt-14 gap-2">
                     <Image
                       src={"/coin.png"}
@@ -397,13 +397,13 @@ function BuyCredits() {
               <CardContent className="my-5 "></CardContent>
               <CardFooter>
                 <p className="text-xs text-gray-500">
-                  For ${option.amount} (~${costPerCredit} per credit)
+                  For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
                 </p>
                  <button
                     onClick={() => handlePiPayment(option)}
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                   >
-                    Pay with Pi
+                    Pay with {`${option.amount}𝜋`}
                   </button>
               </CardFooter>
             </Card>
