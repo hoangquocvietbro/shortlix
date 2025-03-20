@@ -3,7 +3,7 @@ import React from 'react';
 
 const PrivacyPage = () => {
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 px-4">
       <h1 className="text-2xl font-bold mb-4">Privacy Policy</h1>
       <p>Effective Date: 3/18/2025</p>
 
