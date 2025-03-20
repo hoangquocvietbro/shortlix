@@ -6,7 +6,7 @@ import { Outfit } from "next/font/google";
 import { cn } from "lib/utils";
 import { ThemeProvider } from "@/components/(mode-provider)/theme-provider";
 import { Toaster } from "@/components/ui/sonner"
-import { UserDetailProvider } from "./_context/UserDetailContext";
+import { UserProvider } from "./_context/UserContext";
 
 export const metadata = {
   title: "Shortlix AI - AI Short Video Generator",
@@ -37,9 +37,9 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            <UserDetailProvider>
+            <UserProvider>
               <Provider>{children}</Provider>
-            </UserDetailProvider>
+            </UserProvider>
             <Toaster />
           </ThemeProvider>
         </body>

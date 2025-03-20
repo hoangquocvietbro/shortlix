@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { db } from "configs/db";
-import { UserDetailContext } from "app/_context/UserDetailContext";
+import { UserContext } from "app/_context/UserContext";
 import { Users } from "configs/schema";
 import { eq } from "drizzle-orm";
 import {
@@ -18,10 +18,10 @@ import Image from "next/image";
 import CustomBuy from "./_components/CustomBuy";
 
 function BuyCredits() {
-  const { user } = useContext(UserDetailContext); // Get user information
-  const { userDetail, setUserDetail } = useContext(UserDetailContext);
+  const { user } = useContext(UserContext); // Get user information
+  const { user, setUser } = useContext(UserContext);
   const [isSubscribed, setIsSubscribed] = useState(
-    userDetail?.subscription || false
+    user?.subscription || false
   );
   const [loading, setLoading] = useState(true);
   const [isSelectedOption, setIsSelectedOption] = useState(false);
@@ -43,7 +43,7 @@ function BuyCredits() {
         .where(eq(Users.pi_username, user?.pi_username));
 
       // Assuming result returns an array, set the user details
-      setUserDetail(result[0]);
+      setUser(result[0]);
       setIsSubscribed(result[0]?.subscription); // Update isSubscribed state
     } catch (error) {
       console.error("Error fetching user details:", error);
@@ -65,7 +65,7 @@ function BuyCredits() {
 
       // Update context and state
       setIsSubscribed(true);
-      setUserDetail((prev) => ({ ...prev, subscription: true }));
+      setUser((prev) => ({ ...prev, subscription: true }));
 
       // Show success toast
       toast.success("Subscription upgraded successfully!");
@@ -83,13 +83,13 @@ function BuyCredits() {
       // Updating credits in the database
       const result = await db
         .update(Users)
-        .set({ credits: userDetail.credits + amount })
+        .set({ credits: user.credits + amount })
         .where(eq(Users.pi_username, user?.pi_username));
 
       //console.log("Updated user credits:", result); // Debug log
 
       // Update user detail in context
-      setUserDetail((prev) => ({
+      setUser((prev) => ({
         ...prev,
         credits: prev.credits + amount, // Add the purchased amount to credits
       }));
@@ -126,18 +126,18 @@ function BuyCredits() {
       <h2 className="font-bold text-3xl text-primary">Buy Credits</h2>
       <p className="text-gray-400 mt-3 font-semibold">
         Current Credits:{" "}
-        <span className="text-white">{userDetail?.credits || 0}</span>
+        <span className="text-white">{user?.credits || 0}</span>
       </p>
       <p className="text-gray-400 mt-3 font-semibold">
         You can generate:{" "}
         <span className="text-white">
-          {Math.floor((userDetail?.credits || 0) / 10)}
+          {Math.floor((user?.credits || 0) / 10)}
         </span>{" "}
         video(s) with your current credits.
       </p>
       <p className="text-gray-400 mt-3 font-semibold">
         You can generate:{" "}
-        <span className="text-white">{userDetail?.credits || 0}</span> voice(s)
+        <span className="text-white">{user?.credits || 0}</span> voice(s)
         with your current credits.
       </p>
       <p className="text-gray-400 mt-3 font-semibold">
@@ -147,7 +147,7 @@ function BuyCredits() {
             isSubscribed ? "text-green-500" : "text-red-500"
           }`}
         >
-          {userDetail?.subscription ? "Active" : "Inactive"}
+          {user?.subscription ? "Active" : "Inactive"}
         </span>
       </p>
 

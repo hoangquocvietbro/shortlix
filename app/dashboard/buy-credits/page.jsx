@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Script from 'next/script';
 import { toast } from "sonner";
 import { db } from "configs/db";
-import { UserDetailContext } from "app/_context/UserDetailContext";
+import { UserContext } from "app/_context/UserContext";
 import { Users } from "configs/schema";
 import { eq } from "drizzle-orm";
 import {
@@ -19,26 +19,17 @@ import Image from "next/image";
 import CustomBuy from "./_components/CustomBuy";
 
 function BuyCredits() {
-  const { user } = useContext(UserDetailContext); // Get user information
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [paymentId, setPaymentId] = useState(null);
   const [txid, setTxid] = useState(null);
-  const { userDetail, setUserDetail } = useContext(UserDetailContext);
+  const { user, setUser } = useContext(UserContext);
   const [isSubscribed, setIsSubscribed] = useState(
-    userDetail?.subscription || false
+    user?.subscription || false
   );
   const [loading, setLoading] = useState(false);
   const [isSelectedOption, setIsSelectedOption] = useState(false);
   const [selectedCreditsOption, setSelectedCreditsOption] = useState(null);
   const [piInitialized, setPiInitialized] = useState(false);
-
-  // Fetch user data if user is logged in
-  useEffect(() => {
-    if (user) {
-      getUserDetail();
-    }
-  }, [user]);
-
   useEffect(() => {
     // Only initialize Pi SDK if the user is available
     if (user) {
@@ -56,7 +47,7 @@ function BuyCredits() {
 
       // Assuming result returns an array, set the user details
       console.log(result[0])
-      setUserDetail(result[0]);
+      setUser(result[0]);
       setIsSubscribed(result[0]?.subscription); // Update isSubscribed state
     } catch (error) {
       console.error("Error fetching user details:", error);
@@ -98,7 +89,7 @@ function BuyCredits() {
 
       // Update context and state
       setIsSubscribed(true);
-      setUserDetail((prev) => ({ ...prev, subscription: true }));
+      setUser((prev) => ({ ...prev, subscription: true }));
 
       // Show success toast
       toast.success("Subscription upgraded successfully!");
@@ -116,13 +107,13 @@ function BuyCredits() {
       // Updating credits in the database
       const result = await db
         .update(Users)
-        .set({ credits: userDetail.credits + amount })
+        .set({ credits: user.credits + amount })
         .where(eq(Users.pi_username, user?.pi_username));
 
       //console.log("Updated user credits:", result); // Debug log
 
       // Update user detail in context
-      setUserDetail((prev) => ({
+      setUser((prev) => ({
         ...prev,
         credits: prev.credits + amount, // Add the purchased amount to credits
       }));
@@ -151,7 +142,7 @@ function BuyCredits() {
 
     const amount = creditsOption.amount; // Price in Pi
     const credits = creditsOption.credits; // Credits to grant
-    const pi_username = userDetail?.pi_username; // Recipient username
+    const pi_username = user?.pi_username; // Recipient username
 
     try {
       const payment = await window.Pi.createPayment({
@@ -241,7 +232,7 @@ function BuyCredits() {
         // Payment completed successfully
         toast.success("Payment completed successfully!");
          // Optionally, refresh user credits
-         getUserDetail();
+        getUserDetail();
       } else {
         console.error('Error completing payment on server:', data.error);
         // Handle error case
@@ -328,18 +319,18 @@ function BuyCredits() {
       <h2 className="font-bold text-3xl text-primary">Buy Credits</h2>
       <p className="text-gray-400 mt-3 font-semibold">
         Current Credits:{" "}
-        <span className="text-white">{userDetail?.credits || 0}</span>
+        <span className="text-white">{user?.credits || 0}</span>
       </p>
       <p className="text-gray-400 mt-3 font-semibold">
         You can generate:{" "}
         <span className="text-white">
-          {Math.floor((userDetail?.credits || 0) / 10)}
+          {Math.floor((user?.credits || 0) / 10)}
         </span>{" "}
         video(s) with your current credits.
       </p>
       <p className="text-gray-400 mt-3 font-semibold">
         You can generate:{" "}
-        <span className="text-white">{userDetail?.credits || 0}</span> voice(s)
+        <span className="text-white">{user?.credits || 0}</span> voice(s)
         with your current credits.
       </p>
       <p className="text-gray-400 mt-3 font-semibold">
@@ -349,7 +340,7 @@ function BuyCredits() {
             isSubscribed ? "text-green-500" : "text-red-500"
           }`}
         >
-          {userDetail?.subscription ? "Active" : "Inactive"}
+          {user?.subscription ? "Active" : "Inactive"}
         </span>
       </p>
 

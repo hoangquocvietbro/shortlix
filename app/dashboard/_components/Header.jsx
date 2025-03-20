@@ -13,13 +13,13 @@ import {
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { UserDetailContext } from "app/_context/UserDetailContext";
+import { UserContext } from "app/_context/UserContext";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false); // State to toggle the sidebar
   const pathName = usePathname();
   const router = useRouter();
-  const { userDetail, setUserDetail } = useContext(UserDetailContext);
+  const { user, setUser } = useContext(UserContext);
   const toggleSidebar = () => {
     setIsOpen(!isOpen); // Toggle the state when the menu button is clicked
   };
@@ -87,7 +87,7 @@ function Header() {
         >
           <Image src="/coin.png" alt="coin" width={30} height={30} />
           <h2 className="font-bold text-xl drop-shadow-lg">
-            {userDetail?.credits}
+            {user?.credits}
           </h2>
         </div>
 

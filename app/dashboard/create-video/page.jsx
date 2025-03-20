@@ -13,7 +13,7 @@ import { db } from "configs/db";
 import { Users, VideoData } from "configs/schema";
 import { useUser } from "@clerk/nextjs";
 import PlayerDialog from "../_components/PlayerDialog";
-import { UserDetailContext } from "app/_context/UserDetailContext";
+import { UserContext } from "app/_context/UserContext";
 import { toast } from "sonner";
 import { eq } from "drizzle-orm";
 import SelectVoice from "./_components/SelectVoice";
@@ -45,8 +45,7 @@ function CreateNew() {
   const [playVideo, setPlayVideo] = useState(false);
   const [videoId, setVideoId] = useState(1);
   const { videoData, setVideoData } = useVideoData(); // Access videoData from cont
-  const { userDetail, setUserDetail } = useContext(UserDetailContext);
-  const { user } = useContext(UserDetailContext);
+  const { user, setUser } = useContext(UserContext);
 
 
   function flattenCaptions(captions) {
@@ -74,7 +73,7 @@ function CreateNew() {
     setFormData((prev) => ({ ...prev, [fielName]: fielValue }));
   };
   const onCreateClickHandler = () => {
-    if (!userDetail || userDetail.credits <= 0) {
+    if (!user || user.credits <= 0) {
       toast("Insufficient credits");
       return;
     }
@@ -306,12 +305,12 @@ useEffect(() => {
 const updateUserCredits = async () => {
   const result = await db
     .update(Users)
-    .set({ credits: userDetail?.credits - 10 })
+    .set({ credits: user?.credits - 10 })
     .where(eq(Users.pi_username, user?.pi_username));
   ////console.log(result);
-  setUserDetail((prev) => ({
+  setUser((prev) => ({
     ...prev,
-    credits: userDetail?.credits - 10,
+    credits: user?.credits - 10,
   }));
   setVideoData(null);
 };

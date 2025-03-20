@@ -6,7 +6,7 @@ import { eq,  } from "drizzle-orm";
 import EmptyState from "../_components/EmptyState";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { UserDetailContext } from "app/_context/UserDetailContext";
+import { UserContext } from "app/_context/UserContext";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trash2 } from "lucide-react";
 import {
@@ -26,7 +26,7 @@ const DEFAULT_ITEMS_PER_PAGE = 6;
 const PAGE_SIZE_OPTIONS = [3, 6, 9, 12];
 
 function VoiceGeneration() {
-    const { user } = useContext(UserDetailContext);
+    const { user } = useContext(UserContext);
     const [voiceGenerations, setVoiceGenerations] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);

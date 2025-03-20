@@ -3,7 +3,7 @@ import React, { useContext
 ,  useState, useEffect } from 'react';
 import Script from 'next/script';
 import { Button } from "../components/ui/button";
-import { UserDetailContext } from './_context/UserDetailContext';
+import { UserContext } from './_context/UserContext';
 import { db } from 'configs/db';
 import { Users } from 'configs/schema';
 import { eq } from 'drizzle-orm';
@@ -15,7 +15,7 @@ function Home() {
   const [txid, setTxid] = useState(null);
   const [username, setUsername] = useState('');
   const [piInitialized, setPiInitialized] = useState(false);
-  const { setUserDetail } = useContext(UserDetailContext); // Access setUserDetail from context
+  const { setUser } = useContext(UserContext); // Access setUser from context
   const router = useRouter();
 
 
@@ -59,7 +59,7 @@ function Home() {
       if (data.success) {
         setUsername(data.data.username || 'N/A'); // Set username from API
         // Update user detail context
-        setUserDetail({ pi_username: data.data.username });
+        setUser({ pi_username: data.data.username });
 
 
         router.push('/dashboard'); 

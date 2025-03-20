@@ -15,7 +15,7 @@ import { db } from "configs/db";
 import { eq } from "drizzle-orm";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
-import { UserDetailContext } from "app/_context/UserDetailContext";
+import { UserContext } from "app/_context/UserContext";
 import { Users, Voices } from "configs/schema";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "configs/FierbaseConfig";
@@ -29,8 +29,8 @@ function SelectVoice({ onUserSelect }) {
   const [selectedGender, setSelectedGender] = useState("NEUTRAL"); // Default gender
   const [audioUrl, setAudioUrl] = useState(null); // State to hold audio URL
   const [isGeneratingVoice, setIsGeneratingVoice] = useState(false); // State to indicate if voice is being generated
-  const { userDetail, setUserDetail } = useContext(UserDetailContext);
-  const { user } = useContext(UserDetailContext);
+  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   // Handle form submission
   const handleSubmit = async () => {
     setIsGeneratingVoice(true);
@@ -73,7 +73,7 @@ function SelectVoice({ onUserSelect }) {
 
   // Function to update user credits
   const updateUserCredits = async () => {
-    if (userDetail?.credits <= 0) {
+    if (user?.credits <= 0) {
       toast("Insufficient credits"); // Optionally handle the case of insufficient credits
       return; // Exit if no credits are available
     }
@@ -81,13 +81,13 @@ function SelectVoice({ onUserSelect }) {
     try {
       const result = await db
         .update(Users)
-        .set({ credits: userDetail.credits - 1 }) // Deduct 1 credit for each generation
+        .set({ credits: user.credits - 1 }) // Deduct 1 credit for each generation
         .where(eq(Users.pi_username, user?.pi_username)); // Update based on user's email
 
       //console.log("Credits updated:", result);
 
       // Update user details in local state
-      setUserDetail((prev) => ({
+      setUser((prev) => ({
         ...prev,
         credits: prev.credits - 1,
       }));
