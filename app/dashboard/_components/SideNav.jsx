@@ -1,5 +1,5 @@
 "use client";
-import {Cookie, ReceiptText, AudioLines,CircleDollarSign,Delete,FileImage,FileVideo, Languages, PanelsTopLeft } from "lucide-react";
+import {Search,ArrowRightFromLine, FileUp,Captions,Cookie, ReceiptText, AudioLines,CircleDollarSign,Delete,FileImage,FileVideo, Languages, PanelsTopLeft } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -27,27 +27,34 @@ function SideNav() {
     },
     {
       id: 4,
-      name: "Voice Generation",
+      name: "Voice Generate",
       path: "/dashboard/voice",
       icon: <AudioLines />,
     },
+    //     {
+    //   id: 5,
+    //   name: "Edit Subtitles",
+    //   path: "/dashboard/Indevelop",
+    //   icon: <Captions />,
+    // },
+    // {
+    //   id: 5,
+    //   name: "Hardsub Remove",
+    //   path: "/dashboard/Indevelop",
+    //   icon: <ArrowRightFromLine />,
+    // },
     // {
     //   id: 5,
     //   name: "Video Translate",
-    //   path: "/dashboard/create-video",
+    //   path: "/dashboard/Indevelop",
     //   icon: <Languages />,
-    // },
+    // }
+    // ,
     // {
-    //   id: 6,
-    //   name: "Manga's Review Translate",
-    //   path: "/dashboard/create-video",
-    //   icon: <Languages />,
-    // },
-    // {
-    //   id: 7,
-    //   name: "Remove Video Logo",
-    //   path: "/dashboard/create-video",
-    //   icon: <Delete />,
+    //   id: 5,
+    //   name: "Explore",
+    //   path: "/dashboard/Indevelop",
+    //   icon: <Search />,
     // },
     {
       id: 5,

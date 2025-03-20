@@ -70,40 +70,7 @@ module.exports = {
 			'7xl': '3.78rem',    // 4.5rem * 0.84
 			'8xl': '5.04rem',    // 6rem * 0.84
 			'9xl': '6.72rem',    // 8rem * 0.84
-		  },
-		  spacing: {
-			'0.5': '0.10417rem', // Default: 0.125rem / 1.2 (approximately)
-			'1': '0.20833rem',   // Default: 0.25rem / 1.2 (approximately)
-			'1.5': '0.3125rem', // Default: 0.375rem / 1.2
-			'2': '0.41667rem',   // Default: 0.5rem / 1.2 (approximately)
-			'3': '0.625rem', // Default: 0.75rem / 1.2
-			'4': '0.83333rem',   // Default: 1rem / 1.2 (approximately)
-			'5': '1.04167rem', // Default: 1.25rem / 1.2 (approximately)
-			'6': '1.25rem',   // Default: 1.5rem / 1.2
-			'7': '1.45833rem', // Default: 1.75rem / 1.2 (approximately)
-			'8': '1.66667rem',   // Default: 2rem / 1.2 (approximately)
-			'9': '1.875rem', // Default: 2.25rem / 1.2
-			'10': '2.08333rem',  // Default: 2.5rem / 1.2 (approximately)
-			'11': '2.29167rem', // Default: 2.75rem / 1.2 (approximately)
-			'12': '2.5rem',  // Default: 3rem / 1.2
-			'14': '2.91667rem',  // Default: 3.5rem / 1.2 (approximately)
-			'16': '3.33333rem',  // Default: 4rem / 1.2 (approximately)
-			'20': '4.16667rem',  // Default: 5rem / 1.2 (approximately)
-			'24': '5rem', // Default: 6rem / 1.2
-			'28': '5.83333rem',  // Default: 7rem / 1.2 (approximately)
-        '32': '6.66667rem',  // Default: 8rem / 1.2 (approximately)
-        '36': '7.5rem',   // Default: 9rem / 1.2
-        '40': '8.33333rem',   // Default: 10rem / 1.2 (approximately)
-        '44': '9.16667rem', // Default: 11rem / 1.2 (approximately)
-        '48': '10rem', // Default: 12rem / 1.2
-        '52': '10.83333rem',   // Default: 13rem / 1.2 (approximately)
-        '56': '11.66667rem',  // Default: 14rem / 1.2 (approximately)
-        '60': '12.5rem',   // Default: 15rem / 1.2
-        '64': '13.33333rem',  // Default: 16rem / 1.2 (approximately)
-        '72': '15rem', // Default: 18rem / 1.2
-        '80': '16.66667rem',  // Default: 20rem / 1.2 (approximately)
-        '96': '20rem', // Default: 24rem / 1.2
-      },
+		  }
   	}
   },
   plugins: [require("tailwindcss-animate")],

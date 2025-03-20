@@ -210,7 +210,8 @@ function PlayerDialog({ playVideo, videoId }) {
                     )}
                     <div style={{ width: '300px', height: 'auto' }}> {/* Half of 720x1280 */}
                       <div>
-                        <Player
+                        <Player doubleClickToFullscreen={true}
+                          allowFullscreen={true}
                           className="w-full h-full mr-20 mx-auto rounded-md"
                           ref={videoRef}
                           numberOfSharedAudioTags={videoData.captions.length}
