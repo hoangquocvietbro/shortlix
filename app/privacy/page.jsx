@@ -76,7 +76,7 @@ const PrivacyPage = () => {
 
           <li>
             <strong>Contact Us</strong>
-            <p>If you have any questions about this Privacy Policy, please contact us at: shortlix.contact@gmail.com.</p>
+            <p>If you have any questions about this Privacy Policy, please contact us at: shortlixcontact@gmail.com.</p>
           </li>
         </ol>
       </div>
