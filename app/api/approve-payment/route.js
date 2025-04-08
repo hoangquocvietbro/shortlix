@@ -4,7 +4,7 @@ import axios from 'axios';
 export async function POST(request) {
     const PI_SERVER_API_KEY = process.env.PI_SERVER_API_KEY;
     const { paymentId } = await request.json();
-
+    console.log(paymentId)
     if (!PI_SERVER_API_KEY) {
         console.error('PI_SERVER_API_KEY is not set');
         return new NextResponse(JSON.stringify({ success: false, error: 'PI_SERVER_API_KEY is not set' }), {

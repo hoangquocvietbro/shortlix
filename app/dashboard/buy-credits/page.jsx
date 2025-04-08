@@ -146,8 +146,8 @@ function BuyCredits() {
 
     try {
       const payment = await window.Pi.createPayment({
-        amount: 5,
-        memo: "Test Payment",
+        amount: amount,
+        memo: `Test Payment ${amount}pi to buy ${credits}credits`,
         metadata: { item: "Test Item" }
       }, {
         onReadyForServerApproval: paymentId => {
@@ -211,12 +211,10 @@ function BuyCredits() {
   };
 
   //Pi Complete Payment
-  const completePaymentOnServer = async (paymentId) => {
+  const completePaymentOnServer = async (paymentId,txid) => {
     // Implement function to call /api/complete-payment, send txid
 
     try {
-      // Simulate getting txid.  In real app, it should be filled by user
-      const txid = "example_txid";
       const response = await fetch('/api/complete-payment', {
         method: 'POST',
         headers: {
