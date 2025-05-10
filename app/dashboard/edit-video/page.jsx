@@ -246,11 +246,18 @@ function EditVideoPage() {
                 <div key={index} className="mb-8 border rounded p-4">
                     <div className="mb-4">
                         <img src={imageList[index]} alt={`Image ${index}`} className="w-64 h-64 object-cover rounded" />
-                        <input
-                            type="file"
-                            onChange={(e) => handleImageUpload(index, e)}
-                            className="mt-2"
-                        />
+                        <div className="relative">
+                            <input
+                                type="file"
+                                onChange={(e) => handleImageUpload(index, e)}
+                                className="mt-2 w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-neutral-700 file:text-white
+                                hover:file:bg-neutral-600
+                                cursor-pointer"
+                            />
+                        </div>
                     </div>
                     <div className="mb-4">
                         <label className="block text-white-900 text-sm font-bold mb-2" htmlFor={`imagePrompt-${index}`}>

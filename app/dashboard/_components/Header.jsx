@@ -75,7 +75,7 @@ function Header() {
       <Link href={"/dashboard"}>
         <div className="flex gap-3 items-center">
           <Image src="/logo.svg" alt="logo" width={30} height={30} />
-          <h2 className="font-bold text-md">Shortlix AI </h2>
+          <h2 className="font-bold text-sm">Shortlix AI </h2>
         </div>
       </Link>
 
@@ -86,7 +86,7 @@ function Header() {
           onClick={() => router.replace("/dashboard/upgrade")}
         >
           <Image src="/coin.png" alt="coin" width={30} height={30} />
-          <h2 className="font-bold text-xl drop-shadow-lg">
+          <h2 className="font-bold text-base drop-shadow-lg">
             {user?.credits}
           </h2>
         </div>
@@ -119,7 +119,7 @@ function Header() {
             {/* Sidebar Content */}
             <nav>
               {menuOption.map((item) => (
-                <Link href={item.path} key={item.id}>
+                <Link href={item.path} key={item.id} onClick={toggleSidebar}>
                   <div
                     className={`flex items-center mt-[15%] gap-1 mb-4 cursor-pointer text-lg  ${
                       pathName === item.path

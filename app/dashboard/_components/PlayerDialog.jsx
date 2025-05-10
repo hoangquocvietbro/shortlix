@@ -180,7 +180,7 @@ function PlayerDialog({ playVideo, videoId }) {
             {loading ? (
               <span className="text-center">Loading video data...</span>
             ) : (
-              <DialogTitle className="flex text-center text-xl font-bold my-5 ml-14">
+              <DialogTitle className="flex text-center text-base font-bold my-5 ml-14">
                 {videoData ? "Your video is ready!" : "Your video is not found!"}
               </DialogTitle>
             )}

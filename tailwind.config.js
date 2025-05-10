@@ -57,19 +57,19 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
 		  fontSize: {
-			'xs': '0.21rem',     // 0.75rem * 0.84 / 3
-			'sm': '0.245rem',    // 0.875rem * 0.84 / 3
-			'base': '0.28rem',   // 1rem * 0.84 / 3
-			'lg': '0.315rem',    // 1.125rem * 0.84 / 3
-			'xl': '0.35rem',     // 1.25rem * 0.84 / 3
-			'2xl': '0.42rem',    // 1.5rem * 0.84 / 3
-			'3xl': '0.525rem',   // 1.875rem * 0.84 / 3
-			'4xl': '0.63rem',    // 2.25rem * 0.84 / 3
-			'5xl': '0.84rem',    // 3rem * 0.84 / 3
-			'6xl': '1.05rem',    // 3.75rem * 0.84 / 3
-			'7xl': '1.26rem',    // 4.5rem * 0.84 / 3
-			'8xl': '1.68rem',    // 6rem * 0.84 / 3
-			'9xl': '2.24rem',    // 8rem * 0.84 / 3
+			'xs': '0.21rem',     // Cho text nhỏ nhất (labels, captions)
+			'sm': '0.245rem',    // Cho text phụ (descriptions)
+			'base': '0.28rem',   // Cho text thường
+			'lg': '0.315rem',    // Cho heading phụ
+			'xl': '0.35rem',     // Cho heading chính
+			'2xl': '0.42rem',    // Cho heading lớn
+			'3xl': '0.525rem',   // Cho heading rất lớn
+			'4xl': '0.63rem',    // Cho display text
+			'5xl': '0.84rem',    // Cho display text lớn
+			'6xl': '1.05rem',    // Cho display text rất lớn
+			'7xl': '1.26rem',    // Cho display text cực lớn
+			'8xl': '1.68rem',    // Cho display text siêu lớn
+			'9xl': '2.24rem',    // Cho display text khổng lồ
 		  }
   	}
   },

@@ -6,8 +6,8 @@ import React from "react";
 function EmptyState({ title, message, buttonTitle, isVideo = true }) {
   return (
     <div className="flex flex-col items-center justify-center h-96 mt-32">
-      <h3 className="font-semibold text-xl">You don't have any {title} yet.</h3>
-      <p className=" flex text-center text-muted-foreground text-sm mt-1">
+      <h3 className="font-semibold text-base">You don't have any {title} yet.</h3>
+      <p className=" flex text-center text-muted-foreground text-xs mt-1">
         Create a new {message} by clicking the button above.
       </p>
       {isVideo ? (

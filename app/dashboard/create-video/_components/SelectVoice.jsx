@@ -146,15 +146,15 @@ function SelectVoice({ onUserSelect }) {
   return (
     <div>
       {/* Text Option Selection */}
-      <h2 className="font-bold text-xl text-primary my-5">
+      <h2 className="font-bold text-base text-primary my-5">
         Voice generation feature
       </h2>
-      <p className="text-gray-400 mt-5">
+      <p className="text-gray-400 mt-2 text-xs">
         the testing voice generation feature takes 1 credit for each generation.
       </p>
       {/* Language Selection */}
-      <h2 className="font-bold text-lg text-primary">Language</h2>
-      <p className="text-gray-400 mt-2">Select language for your video</p>
+      <h2 className="font-bold text-base text-primary">Language</h2>
+      <p className="text-gray-400 mt-2 text-xs">Select language for your video</p>
       <div className="flex flex-wrap gap-2 my-5">
         {languages.map((language, idx) => (
           <Button
@@ -174,7 +174,7 @@ function SelectVoice({ onUserSelect }) {
           </Button>
         ))}
       </div>
-      <h2 className="font-bold text-lg text-primary my-5">
+      <h2 className="font-bold text-base text-primary my-5">
         Select Text Option
       </h2>
       <div className="my-3">
@@ -197,7 +197,7 @@ function SelectVoice({ onUserSelect }) {
       {selectedOption === "Custom Text" && (
         <div className="relative my-3">
           <Textarea
-            className="dark:border-gray-400 pr-[50px] text-sm md:text-base"
+            className="dark:border-gray-400 pr-[50px] text-xs md:text-sm"
             value={customText}
             onChange={(e) => {
               if (e.target.value.length <= maxCharacters) {
@@ -217,8 +217,8 @@ function SelectVoice({ onUserSelect }) {
         </div>
       )}
       {/* Voice Gender Selection */}
-      <h2 className="font-bold text-lg text-primary">Voice Gender</h2>
-      <p className="text-gray-400 mt-2">Select Voice Gender for your video</p>
+      <h2 className="font-bold text-base text-primary">Voice Gender</h2>
+      <p className="text-gray-400 mt-2 text-xs">Select Voice Gender for your video</p>
       <div className="my-3">
         <Select
           defaultValue="Male"
@@ -248,8 +248,8 @@ function SelectVoice({ onUserSelect }) {
       </div>
       {/* Speech Rate Adjustment (%) */}
       <div className="my-5">
-        <h2 className="font-bold text-lg text-primary">Speech Rate Adjustment (%)</h2>
-        <p className="text-gray-400 mt-2">Adjust the speed of the speech ( -50% to 50%)</p>
+        <h2 className="font-bold text-base text-primary">Speech Rate Adjustment (%)</h2>
+        <p className="text-gray-400 mt-2 text-xs">Adjust the speed of the speech ( -50% to 50%)</p>
         <div className="flex items-center gap-2 mt-2">
           <span className="text-gray-400">-50</span>
           <input
@@ -279,8 +279,8 @@ function SelectVoice({ onUserSelect }) {
       </div>
       {/* Pitch Adjustment (Hz)*/}
        <div className="my-5">
-        <h2 className="font-bold text-lg text-primary">Pitch Adjustment (Hz)</h2>
-        <p className="text-gray-400 mt-2">Adjust the pitch of the speech ( -20 Hz to 20 Hz )</p>
+        <h2 className="font-bold text-base text-primary">Pitch Adjustment (Hz)</h2>
+        <p className="text-gray-400 mt-2 text-xs">Adjust the pitch of the speech ( -20 Hz to 20 Hz )</p>
         <div className="flex items-center gap-2 mt-2">
           <span className="text-gray-400">-20</span>
           <input

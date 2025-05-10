@@ -303,24 +303,24 @@ function BuyCredits() {
   return (
     <div className="p-4">
             <Script src="https://sdk.minepi.com/pi-sdk.js" onReady={PiInit}/>
-      <h2 className="font-bold text-3xl text-primary">Buy Credits</h2>
-      <p className="text-gray-400 mt-3 font-semibold">
+      <h2 className="font-bold text-xl text-primary">Buy Credits</h2>
+      <p className="text-gray-400 mt-3 font-semibold text-xs">
         Current Credits:{" "}
         <span className="text-white">{user?.credits || 0}</span>
       </p>
-      <p className="text-gray-400 mt-3 font-semibold">
+      <p className="text-gray-400 mt-3 font-semibold text-xs">
         You can generate:{" "}
         <span className="text-white">
           {Math.floor((user?.credits || 0) / 10)}
         </span>{" "}
         video(s) with your current credits.
       </p>
-      <p className="text-gray-400 mt-3 font-semibold">
+      <p className="text-gray-400 mt-3 font-semibold text-xs">
         You can generate:{" "}
         <span className="text-white">{user?.credits || 0}</span> voice(s)
         with your current credits.
       </p>
-      <p className="text-gray-400 mt-3 font-semibold">
+      <p className="text-gray-400 mt-3 font-semibold text-xs">
       Subscription Status:{" "}
         <span
           className={`animate-pulse ${
@@ -349,7 +349,7 @@ function BuyCredits() {
               }`}
             >
               <CardHeader>
-                <CardTitle className="mt-5 mb-10 text-center font-bold text-2xl ">
+                <CardTitle className="mt-5 mb-10 text-center font-bold text-xl">
                   Add {option.credits} Credits
                 </CardTitle>
                 <CardDescription className="mt-10 text-center">

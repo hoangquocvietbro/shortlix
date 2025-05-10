@@ -40,7 +40,7 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
     ];
     return (
         <div>
-                <label htmlFor="showCaptions" className="mr-2 text-white">Show Captions:</label>
+                <label htmlFor="showCaptions" className="mr-2 text-white text-xs">Show Captions:</label>
                 <input width="200"
                     type="checkbox"
                     id="showCaptions"
