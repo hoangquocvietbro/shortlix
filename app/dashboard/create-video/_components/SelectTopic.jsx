@@ -34,7 +34,7 @@ function SelectTopic({ onUserSelect }) {
   return (
     <div>
       <h2 className="font-bold text-xl text-primary ">Content</h2>
-      <p className="text-gray-400 mt-2">what is the topic of your video</p>
+      <p className="text-gray-400 text-sm mt-2">what is the topic of your video</p>
       <div className="my-3">
         <Select
           defaultValue="Random AI Prompt"

@@ -258,10 +258,10 @@ function SelectVoice({ onUserSelect }) {
             max="50"
             value={speechRate}
             onChange={(e) => {
-                setSpeechRate(Number(e.target.value));
-                onUserSelect("speechRate", Number(e.target.value));
+              setSpeechRate(Number(e.target.value));
+              onUserSelect("speechRate", Number(e.target.value));
             }}
-            className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer text-white"
           />
            <span className="text-gray-400">50</span>
           <input

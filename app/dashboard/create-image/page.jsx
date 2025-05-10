@@ -39,13 +39,13 @@ function CreateImage() {
           placeholder="Enter prompt"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          className="border p-2 w-full"
+          className="border p-2 w-full text-sm"
         />
         <div className="flex mt-3">
           <select
             value={width}
             onChange={(e) => setWidth(e.target.value)}
-            className="border p-2 mr-2"
+            className="border p-2 mr-2 text-sm"
           >
             <option value="128">128</option>
             <option value="256">256</option>
@@ -61,7 +61,7 @@ function CreateImage() {
           <select
             value={height}
             onChange={(e) => setHeight(e.target.value)}
-            className="border p-2 mr-2"
+            className="border p-2 mr-2 text-sm"
           >
             <option value="128">128</option>
             <option value="256">256</option>
@@ -76,7 +76,7 @@ function CreateImage() {
           <select style={{width: 100}}
             value={model}
             onChange={(e) => setModel(e.target.value)}
-            className="border p-2"
+            className="border p-2 text-sm"
           >
             <option value="flux">Flux</option>
             <option value="flux-pro">Flux-Pro</option>

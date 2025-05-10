@@ -128,7 +128,7 @@ function VoiceGeneration() {
       <div className="flex justify-between items-center my-4">
         {/* Items per page select */}
         <div className="flex items-center">
-          <span className="mr-2 text-gray-300">Items per page:</span>
+          <span className="mr-2 text-gray-300 text-sm">Items per page:</span>
           <Select
             onValueChange={handleItemsPerPageChange}
             defaultValue={String(DEFAULT_ITEMS_PER_PAGE)}

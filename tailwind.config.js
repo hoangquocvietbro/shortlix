@@ -73,5 +73,16 @@ module.exports = {
 		  }
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function({ addBase, theme }) {
+      addBase({
+        '@media (min-width: 1024px)': {
+          'html': {
+            fontSize: '300%', // Tăng font size lên 3 lần cho desktop
+          }
+        }
+      })
+    }
+  ],
 };

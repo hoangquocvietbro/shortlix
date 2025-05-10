@@ -57,7 +57,7 @@ function SelectStyle({ onUserSelect }) {
   return (
     <div className="mt-7">
       <h2 className="font-bold text-xl text-primary ">Style</h2>
-      <p className="text-gray-400 mt-2">Select your video style</p>
+      <p className="text-gray-400 text-sm mt-2">Select your video style</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-5">
         {styleOptions.map((option, idx) => (
           <div

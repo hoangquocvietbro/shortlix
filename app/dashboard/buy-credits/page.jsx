@@ -386,7 +386,7 @@ function BuyCredits() {
                         e.stopPropagation();  // Prevent event bubbling
                         handlePiPayment(option);
                     }}
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded"
                   >
                     Pay with {`${option.amount}𝜋`}
                   </button>
