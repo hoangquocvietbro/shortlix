@@ -208,17 +208,22 @@ function PlayerDialog({ playVideo, videoId }) {
                     ) : (
                       <div></div>
                     )}
-                    <div style={{ width: '300px', height: 'auto' }}> {/* Half of 720x1280 */}
+                    <div style={{ 
+                      width: '100%', 
+                      maxWidth: '300px', 
+                      height: 'auto',
+                      margin: '0 auto'
+                    }}>
                       <div>
                         <Player doubleClickToFullscreen={true}
                           allowFullscreen={true}
-                          className="w-full h-full mr-20 mx-auto rounded-md"
+                          className="w-full h-full mx-auto rounded-md"
                           ref={videoRef}
                           numberOfSharedAudioTags={videoData.captions.length}
                           component={RemotionVideo}
                           durationInFrames={Math.floor(videoData.captions[videoData.captions.length - 1].end / 1000 * 30)}
-                          compositionWidth={300}
-                          compositionHeight={Number((videoData.height * 300 / videoData.width).toFixed(0))}
+                          compositionWidth={Math.min(300, window.innerWidth - 32)}
+                          compositionHeight={Number((videoData.height * Math.min(300, window.innerWidth - 32) / videoData.width).toFixed(0))}
                           fps={30}
                           controls={true}
                           inputProps={{

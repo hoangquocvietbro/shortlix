@@ -46,12 +46,12 @@ function DashboradLayout({ children }) {
       <UserContext.Provider value={{ user, setUser }}>
         <VideoDataContext.Provider value={{ videoData, setVideoData }}>
           <div>
-            <div className=" hidden md:block h-screen fixed mt-[65px] w-64">
+            <div className="hidden md:block h-screen fixed mt-[65px] w-64">
               <SideNav />
             </div>
             <div>
               <Header />
-              <div className="md:ml-64 p-10">{children}</div>
+              <div className="md:ml-64 p-4 md:p-10">{children}</div>
             </div>
           </div>
         </VideoDataContext.Provider>

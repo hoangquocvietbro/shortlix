@@ -40,18 +40,14 @@ export async function POST(req) {
 
     await execPromise(command);
 
-    const videoBuffer = await readFile(videoFilePath);
-    await uploadBytes(storageRef, videoBuffer, { contentType: "video/mp4" });
-    const downloadFirebaseUrl = await getDownloadURL(storageRef);
-
     await db
     .update(VideoData)
     .set({
-      downloadUrl: downloadFirebaseUrl, // Đảm bảo `downloadUrl` có giá trị hợp lệ
+      downloadUrl: videoFilePath, // Đảm bảo `downloadUrl` có giá trị hợp lệ
     })
     .where(eq(VideoData.id, Number(videoId))); // Loại bỏ `?.` nếu `VideoData` luôn tồn tại
 
-    return NextResponse.json({ 'result': 'success', 'videoFilePath': downloadFirebaseUrl });
+    return NextResponse.json({ 'result': 'success', 'videoFilePath': videoFilePath });
   } catch (e) {
     return NextResponse.json({ 'Error': e.message });
   }

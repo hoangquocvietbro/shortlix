@@ -31,29 +31,25 @@ function BuyCredits() {
   const [selectedCreditsOption, setSelectedCreditsOption] = useState(null);
   const [piInitialized, setPiInitialized] = useState(false);
   useEffect(() => {
-    // Only initialize Pi SDK if the user is available
-    if (user) {
+    if (user && !piInitialized) {  // Only initialize if not already initialized
       PiInit();
     }
-  }, [user]);
+  }, [user, piInitialized]);
 
   const getUserDetail = async () => {
-    setLoading(false);
     try {
       const result = await db
         .select()
         .from(Users)
         .where(eq(Users.pi_username, user?.pi_username));
 
-      // Assuming result returns an array, set the user details
-      console.log(result[0])
-      setUser(result[0]);
-      setIsSubscribed(result[0]?.subscription); // Update isSubscribed state
+      if (result && result[0]) {
+        setUser(result[0]);
+        setIsSubscribed(result[0].subscription);
+      }
     } catch (error) {
       console.error("Error fetching user details:", error);
-      toast.error("Failed to load user data");
-    } finally {
-      setLoading(false);
+      toast.error("Failed to refresh user data");
     }
   };
 
@@ -140,47 +136,43 @@ function BuyCredits() {
       return;
     }
 
-    const amount = creditsOption.amount; // Price in Pi
-    const credits = creditsOption.credits; // Credits to grant
-    const pi_username = user?.pi_username; // Recipient username
+    const amount = creditsOption.amount;
+    const credits = creditsOption.credits;
 
     try {
+      setLoading(true); // Add loading state
       const payment = await window.Pi.createPayment({
         amount: amount,
-        memo: `Test Payment ${amount}pi to buy ${credits}credits`,
-        metadata: { item: "Test Item" }
+        memo: `Purchase ${credits} credits`,
+        metadata: { 
+          credits,
+          pi_username: user?.pi_username,
+          type: 'credits_purchase'
+        }
       }, {
-        onReadyForServerApproval: paymentId => {
+        onReadyForServerApproval: async (paymentId) => {
           setPaymentId(paymentId);
-          approvePaymentOnServer(paymentId);
+          await approvePaymentOnServer(paymentId);
         },
-        onReadyForServerCompletion: (paymentId, txid) => {
+        onReadyForServerCompletion: async (paymentId, txid) => {
           setPaymentId(paymentId);
           setTxid(txid);
-          completePaymentOnServer(paymentId, txid);
+          await completePaymentOnServer(paymentId, txid, credits);
         },
-        onCancel: paymentId => {
-          setPaymentId(null);
-          setTxid(null);
+        onCancel: () => {
+          setLoading(false);
+          toast.error("Payment was cancelled");
         },
-        onError: (error, payment) => {
-          console.error("Payment error:", error, payment);
-          setPaymentId(null);
-          setTxid(null);
+        onError: (error) => {
+          setLoading(false);
+          console.error("Payment error:", error);
+          toast.error("Payment failed");
         }
       });
-
-      console.log("Payment created:", payment);
-
-      // Optional:  Implement a function to handle incomplete payments found on page load
-      //onIncompletePaymentFound(payment);
-
-      // Call approve payment to backend
-      await approvePaymentOnServer(payment.identifier);
-
     } catch (error) {
       console.error("Error starting Pi Payment:", error);
-      toast.error("Failed to initiate Pi Network payment.");
+      toast.error("Failed to initiate payment");
+      setLoading(false);
     }
   };
 
@@ -211,35 +203,35 @@ function BuyCredits() {
   };
 
   //Pi Complete Payment
-  const completePaymentOnServer = async (paymentId,txid) => {
-    // Implement function to call /api/complete-payment, send txid
-
+  const completePaymentOnServer = async (paymentId, txid, credits) => {
+    setLoading(true);
     try {
       const response = await fetch('/api/complete-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ paymentId: paymentId, txid: txid }),
+        body: JSON.stringify({ 
+          paymentId,
+          txid,
+          credits,
+          pi_username: user?.pi_username
+        }),
       });
 
       const data = await response.json();
 
-      if (        data.success) {
-        console.log('Payment completed on server:', data);
-        // Payment completed successfully
-        toast.success("Payment completed successfully!");
-         // Optionally, refresh user credits
-        getUserDetail();
+      if (data.success && data.data) {
+        // Update local state with the data returned from the server
+        setUser(data.data);
+        setIsSubscribed(data.data.subscription);
+        toast.success(`Payment completed! ${credits} credits added successfully!`);
       } else {
-        console.error('Error completing payment on server:', data.error);
-        // Handle error case
-        toast.error(`Payment completion failed: ${data.error}`);
+        throw new Error(data.error || 'Payment completion failed');
       }
     } catch (error) {
-      console.error('Error communicating with server:', error);
-      // Handle network or other errors
-      toast.error("Failed to communicate with the server.");
+      console.error('Error in payment completion:', error);
+      toast.error(error.message || "Failed to complete payment");
     } finally {
       setLoading(false);
     }
@@ -277,25 +269,22 @@ function BuyCredits() {
   };
 
   const PiInit = () => {
-    switch (process.env.NEXT_PUBLIC_MODE) {
-      case 'sandbox':
-        window.Pi.init({ version: '2.0', sandbox: true })
-        //console.log(window.Pi);
-
-        setPiInitialized(true);  // Set the state to indicate SDK is initialized
-        authenticateUser();
-        // Now that Pi is initialized, you can attempt authentication.
-        break;
-      case 'product':
-        window.Pi.init({ version: '2.0', sandbox: false })
-        //console.log(window.Pi);
-        setPiInitialized(true);  // Set the state to indicate SDK is initialized
-        break; // Corrected: Add break to prevent fall-through
-      default:
-        //console.log("Pi environment mode not specified or invalid.");
+    if (window.Pi && !piInitialized) {  // Check if not already initialized
+      switch (process.env.NEXT_PUBLIC_MODE) {
+        case 'sandbox':
+          window.Pi.init({ version: '2.0', sandbox: true });
+          setPiInitialized(true);
+          authenticateUser();
+          break;
+        case 'product':
+          window.Pi.init({ version: '2.0', sandbox: false });
+          setPiInitialized(true);
+          break;
+        default:
+          console.error("Pi environment mode not specified or invalid.");
+      }
     }
-
-  }
+  };
 
   if (loading) return <p>Loading...</p>;
 
@@ -350,7 +339,10 @@ function BuyCredits() {
 
           return (
             <Card
-              onClick={() => handleOptionSelect(option)} // Pass the option directly
+              onClick={(e) => {
+                e.preventDefault();
+                handleOptionSelect(option);
+              }}
               key={option.id}
               className={`bg-neutral-900 hover:cursor-pointer hover:scale-105 transition-all duration-300 hover:border-primary ${
                 isSelectedOption === option.id ? "border-primary border-2" : ""
@@ -390,7 +382,10 @@ function BuyCredits() {
                   For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
                 </p>
                  <button
-                    onClick={() => handlePiPayment(option)}
+                    onClick={(e) => {
+                        e.stopPropagation();  // Prevent event bubbling
+                        handlePiPayment(option);
+                    }}
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                   >
                     Pay with {`${option.amount}𝜋`}

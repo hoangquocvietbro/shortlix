@@ -58,7 +58,7 @@ function SelectStyle({ onUserSelect }) {
     <div className="mt-7">
       <h2 className="font-bold text-xl text-primary ">Style</h2>
       <p className="text-gray-400 mt-2">Select your video style</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-5">
         {styleOptions.map((option, idx) => (
           <div
             key={idx}
@@ -71,14 +71,14 @@ function SelectStyle({ onUserSelect }) {
               alt={option.name}
               width={500}
               height={500}
-              className="h-56 object-cover rounded-lg w-full"
+              className="h-48 md:h-56 object-cover rounded-lg w-full"
               onClick={() => {
                 setSelectedOption(option.name),
                   onUserSelect("imageStyle", option.name);
               }}
             />
             <h2
-              className={` absolute p-1.5 bg-black/80 bottom-0 w-full text-center font-bold rounded-b-lg ${
+              className={`absolute p-1.5 bg-black/80 bottom-0 w-full text-center font-bold rounded-b-lg text-sm md:text-base ${
                 selectedOption === option.name ? "text-primary" : "text-white"
               }`}
             >

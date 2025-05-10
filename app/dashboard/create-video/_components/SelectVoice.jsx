@@ -197,30 +197,22 @@ function SelectVoice({ onUserSelect }) {
       {selectedOption === "Custom Text" && (
         <div className="relative my-3">
           <Textarea
-            className="dark:border-gray-400 pr-[50px]" // Adjust padding to accommodate character count
+            className="dark:border-gray-400 pr-[50px] text-sm md:text-base"
             value={customText}
             onChange={(e) => {
-              // Limit the number of characters to maxCharacters
               if (e.target.value.length <= maxCharacters) {
                 setCustomText(e.target.value);
               }
             }}
             placeholder="Enter custom text here..."
             rows={4}
-            maxLength={maxCharacters} // Set the maximum length for the textarea
+            maxLength={maxCharacters}
           />
-          {/* Character Count Inside Textarea */}
-          <span className="absolute bottom-2 right-2 text-gray-400 text-sm">
-            <span
-              className={`${
-                customText.length >= maxCharacters
-                  ? "text-primary"
-                  : "text-white"
-              }`}
-            >
+          <span className="absolute bottom-2 right-2 text-gray-400 text-xs md:text-sm">
+            <span className={customText.length >= maxCharacters ? "text-primary" : "text-white"}>
               {customText.length}
-            </span>{" "}
-            / <span className="text-primary">{maxCharacters}</span>
+            </span>
+            {" "}/ <span className="text-primary">{maxCharacters}</span>
           </span>
         </div>
       )}
