@@ -7,10 +7,13 @@ import { UserContext } from "app/_context/UserContext";
 import { db } from "configs/db";
 import { Users } from "configs/schema";
 import { eq } from "drizzle-orm";
+import { Loader2 } from "lucide-react";
 
 function DashboradLayout({ children }) {
   const [videoData, setVideoData] = useState([]);
   const { user,setUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (user) {
       getUserDetail();
@@ -53,6 +56,14 @@ function DashboradLayout({ children }) {
               <Header />
               <div className="md:ml-64 p-4 md:p-10">{children}</div>
             </div>
+            {isLoading && (
+              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                <div className="bg-neutral-900 p-4 rounded-lg flex items-center gap-2">
+                  <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  <span className="text-white">Processing...</span>
+                </div>
+              </div>
+            )}
           </div>
         </VideoDataContext.Provider>
       </UserContext.Provider>

@@ -79,7 +79,7 @@ module.exports = {
       addBase({
         '@media (min-width: 1024px)': {
           'html': {
-            fontSize: '300%', // Tăng font size lên 3 lần cho desktop
+            fontSize: '100%', // Tăng font size lên 3 lần cho desktop
           }
         }
       })

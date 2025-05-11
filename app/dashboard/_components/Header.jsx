@@ -121,7 +121,7 @@ function Header() {
               {menuOption.map((item) => (
                 <Link href={item.path} key={item.id} onClick={toggleSidebar}>
                   <div
-                    className={`flex items-center mt-[15%] gap-1 mb-4 cursor-pointer text-lg  ${
+                    className={`flex items-center mt-[15%] gap-1 mb-4 cursor-pointer text-sm  ${
                       pathName === item.path
                         ? "text-black bg-primary rounded-md p-2 font-bold"
                         : "text-gray-300"
