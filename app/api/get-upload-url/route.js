@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { drive } from '@/configs/GoogleDriveConfig';
+import { drive } from 'configs/GoogleDriveConfig';
 
 export async function POST(req) {
   try {
