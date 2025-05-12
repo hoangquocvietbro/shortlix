@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import {
+  Languages,
   Cookie,
   ReceiptText,
   FileVideo,
@@ -51,18 +52,24 @@ function Header() {
     },
     {
       id: 5,
+      name: "Video Translation",
+      path: "/dashboard/translate-video",
+      icon: <Languages />,
+    },
+    {
+      id: 6,
       name: "Buy Credits",
       path: "/dashboard/buy-credits",
       icon: <CircleDollarSign />,
     },
     {
-      id: 6,
+      id: 7,
       name: "Terms of Service",
       path: "/terms",
       icon: <ReceiptText />,
     },
     {
-      id: 7,
+      id: 8,
       name: "Privacy Policy",
       path: "/privacy",
       icon: <Cookie />,

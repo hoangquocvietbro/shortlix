@@ -1,8 +1,8 @@
 import { Client } from "@gradio/client";
 import { NextResponse } from 'next/server';
 
-const SONITRANSLATE_API_ID = "hoangquocviet/sonitr";
-
+const SONITRANSLATE_API_ID = "hoangquocviet/shortlixserver";
+const HF_TOKEN = process.env.HF_TOKEN;
 export async function POST(req) {
   try {
     const formData = await req.formData();
@@ -40,9 +40,10 @@ export async function POST(req) {
       textSegmentationScale: formData.get('textSegmentationScale'),
       workers: parseInt(formData.get('workers')),
     };
+    console.log(settings);
 
     // Initialize the Gradio client
-    const client = await Client.connect(SONITRANSLATE_API_ID);
+    const client = await Client.connect(SONITRANSLATE_API_ID, { hf_token: HF_TOKEN });
     await client.view_api();
     // Call the translation API with the video blob
     const result = await client.predict("/batch_multilingual_media_conversion_1",
