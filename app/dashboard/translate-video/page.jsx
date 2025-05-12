@@ -61,7 +61,7 @@ export default function TranslateVideo() {
       toast.success('Video uploaded successfully!');
       setSelectedVideoUrl(publicUrl);
     } catch (error) {
-      toast.error('Failed to upload video:', error);
+      toast.error(`Failed to upload video: ${error.message}`);
       console.error('Upload error:', error);
     } finally {
       setUploading(false);
