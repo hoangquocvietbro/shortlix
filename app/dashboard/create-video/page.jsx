@@ -19,6 +19,8 @@ import { eq } from "drizzle-orm";
 import SelectVoice from "./_components/SelectVoice";
 import { useVideoData } from "app/Provider";
 import { getAudioDurationInSeconds } from "@remotion/media-utils";
+import { Card, CardContent } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 function CreateNew() {
   const [formData, setFormData] = useState({
@@ -46,6 +48,7 @@ function CreateNew() {
   const [videoId, setVideoId] = useState(1);
   const { videoData, setVideoData } = useVideoData(); // Access videoData from cont
   const { user, setUser } = useContext(UserContext);
+  const router = useRouter();
 
 
   function flattenCaptions(captions) {
@@ -315,56 +318,84 @@ const updateUserCredits = async () => {
   setVideoData(null);
 };
 return (
-  <div>
-    <h2 className="font-bold text-3xl text-primary ">Create New</h2>
-    <div className="mt-10 shadow-md shadow-neutral-900 rounded-md p-10">
-      {/* Select Topic */}
-      <SelectTopic onUserSelect={onHandleInputChange} />
-        {/* Select Style */}
-        <SelectStyle onUserSelect={onHandleInputChange} />
-        {/* Duration */}
-        <SelectDuration onUserSelect={onHandleInputChange} />
-        {/* Select voice */}
-        <SelectVoice onUserSelect={onHandleInputChange} />
-        {/* Select Dimensions */}
-        <SelectDimensions onUserSelect={onHandleInputChange} />
-        {/* Create Button */}
-        <Button
-          onClick={onCreateClickHandler}
-          className="mt-10 w-full font-bold"
-        >
-          Create Short Video
-        </Button>
-      </div>
-      {/* Custom Loading Component */}
-
-      <CustomLoading
-        loading={
-          isGeneratingScript ||
-          isGeneratingAudio ||
-          isGeneratingCaptions ||
-          isGeneratingImages ||
-          isSavingVideoData
-        }
-        title={" Video"}
-        message={
-          isGeneratingScript
-            ? "Generating video script..."
-            : isGeneratingAudio
-            ? "Generating audio file..."
-            : isGeneratingCaptions
-            ? "Generating captions..."
-            : isGeneratingImages
-            ? "Generating images..."
-            : isSavingVideoData
-            ? " Saving video data..."
-            : ""
-        }
-      />
-      {/* Player Dialog */}
-      <PlayerDialog playVideo={playVideo} videoId={videoId} />
+  <div className="container mx-auto p-4">
+    <div className="flex items-center gap-4 mb-4">
+      <Button
+        variant="outline"
+        onClick={() => router.push("/dashboard")}
+      >
+        Back
+      </Button>
+      <h1 className="text-2xl font-bold">Create New Video</h1>
     </div>
-  );
+
+    <div className="grid grid-cols-1">
+      <Card className="bg-neutral-900 border-neutral-800">
+        <CardContent className="p-4">
+          {/* Your existing form content */}
+          <div className="space-y-4">
+            <SelectTopic onHandleInputChange={onHandleInputChange} />
+            <SelectStyle onHandleInputChange={onHandleInputChange} />
+            <SelectDuration onHandleInputChange={onHandleInputChange} />
+            <SelectDimensions onHandleInputChange={onHandleInputChange} />
+            <SelectVoice onHandleInputChange={onHandleInputChange} />
+          </div>
+
+          <div className="mt-6">
+            <Button
+              onClick={onCreateClickHandler}
+              disabled={isGeneratingScript || isGeneratingAudio || isGeneratingCaptions || isGeneratingImages}
+              className="w-full"
+            >
+              {isGeneratingScript || isGeneratingAudio || isGeneratingCaptions || isGeneratingImages ? (
+                <CustomLoading />
+              ) : (
+                "Create Video"
+              )}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+
+    {/* Results Section */}
+    {videoScript && (
+      <Card className="mt-6 bg-neutral-900 border-neutral-800">
+        <CardContent className="p-4">
+          <h2 className="text-xl font-semibold mb-4">Generation Results</h2>
+          {/* Your existing results content */}
+        </CardContent>
+      </Card>
+    )}
+
+    {/* Custom Loading Component */}
+    <CustomLoading
+      loading={
+        isGeneratingScript ||
+        isGeneratingAudio ||
+        isGeneratingCaptions ||
+        isGeneratingImages ||
+        isSavingVideoData
+      }
+      title={" Video"}
+      message={
+        isGeneratingScript
+          ? "Generating video script..."
+          : isGeneratingAudio
+          ? "Generating audio file..."
+          : isGeneratingCaptions
+          ? "Generating captions..."
+          : isGeneratingImages
+          ? "Generating images..."
+          : isSavingVideoData
+          ? " Saving video data..."
+          : ""
+      }
+    />
+    {/* Player Dialog */}
+    <PlayerDialog playVideo={playVideo} videoId={videoId} />
+  </div>
+);
 }
 
 export default CreateNew;

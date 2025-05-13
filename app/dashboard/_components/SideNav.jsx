@@ -27,7 +27,7 @@ function SideNav() {
     },
     {
       id: 4,
-      name: "Voice Generate",
+      name: "Generated Voice",
       path: "/dashboard/voice",
       icon: <AudioLines />,
     },

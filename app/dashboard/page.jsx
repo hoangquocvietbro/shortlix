@@ -71,33 +71,33 @@ function Dashboard() {
   };
   const totalPages = Math.ceil(totalVideos / videosPerPage);
   return (
-    <div>
-      <div className="flex items-center justify-between">
-        <h2 className="font-bold text-2xl text-primary">Dashboard</h2>
+    <div className="container mx-auto p-4">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-bold">Dashboard</h2>
         <Link href={"/dashboard/create-video"}>
-          <Button className="font-bold">+ Create New </Button>
+          <Button className="font-bold">+ Create New</Button>
         </Link>
       </div>
       {/* Empty State */}
       <div className="flex flex-col">
-         <div className="flex justify-end items-center">
-        <Select onValueChange={handlePageSizeChange} defaultValue={String(DEFAULT_VIDEOS_PER_PAGE)}>
+        <div className="flex justify-end items-center mb-4">
+          <Select onValueChange={handlePageSizeChange} defaultValue={String(DEFAULT_VIDEOS_PER_PAGE)}>
             <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Videos Per Page" />
+              <SelectValue placeholder="Videos Per Page" />
             </SelectTrigger>
             <SelectContent>
-                {PAGE_SIZE_OPTIONS.map(size => (
-                    <SelectItem key={size} value={String(size)}>
-                        {size}
-                    </SelectItem>
-                ))}
+              {PAGE_SIZE_OPTIONS.map(size => (
+                <SelectItem key={size} value={String(size)}>
+                  {size}
+                </SelectItem>
+              ))}
             </SelectContent>
-        </Select>
-      </div>
+          </Select>
+        </div>
         {loading ? (
-           <div className="flex justify-center items-center">
-           Loading...
-         </div>
+          <div className="flex justify-center items-center">
+            Loading...
+          </div>
         ) : videoList?.length === 0 ? (
           <div className="flex justify-center items-center">
             <EmptyState
@@ -105,32 +105,32 @@ function Dashboard() {
               message={"video"}
               buttonTitle={" new video"}
             />
-                      </div>
+          </div>
         ) : (
           // Video List
           <div className="flex items-center">
             <VideoList videoList={videoList} />
           </div>
         )}
-          {videoList?.length > 0 && (
-              <div className="mt-4 flex justify-center items-center gap-2">
-                   <Button
-                  onClick={() => handlePageChange(page - 1)}
-                  disabled={page === 1}
-                >
-                  Previous
-                </Button>
-                <span>
-                {page} of {totalPages}
-                </span>
-                <Button
-                  onClick={() => handlePageChange(page + 1)}
-                  disabled={page === totalPages}
-                >
-                  Next
-                </Button>
-              </div>
-            )}
+        {videoList?.length > 0 && (
+          <div className="mt-4 flex justify-center items-center gap-2">
+            <Button
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}
+            >
+              Previous
+            </Button>
+            <span>
+              {page} of {totalPages}
+            </span>
+            <Button
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page === totalPages}
+            >
+              Next
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

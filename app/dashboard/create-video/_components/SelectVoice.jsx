@@ -21,7 +21,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "configs/FierbaseConfig";
 import { v4 as uuidv4 } from "uuid";
 
-function SelectVoice({ onUserSelect }) {
+function SelectVoice({ onHandleInputChange }) {
   const defaultText = "Hello! This is a test of the voice generation feature."; // Default text
   const maxCharacters = 100; // Maximum character limit
   const [selectedOption, setSelectedOption] = useState("Default Text"); // State for selecting text option

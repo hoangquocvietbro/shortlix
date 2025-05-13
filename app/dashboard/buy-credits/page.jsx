@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import CustomBuy from "./_components/CustomBuy";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 function BuyCredits() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,6 +32,8 @@ function BuyCredits() {
   const [isSelectedOption, setIsSelectedOption] = useState(false);
   const [selectedCreditsOption, setSelectedCreditsOption] = useState(null);
   const [piInitialized, setPiInitialized] = useState(false);
+  const router = useRouter();
+
   useEffect(() => {
     if (user && !piInitialized) {  // Only initialize if not already initialized
       PiInit();
@@ -301,8 +305,17 @@ function BuyCredits() {
   ];
 
   return (
-    <div className="p-4">
-            <Script src="https://sdk.minepi.com/pi-sdk.js" onReady={PiInit}/>
+    <div className="container mx-auto p-4">
+      <div className="flex items-center gap-4 mb-4">
+        <Button
+          variant="outline"
+          onClick={() => router.push("/dashboard")}
+        >
+          Back
+        </Button>
+        <h1 className="text-2xl font-bold">Buy Credits</h1>
+      </div>
+      <Script src="https://sdk.minepi.com/pi-sdk.js" onReady={PiInit}/>
       <h2 className="font-bold text-xl text-primary">Buy Credits</h2>
       <p className="text-gray-400 mt-3 font-semibold text-xs">
         Current Credits:{" "}
@@ -378,18 +391,18 @@ function BuyCredits() {
               </CardHeader>
               <CardContent className="my-5 "></CardContent>
               <CardFooter>
-                <p className="text-xs text-gray-500">
-                  For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
-                </p>
-                 <button
+                 <button 
                     onClick={(e) => {
                         e.stopPropagation();  // Prevent event bubbling
                         handlePiPayment(option);
                     }}
-                    className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded"
+                    className="text-center bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded"
                   >
                     Pay with {`${option.amount}𝜋`}
-                  </button>
+                  </button> 
+                  <p className="text-xs text-gray-500">
+                  For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
+                </p>
               </CardFooter>
             </Card>
           );

@@ -87,7 +87,15 @@ export default function TranslateVideo() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Translate Video</h1>
+      <div className="flex items-center gap-4 mb-4">
+        <Button
+          variant="outline"
+          onClick={() => router.push("/dashboard")}
+        >
+          Back
+        </Button>
+        <h1 className="text-2xl font-bold">Translate Video</h1>
+      </div>
       
       {!selectedVideoUrl ? (
         <div className="space-y-4">

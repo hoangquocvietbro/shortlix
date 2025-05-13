@@ -41,13 +41,14 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
     return (
         <div>
                 <label htmlFor="showCaptions" className="mr-2 text-white text-xs">Show Captions:</label>
+                <br></br>
                 <input width="200"
                     type="checkbox"
                     id="showCaptions"
                     checked={videoData.showCaptions || false} // Default to false if not provided
                     onChange={(e) => onVideoDataChange({ ...videoData, showCaptions: e.target.checked })}
                     className="bg-neutral-700 rounded"
-                />
+                /><br></br>
             {/* ... (Other settings similarly structured) ... */}
             <label htmlFor="captionPosition" className="mr-2 text-white">Caption Position:</label>
             <select style={{width: 136}}

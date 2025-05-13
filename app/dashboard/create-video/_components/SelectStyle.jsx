@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-function SelectStyle({ onUserSelect }) {
+function SelectStyle({ onHandleInputChange }) {
   const [selectedOption, setSelectedOption] = useState("Realistic Photography");
   const styleOptions = [
     {
@@ -74,7 +74,7 @@ function SelectStyle({ onUserSelect }) {
               className="h-48 md:h-56 object-cover rounded-lg w-full"
               onClick={() => {
                 setSelectedOption(option.name),
-                  onUserSelect("imageStyle", option.name);
+                  onHandleInputChange("imageStyle", option.name);
               }}
             />
             <h2

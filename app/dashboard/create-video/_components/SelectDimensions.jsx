@@ -1,12 +1,12 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 
-function SelectDimensions({ onUserSelect }) {
+function SelectDimensions({ onHandleInputChange }) {
   const [selectedDimensions, setSelectedDimensions] = useState({ width: 720, height: 1280 });
 
   const handleDimensionChange = (width, height) => {
     setSelectedDimensions({ width, height });
-    onUserSelect("dimensions", { width, height });
+    onHandleInputChange("dimensions", { width, height });
   };
 
   return (

@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
 
 
 const DEFAULT_ITEMS_PER_PAGE = 6;
@@ -32,6 +33,7 @@ function VoiceGeneration() {
     const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);
     const [voiceToDelete, setVoiceToDelete] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchVoiceGenerations = async () => {
@@ -116,16 +118,18 @@ function VoiceGeneration() {
   };
 
   return (
-    <div>
-      <div className="flex items        -center justify-between">
-        <h2 className="font-bold text-3xl text-primary">
-          Your Voice Generations
-        </h2>
-        <Link href={"/dashboard/create-video"}>
-          <Button className="font-bold">+ Create New </Button>
-        </Link>
+    <div className="container mx-auto p-4">
+      <div className="flex items-center gap-4 mb-4">
+        <Button
+          variant="outline"
+          onClick={() => router.push("/dashboard")}
+        >
+          Back
+        </Button>
+        <h2 className="text-2xl font-bold">Your Voice Generations</h2>
       </div>
-      <div className="flex justify-between items-center my-4">
+
+      <div className="flex justify-between items-center mb-4">
         {/* Items per page select */}
         <div className="flex items-center">
           <span className="mr-2 text-gray-300 text-sm">Items per page:</span>
@@ -146,6 +150,7 @@ function VoiceGeneration() {
           </Select>
         </div>
       </div>
+
       {/* Empty State */}
       <div>
         {voiceGenerations.length === 0 ? (
@@ -164,14 +169,14 @@ function VoiceGeneration() {
               {displayedVoices.map((voice, idx) => (
                 <div
                   key={idx}
-                  className="bg-neutral-900 shadow-md rounded-lg p-4 mt-5 relative"
+                  className="bg-neutral-900 border border-neutral-800 rounded-lg p-4 relative"
                 >
-                    <button
-                      onClick={() => handleDeleteVoice(voice.id)}
-                      className="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition duration-200 ease-in-out"
-                      >
-                         <Trash2 className="h-4 w-4"/>
-                    </button>
+                  <button
+                    onClick={() => handleDeleteVoice(voice.id)}
+                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition duration-200 ease-in-out"
+                  >
+                    <Trash2 className="h-4 w-4"/>
+                  </button>
                   <h2 className="text-gray-300">
                     Title:{" "}
                     {voice.voiceTitle ||
@@ -208,23 +213,24 @@ function VoiceGeneration() {
           </>
         )}
       </div>
-          {/* Delete Confirmation Modal */}
-          <AlertDialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete this voice generation?
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel onClick={cancelDeleteVoice}>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={confirmDeleteVoice}>
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+
+      {/* Delete Confirmation Modal */}
+      <AlertDialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this voice generation?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={cancelDeleteVoice}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDeleteVoice}>
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

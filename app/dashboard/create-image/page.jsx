@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import CustomLoading from "./_components/CustomLoading";
 import axios from "axios";
+import { Card, CardContent } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 function CreateImage() {
   const [prompt, setPrompt] = useState("");
@@ -11,6 +13,7 @@ function CreateImage() {
   const [model, setModel] = useState("flux");
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const router = useRouter();
 
   const handleGenerateImage = async () => {
     setIsLoading(true);
@@ -31,73 +34,95 @@ function CreateImage() {
   };
 
   return (
-    <div>
-      <h2 className="font-bold text-3xl text-primary">Create Image</h2>
-      <div className="mt-5">
-        <textarea
-          type="text"
-          placeholder="Enter prompt"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          className="border p-2 w-full text-sm"
-        />
-        <div className="flex mt-3">
-          <select
-            value={width}
-            onChange={(e) => setWidth(e.target.value)}
-            className="border p-2 mr-2 text-sm"
-          >
-            <option value="128">128</option>
-            <option value="256">256</option>
-            <option value="512">512</option>
-            <option value="480">480</option>
-            <option value="720">720</option>
-            <option value="1024">1024</option>
-            <option value="1280">1280</option>
-            <option value="1820">1820</option>
-            <option value="1920">1920</option>
-
-          </select>
-          <select
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            className="border p-2 mr-2 text-sm"
-          >
-            <option value="128">128</option>
-            <option value="256">256</option>
-            <option value="512">512</option>
-            <option value="480">480</option>
-            <option value="720">720</option>
-            <option value="1024">1024</option>
-            <option value="1280">1280</option>
-            <option value="1820">1820</option>
-            <option value="1920">1920</option>
-          </select>
-          <select style={{width: 100}}
-            value={model}
-            onChange={(e) => setModel(e.target.value)}
-            className="border p-2 text-sm"
-          >
-            <option value="flux">Flux</option>
-            <option value="flux-pro">Flux-Pro</option>
-            <option value="flux-realism">Flux-Realism</option>
-            <option value="flux-anime">Flux-Anime</option>
-            <option value="flux-3d">Flux-3D</option>
-            <option value="flux-cablyai">Flux-CablyAI</option>
-            <option value="turbo">Turbo</option>
-          </select>
-        </div>
-        <Button onClick={handleGenerateImage} className="mt-5">
-          Create Image
+    <div className="container mx-auto p-4">
+      <div className="flex items-center gap-4 mb-4">
+        <Button
+          variant="outline"
+          onClick={() => router.push("/dashboard")}
+        >
+          Back
         </Button>
+        <h1 className="text-2xl font-bold">Create Image</h1>
       </div>
-      <CustomLoading loading={isLoading} title="Image" message="Generating image..." />
+
+      <div className="grid grid-cols-1">
+        <Card className="bg-neutral-900 border-neutral-800">
+          <CardContent className="p-4">
+            <div className="space-y-4">
+              <textarea
+                type="text"
+                placeholder="Enter prompt"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                className="w-full p-2 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-white"
+              />
+              <div className="flex gap-2">
+                <select
+                  value={width}
+                  onChange={(e) => setWidth(e.target.value)}
+                  className="p-2 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-white"
+                >
+                  <option value="128">128</option>
+                  <option value="256">256</option>
+                  <option value="512">512</option>
+                  <option value="480">480</option>
+                  <option value="720">720</option>
+                  <option value="1024">1024</option>
+                  <option value="1280">1280</option>
+                  <option value="1820">1820</option>
+                  <option value="1920">1920</option>
+                </select>
+                <select
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  className="p-2 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-white"
+                >
+                  <option value="128">128</option>
+                  <option value="256">256</option>
+                  <option value="512">512</option>
+                  <option value="480">480</option>
+                  <option value="720">720</option>
+                  <option value="1024">1024</option>
+                  <option value="1280">1280</option>
+                  <option value="1820">1820</option>
+                  <option value="1920">1920</option>
+                </select>
+                <select
+                  value={model}
+                  onChange={(e) => setModel(e.target.value)}
+                  className="p-2 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-white"
+                >
+                  <option value="flux">Flux</option>
+                  <option value="flux-pro">Flux-Pro</option>
+                  <option value="flux-realism">Flux-Realism</option>
+                  <option value="flux-anime">Flux-Anime</option>
+                  <option value="flux-3d">Flux-3D</option>
+                  <option value="flux-cablyai">Flux-CablyAI</option>
+                  <option value="turbo">Turbo</option>
+                </select>
+              </div>
+              <Button 
+                onClick={handleGenerateImage} 
+                className="w-full"
+                disabled={isLoading}
+              >
+                {isLoading ? "Generating..." : "Create Image"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {imageUrl && (
-        <div className="mt-5">
-          <h3 className="font-bold">Generated Image:</h3>
-          <img src={imageUrl} alt="Generated" className="mt-2" />
-        </div>
+        <Card className="mt-6 bg-neutral-900 border-neutral-800">
+          <CardContent className="p-4">
+            <h2 className="text-xl font-semibold mb-4">Generated Image</h2>
+            <img src={imageUrl} alt="Generated" className="w-full rounded-lg" />
+          </CardContent>
+        </Card>
       )}
+
+      <CustomLoading loading={isLoading} title="Image" message="Generating image..." />
     </div>
   );
 }

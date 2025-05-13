@@ -46,7 +46,7 @@ function Header() {
     },
     {
       id: 4,
-      name: "Voice Generation",
+      name: "Generated Voice",
       path: "/dashboard/voice",
       icon: <AudioLines />,
     },

@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-function SelectDuration({ onUserSelect }) {
+function SelectDuration({ onHandleInputChange }) {
   return (
     <div className="mt-5">
       <h2 className="font-bold text-xl text-primary ">Duration</h2>
@@ -15,7 +15,7 @@ function SelectDuration({ onUserSelect }) {
         <Select
           defaultValue="0.25 minutes"
           onValueChange={(value) => {
-            value != "Custom Prompt" && onUserSelect("duration", value);
+            value != "Custom Prompt" && onHandleInputChange("duration", value);
           }}
         >
           <SelectTrigger className="w-[200px] border-gray-400">
