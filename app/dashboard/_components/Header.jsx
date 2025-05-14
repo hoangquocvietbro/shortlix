@@ -82,7 +82,7 @@ function Header() {
       <Link href={"/dashboard"}>
         <div className="flex gap-3 items-center">
           <Image src="/logo.svg" alt="logo" width={30} height={30} />
-          <h2 className="font-bold text-sm">Shortlix AI </h2>
+          <h2 className="font-bold text-2xl">Shortlix</h2>
         </div>
       </Link>
 

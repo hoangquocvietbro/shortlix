@@ -251,7 +251,7 @@ function SelectVoice({ onHandleInputChange }) {
         <h2 className="font-bold text-base text-primary">Speech Rate Adjustment (%)</h2>
         <p className="text-gray-400 mt-2 text-xs">Adjust the speed of the speech ( -50% to 50%)</p>
         <div className="flex items-center gap-2 mt-2">
-          <span className="text-gray-400">-50</span>
+          <span className="text-gray-400 text-xl">-50</span>
           <input
             type="range"
             min="-50"
@@ -263,7 +263,7 @@ function SelectVoice({ onHandleInputChange }) {
             }}
             className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer text-white"
           />
-           <span className="text-gray-400">50</span>
+           <span className="text-gray-400 text-xl">50</span>
           <input
             type="number"
             min="-50"
@@ -282,7 +282,7 @@ function SelectVoice({ onHandleInputChange }) {
         <h2 className="font-bold text-base text-primary">Pitch Adjustment (Hz)</h2>
         <p className="text-gray-400 mt-2 text-xs">Adjust the pitch of the speech ( -20 Hz to 20 Hz )</p>
         <div className="flex items-center gap-2 mt-2">
-          <span className="text-gray-400">-20</span>
+          <span className="text-gray-400 text-xl">-20</span>
           <input
             type="range"
             min="-20"
@@ -294,7 +294,7 @@ function SelectVoice({ onHandleInputChange }) {
             }}
              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
           />
-          <span className="text-gray-400">20</span>
+          <span className="text-gray-400 text-xl">20</span>
           <input
               type="number"
               min="-20"

@@ -402,7 +402,7 @@ function BuyCredits() {
                   </button> 
                   <p className="text-xs text-gray-500">
                   For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
-                </p>
+                  </p>
               </CardFooter>
             </Card>
           );

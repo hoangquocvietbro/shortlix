@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { UserProvider } from "./_context/UserContext";
 
 export const metadata = {
-  title: "Shortlix AI - AI Short Video Generator",
+  title: "Shortlix - Short Video Generator",
   description: "AI Short Video Generator, a simple and fast video generator",
 };
 

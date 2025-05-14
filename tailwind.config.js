@@ -57,20 +57,21 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
 		  fontSize: {
-			'xs': '0.21rem',     // Cho text nhỏ nhất (labels, captions)
-			'sm': '0.245rem',    // Cho text phụ (descriptions)
-			'base': '0.28rem',   // Cho text thường
-			'lg': '0.315rem',    // Cho heading phụ
-			'xl': '0.35rem',     // Cho heading chính
-			'2xl': '0.42rem',    // Cho heading lớn
-			'3xl': '0.525rem',   // Cho heading rất lớn
-			'4xl': '0.63rem',    // Cho display text
-			'5xl': '0.84rem',    // Cho display text lớn
-			'6xl': '1.05rem',    // Cho display text rất lớn
-			'7xl': '1.26rem',    // Cho display text cực lớn
-			'8xl': '1.68rem',    // Cho display text siêu lớn
-			'9xl': '2.24rem',    // Cho display text khổng lồ
+			'xs': '0.2625rem',    // 0.21 * 1.25
+			'sm': '0.30625rem',   // 0.245 * 1.25
+			'base': '0.35rem',    // 0.28 * 1.25
+			'lg': '0.39375rem',   // 0.315 * 1.25
+			'xl': '0.4375rem',    // 0.35 * 1.25
+			'2xl': '0.525rem',    // 0.42 * 1.25
+			'3xl': '0.65625rem',  // 0.525 * 1.25
+			'4xl': '0.7875rem',   // 0.63 * 1.25
+			'5xl': '1.05rem',     // 0.84 * 1.25
+			'6xl': '1.3125rem',   // 1.05 * 1.25
+			'7xl': '1.575rem',    // 1.26 * 1.25
+			'8xl': '2.1rem',      // 1.68 * 1.25
+			'9xl': '2.8rem',      // 2.24 * 1.25
 		  }
+		  
   	}
   },
   plugins: [
