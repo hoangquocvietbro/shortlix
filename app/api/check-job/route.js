@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
 
-const DB_FILE = path.resolve('./app/api/jobs.json');
+const DB_FILE = path.resolve('/tmp/jobs.json');
 
 export async function GET(req) {
   try {

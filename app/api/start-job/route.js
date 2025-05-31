@@ -6,7 +6,7 @@ import crypto from 'crypto';
 
 const HF_TOKEN = process.env.HF_TOKEN;
 const SONITRANSLATE_API_ID = "hoangquocviet/shortlixserver";
-const DB_FILE = path.resolve('./app/api/jobs.json');
+const DB_FILE = path.resolve('/tmp/jobs.json');
 
 async function saveJob(jobId, data) {
   let db = {};
