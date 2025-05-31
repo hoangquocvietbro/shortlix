@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { VideoTranslator } from "@/components/VideoTranslator";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ export default function TranslatePage() {
   const [videoUrl, setVideoUrl] = useState("");
   const [translationResult, setTranslationResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentJobId, setCurrentJobId] = useState(null);
+  const [pollingInterval, setPollingInterval] = useState(null);
 
   useEffect(() => {
     const url = searchParams.get("videoUrl");
@@ -23,8 +25,64 @@ export default function TranslatePage() {
     setVideoUrl(url);
   }, [searchParams, router]);
 
+  // Cleanup polling on unmount
+  useEffect(() => {
+    return () => {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+    };
+  }, [pollingInterval]);
+
+  const checkTranslationStatus = useCallback(async (jobId) => {
+    try {
+      const response = await fetch(`/api/check-job?jobId=${jobId}`);
+      const data = await response.json();
+      
+      if (!data.success) {
+        throw new Error(data.error);
+      }
+      
+      return data.job;
+    } catch (error) {
+      console.error('Failed to check translation status:', error);
+      throw error;
+    }
+  }, []);
+
+  const startPolling = useCallback((jobId) => {
+    const interval = setInterval(async () => {
+      try {
+        const job = await checkTranslationStatus(jobId);
+        
+        if (job.status === 'done') {
+          clearInterval(interval);
+          setPollingInterval(null);
+          setIsLoading(false);
+          setTranslationResult(job.result);
+          toast.success('Translation completed successfully!');
+        } else if (job.status === 'error') {
+          clearInterval(interval);
+          setPollingInterval(null);
+          setIsLoading(false);
+          toast.error(`Translation failed: ${job.error}`);
+        }
+        // If status is 'pending', continue polling
+      } catch (error) {
+        clearInterval(interval);
+        setPollingInterval(null);
+        setIsLoading(false);
+        toast.error('Failed to check translation status');
+      }
+    }, 50000); // Check every 5 seconds
+
+    setPollingInterval(interval);
+  }, [checkTranslationStatus]);
+
   const handleTranslate = async (settings) => {
     setIsLoading(true);
+    setTranslationResult(null);
+    
     try {
       const formData = new FormData();
       formData.append('videoUrl', videoUrl);
@@ -32,7 +90,7 @@ export default function TranslatePage() {
         formData.append(key, value);
       });
 
-      const response = await fetch('/api/translate-video', {
+      const response = await fetch('/api/start-job', {
         method: 'POST',
         body: formData,
       });
@@ -40,11 +98,12 @@ export default function TranslatePage() {
       const data = await response.json();
       if (!data.success) throw new Error(data.error);
       
-      setTranslationResult(data.result);
+      setCurrentJobId(data.jobId);
+      startPolling(data.jobId);
+      toast.info('Translation started. This may take a few minutes...');
     } catch (error) {
       console.error('Translation failed:', error);
-      toast.error('Failed to translate video');
-    } finally {
+      toast.error('Failed to start translation');
       setIsLoading(false);
     }
   };

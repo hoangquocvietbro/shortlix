@@ -7,9 +7,11 @@ export async function POST(req) {
   try {
     const formData = await req.formData();
     const videoFile = formData.get('videoFile');
-
+    
+    console.log(formData);
     // Convert form data to settings object
     const settings = {
+      videoFile: formData.get('videoFile'),
       sourceLanguage: formData.get('sourceLanguage'),
       targetLanguage: formData.get('targetLanguage'),
       whisperModel: formData.get('whisperModel'),
@@ -40,44 +42,36 @@ export async function POST(req) {
       textSegmentationScale: formData.get('textSegmentationScale'),
       workers: parseInt(formData.get('workers')),
     };
-    console.log(settings);
-
-    // Initialize the Gradio client
-    const client = await Client.connect(SONITRANSLATE_API_ID, { hf_token: HF_TOKEN });
-    await client.view_api();
-    // Call the translation API with the video blob
-    const result = await client.predict("/batch_multilingual_media_conversion_1",
-      [
-      null,
-      "https://drive.google.com/file/d/19TtpCEWeLa5Ko63JmeZjeS0DaEZp6fs_/view?usp=drive_link",
+    const settingArray = [ null,
+      formData.get('videoUrl'),
       "",
       "|1uVagBuf79eTg6p2hbmvs0dG2liq5jH8N",
       false,
-      "Systran/faster-distil-whisper-large-v3",
+      formData.get('whisperModel'),
       32,
-      "int8",
-      "Chinese - Simplified (zh-CN)",
-      "Vietnamese (vi)",
+      "float32",
+      formData.get('sourceLanguage'),
+      formData.get('targetLanguage'),
       1,
       1,
-      "vi-VN-HoaiMyNeural-Female",
-      "en-US-AndrewMultilingualNeural-Male",
-      "en-US-AvaMultilingualNeural-Female",
-      "en-US-BrianMultilingualNeural-Male",
-      "de-DE-SeraphinaMultilingualNeural-Female",
-      "de-DE-FlorianMultilingualNeural-Male",
-      "fr-FR-VivienneMultilingualNeural-Female",
-      "fr-FR-RemyMultilingualNeural-Male",
-      "en-US-EmmaMultilingualNeural-Female",
-      "en-US-AndrewMultilingualNeural-Male",
-      "en-US-EmmaMultilingualNeural-Female",
-      "en-US-AndrewMultilingualNeural-Male",
+      formData.get('ttsSpeakers').split(',')[0],
+      formData.get('ttsSpeakers').split(',')[1],
+      formData.get('ttsSpeakers').split(',')[2],
+      formData.get('ttsSpeakers').split(',')[3],
+      formData.get('ttsSpeakers').split(',')[4],
+      formData.get('ttsSpeakers').split(',')[5],
+      formData.get('ttsSpeakers').split(',')[6],
+      formData.get('ttsSpeakers').split(',')[7],
+      formData.get('ttsSpeakers').split(',')[8],
+      formData.get('ttsSpeakers').split(',')[9],
+      formData.get('ttsSpeakers').split(',')[10],
+      formData.get('ttsSpeakers').split(',')[11],
       "",
       "Adjusting volumes and mixing audio",
       2.5,
       true,
-      0.25,
-      2.5,
+      parseFloat(formData.get('volumeOriginalAudio')),
+      parseFloat(formData.get('volumeTranslatedAudio')),
       "srt",
       false,
       false,
@@ -86,8 +80,8 @@ export async function POST(req) {
       false,
       true,
       16,
-      "disable",
-      "google_translator_batch",
+      formData.get('diarizationModel'),
+      formData.get('translationProcess'),
       null,
       "video (mp4)",
       false,
@@ -98,14 +92,21 @@ export async function POST(req) {
       "freevc",
       true,
       "sentence",
-      "|,|.|:|!|?|...|\u3002",
+      "|，|,|.|:|!|?|...|\u3002",
       false,
       false,
       true,
       false,
       1,
       true
-     ]);
+     ]
+    console.log(settingArray);
+
+    // Initialize the Gradio client
+    const client = await Client.connect(SONITRANSLATE_API_ID, { hf_token: HF_TOKEN });
+    await client.view_api();
+    // Call the translation API with the video blob
+    const result = await client.predict("/batch_multilingual_media_conversion_1",[...settingArray]);
     return NextResponse.json({ success: true, result });
   } catch (error) {
     console.error('Translation error:', error);
