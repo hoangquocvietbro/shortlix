@@ -1,5 +1,6 @@
 import { decimal } from "drizzle-orm/mysql-core";
 import { boolean, integer, json, pgTable, serial, timestamp, varchar,numeric } from "drizzle-orm/pg-core";
+import { text } from 'drizzle-orm/pg-core';
 
 export const Users = pgTable('users', {
   id: serial("id").primaryKey(),
@@ -51,5 +52,14 @@ export const Voices = pgTable("voices", {
   pitch: numeric("pitch").default(0),
   createdAt: timestamp("created_at").defaultNow(), // Timestamp when the voice was generated
   updatedAt: timestamp("updated_at").defaultNow(), // Timestamp for last update
+});
+
+export const jobs = pgTable('jobs', {
+  id: text('id').primaryKey(),
+  status: text('status').notNull(),
+  result: json('result'),
+  error: text('error'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow()
 });
 

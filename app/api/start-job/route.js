@@ -1,32 +1,24 @@
 import { NextResponse } from 'next/server';
 import { Client } from '@gradio/client';
-import fs from 'fs/promises';
-import path from 'path';
+import { db } from 'configs/db';
+import { jobs } from 'configs/schema';
 import crypto from 'crypto';
+import { eq } from 'drizzle-orm';
 
 const HF_TOKEN = process.env.HF_TOKEN;
 const SONITRANSLATE_API_ID = "hoangquocviet/shortlixserver";
-const DB_FILE = path.resolve('/tmp/jobs.json');
-
-async function saveJob(jobId, data) {
-  let db = {};
-  try {
-    db = JSON.parse(await fs.readFile(DB_FILE, 'utf-8'));
-  } catch (e) {}
-  db[jobId] = data;
-  await fs.writeFile(DB_FILE, JSON.stringify(db, null, 2));
-}
 
 export async function POST(req) {
   try {
     const formData = await req.formData();
     const jobId = crypto.randomUUID();
 
-    // Save initial job status
-    await saveJob(jobId, {
+    // Save initial job status to database
+    await db.insert(jobs).values({
+      id: jobId,
       status: 'pending',
-      createdAt: Date.now(),
-      result: null
+      createdAt: new Date(),
+      updatedAt: new Date()
     });
 
     // Process in background
@@ -95,20 +87,25 @@ export async function POST(req) {
         ];
 
         const result = await client.predict("/batch_multilingual_media_conversion_1", settingArray);
-
+        console.log('result', result);
         // Update job when done
-        await saveJob(jobId, {
-          status: 'done',
-          result: result,
-          updatedAt: Date.now()
-        });
+        await db.update(jobs)
+          .set({
+            status: 'done',
+            result: result,
+            updatedAt: new Date()
+          })
+          .where(eq(jobs.id, jobId));
+          console.log('update job done');
       } catch (err) {
         console.error('Translation error:', err);
-        await saveJob(jobId, {
-          status: 'error',
-          error: err.message,
-          updatedAt: Date.now()
-        });
+        await db.update(jobs)
+          .set({
+            status: 'error',
+            error: err.message,
+            updatedAt: new Date()
+          })
+          .where(eq(jobs.id, jobId));
       }
     })();
 

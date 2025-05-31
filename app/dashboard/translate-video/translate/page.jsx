@@ -53,7 +53,9 @@ export default function TranslatePage() {
   const startPolling = useCallback((jobId) => {
     const interval = setInterval(async () => {
       try {
-        const job = await checkTranslationStatus(jobId);
+        const checkJob = await checkTranslationStatus(jobId);
+        const job = checkJob.job;
+        console.log('job', job);
         
         if (job.status === 'done') {
           clearInterval(interval);

@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-
-const DB_FILE = path.resolve('/tmp/jobs.json');
+import { db } from 'configs/db';
+import { jobs } from 'configs/schema';
+import { eq } from 'drizzle-orm';
 
 export async function GET(req) {
   try {
@@ -13,14 +12,8 @@ export async function GET(req) {
       return NextResponse.json({ success: false, error: 'Missing jobId' }, { status: 400 });
     }
 
-    let db = {};
-    try {
-      db = JSON.parse(await fs.readFile(DB_FILE, 'utf-8'));
-    } catch (e) {
-      return NextResponse.json({ success: false, error: 'Job not found' }, { status: 404 });
-    }
-
-    const job = db[jobId];
+    const job = await db.select().from(jobs).where(eq(jobs.id, jobId));
+    
     if (!job) {
       return NextResponse.json({ success: false, error: 'Job not found' }, { status: 404 });
     }
