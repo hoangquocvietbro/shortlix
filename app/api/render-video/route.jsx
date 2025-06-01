@@ -17,7 +17,7 @@ export async function POST(req) {
     const videoFilePath = `public/${uniqueId}.mp4`;
     const storageRef = ref(storage, `video-files/${uniqueId}.mp4`);
     //console.log("bbbb")
-    
+    const videoId = inputProps.videoId;
     await writeFile(jsonFilePath, JSON.stringify(inputProps));
     //console.log("dddd")
     const command = `remotion render remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${inputProps.width} --height=${inputProps.height}`;
