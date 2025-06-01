@@ -79,7 +79,7 @@ export default function TranslatePage() {
         setIsLoading(false);
         toast.error('Failed to check translation status');
       }
-    }, 50000); // Check every 5 seconds
+    }, 10000); // Check every 5 seconds
 
     setPollingInterval(interval);
   }, [checkTranslationStatus]);
