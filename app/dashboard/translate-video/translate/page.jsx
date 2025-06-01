@@ -38,12 +38,14 @@ export default function TranslatePage() {
     try {
       const response = await fetch(`/api/check-job?jobId=${jobId}`);
       const data = await response.json();
-      
+      console.log('data', data);
+      console.log('data.job', data.job);
       if (!data.success) {
         throw new Error(data.error);
       }
-      
-      return data.job;
+      console.log('dataaaa', data);
+      console.log('data.job', data.job);
+      return data.job[0];
     } catch (error) {
       console.error('Failed to check translation status:', error);
       throw error;
@@ -53,9 +55,10 @@ export default function TranslatePage() {
   const startPolling = useCallback((jobId) => {
     const interval = setInterval(async () => {
       try {
-        const checkJob = await checkTranslationStatus(jobId);
-        const job = checkJob.job;
+        const job = await checkTranslationStatus(jobId);
         console.log('job', job);
+        console.log('job.status', job.status);
+
         
         if (job.status === 'done') {
           clearInterval(interval);
