@@ -303,24 +303,38 @@ function BuyCredits() {
   return (
     <div className="p-4">
             <Script src="https://sdk.minepi.com/pi-sdk.js" onReady={PiInit}/>
-      <h2 className="font-bold text-xl text-primary">Buy Credits</h2>
-      <p className="text-gray-400 mt-3 font-semibold text-xs">
+      <h2 className="font-bold text-xl text-primary mb-6">Buy Credits</h2>
+      <p className="text-gray-400 mt-1 font-semibold text-xs">
         Current Credits:{" "}
         <span className="text-white">{user?.credits || 0}</span>
       </p>
-      <p className="text-gray-400 mt-3 font-semibold text-xs">
+      <p className="text-gray-400 mt-1 font-semibold text-xs">
         You can generate:{" "}
         <span className="text-white">
           {Math.floor((user?.credits || 0) / 10)}
         </span>{" "}
         video(s) with your current credits.
       </p>
-      <p className="text-gray-400 mt-3 font-semibold text-xs">
+      <p className="text-gray-400 mt-1 font-semibold text-xs">
         You can generate:{" "}
         <span className="text-white">{user?.credits || 0}</span> voice(s)
         with your current credits.
       </p>
-      <p className="text-gray-400 mt-3 font-semibold text-xs">
+      <p className="text-gray-400 mt-1 font-semibold text-xs">
+        You can translate:{" "}
+        <span className="text-white">
+          {Math.floor((user?.credits || 0) / 10)}
+        </span>{" "}
+        video(s) with your current credits.
+      </p>
+      <p className="text-gray-400 mt-1 font-semibold text-xs">
+        You can use editor:{" "}
+        <span className="text-white">
+          {Math.floor((user?.credits || 0) / 10)}
+        </span>{" "}
+        time(s) with your current credits.
+      </p>
+      <p className="text-gray-400 mt-1 font-semibold text-xs">
       Subscription Status:{" "}
         <span
           className={`animate-pulse ${
@@ -378,18 +392,18 @@ function BuyCredits() {
               </CardHeader>
               <CardContent className="my-5 "></CardContent>
               <CardFooter>
-                <p className="text-xs text-gray-500">
-                  For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
-                </p>
-                 <button
+                 <button 
                     onClick={(e) => {
                         e.stopPropagation();  // Prevent event bubbling
                         handlePiPayment(option);
                     }}
-                    className="bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded"
+                    className="text-center bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded"
                   >
                     Pay with {`${option.amount}𝜋`}
-                  </button>
+                  </button> 
+                  <p className="text-xs text-gray-500">
+                  For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
+                  </p>
               </CardFooter>
             </Card>
           );

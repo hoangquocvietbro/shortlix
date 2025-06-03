@@ -87,8 +87,15 @@ export default function TranslateVideo() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Translate Video</h1>
-      
+              <h2 className="font-bold text-3xl text-primary mb-6 ">
+          Translate video
+        </h2>
+        <p className="font-bold text-sm text-primary mb-2 ">
+          + Accept video from douyin, youtube short, bilibili<br></br>
+          + Accept maximum 1 minute video long<br></br>
+          + If video size more than 4mb,
+          please upload to Google Drive and use public link
+        </p>
       {!selectedVideoUrl ? (
         <div className="space-y-4">
           <Tabs defaultValue="upload" className="w-full">

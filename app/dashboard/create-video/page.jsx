@@ -316,8 +316,8 @@ const updateUserCredits = async () => {
 };
 return (
   <div>
-    <h2 className="font-bold text-3xl text-primary ">Create New</h2>
-    <div className="mt-10 shadow-md shadow-neutral-900 rounded-md p-10">
+    <h2 className="font-bold text-3xl text-primary mb-6 ">Create Video</h2>
+    <div className="rounded-xl border text-card-foreground shadow bg-neutral-900 border-neutral-800 p-6">
       {/* Select Topic */}
       <SelectTopic onUserSelect={onHandleInputChange} />
         {/* Select Style */}

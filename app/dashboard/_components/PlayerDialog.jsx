@@ -198,12 +198,7 @@ function PlayerDialog({ playVideo, videoId }) {
 
                     {videoData.downloadUrl ? (
                       <>
-                        <Button
-                          onClick={handleDownload}
-                          className="flex items-center justify-center text-center"
-                        >
-                          Download
-                        </Button>
+
                       </>
                     ) : (
                       <div></div>
@@ -215,6 +210,12 @@ function PlayerDialog({ playVideo, videoId }) {
                       margin: '0 auto'
                     }}>
                       <div>
+                      <Button
+                          onClick={handleDownload}
+                          className="flex items-center justify-center text-center"
+                        >
+                          Download
+                        </Button><br></br>
                         <Player doubleClickToFullscreen={true}
                           allowFullscreen={true}
                           className="w-full h-full mx-auto rounded-md"
