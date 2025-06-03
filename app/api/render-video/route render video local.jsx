@@ -17,7 +17,7 @@ export async function POST(req) {
     const videoFilePath = `public/${uniqueId}.mp4`;
     const storageRef = ref(storage, `video-files/${uniqueId}.mp4`);
     //console.log("bbbb")
-    
+    const videoId = inputProps.id;
     await writeFile(jsonFilePath, JSON.stringify(inputProps));
     //console.log("dddd")
     const command = `remotion render remotion/index.jsx Empty ${videoFilePath} --props=${jsonFilePath} --width=${inputProps.width} --height=${inputProps.height}`;
@@ -40,18 +40,14 @@ export async function POST(req) {
 
     await execPromise(command);
 
-    const videoBuffer = await readFile(videoFilePath);
-    await uploadBytes(storageRef, videoBuffer, { contentType: "video/mp4" });
-    const downloadFirebaseUrl = await getDownloadURL(storageRef);
-
     await db
     .update(VideoData)
     .set({
-      downloadUrl: downloadFirebaseUrl, // Đảm bảo `downloadUrl` có giá trị hợp lệ
+      downloadUrl: videoFilePath, // Đảm bảo `downloadUrl` có giá trị hợp lệ
     })
     .where(eq(VideoData.id, Number(videoId))); // Loại bỏ `?.` nếu `VideoData` luôn tồn tại
 
-    return NextResponse.json({ 'result': 'success', 'videoFilePath': downloadFirebaseUrl });
+    return NextResponse.json({ 'result': 'success', 'videoFilePath': videoFilePath });
   } catch (e) {
     return NextResponse.json({ 'Error': e.message });
   }
