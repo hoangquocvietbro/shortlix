@@ -3,7 +3,6 @@ import { db } from 'configs/db';
 import { Users } from 'configs/schema';
 import { eq } from 'drizzle-orm';
 import React, { useContext, useEffect, useState } from 'react'
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { VideoDataContext } from './_context/VideoDataContext';
 import { UserContext } from "app/_context/UserContext"; // Import UserContext
 
@@ -29,11 +28,9 @@ function Provider({ children }) {
 
   return (
 
-    <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}>
       <VideoDataContext.Provider value={{ videoData, setVideoData }}>
         <div>{children}</div>
       </VideoDataContext.Provider>
-    </PayPalScriptProvider>
 
   )
 }
