@@ -1,15 +1,21 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { VideoTranslator } from "@/components/VideoTranslator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Download } from "lucide-react";
 import { toast } from "sonner";
+import CustomLoading from "@/components/ui/CustomLoading";
+import { UserContext } from "app/_context/UserContext";
+import { db } from "configs/db";
+import { Users } from "configs/schema";
+import { eq } from "drizzle-orm";
 
 export default function TranslatePage() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { user, setUser } = useContext(UserContext);
   const [videoUrl, setVideoUrl] = useState("");
   const [translationResult, setTranslationResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -85,6 +91,11 @@ export default function TranslatePage() {
   }, [checkTranslationStatus]);
 
   const handleTranslate = async (settings) => {
+    if (!user || user.credits < 10) {
+      toast.error("Insufficient credits. You need 10 credits to translate a video.");
+      return;
+    }
+
     setIsLoading(true);
     setTranslationResult(null);
     
@@ -102,6 +113,14 @@ export default function TranslatePage() {
 
       const data = await response.json();
       if (!data.success) throw new Error(data.error);
+      
+      // Deduct credits after successful job start
+      const updatedUser = await db.update(Users)
+        .set({ credits: user.credits - 10 })
+        .where(eq(Users.id, user.id))
+        .returning();
+      
+      setUser(updatedUser[0]);
       
       setCurrentJobId(data.jobId);
       startPolling(data.jobId);
@@ -126,10 +145,15 @@ export default function TranslatePage() {
         >
           Back
         </Button>
-        <h1 className="text-2xl font-bold">Translate Video</h1>
+        <h2 className="font-bold text-3xl text-primary mb-6">Translate Video</h2>
+
       </div>
 
       <div className="grid grid-cols-1 ">
+      <br></br>
+        <p className="text-3xl text-primary mb-1">
+          + OpenAi voice and translator require api key. so this feature in develop proccess. Please use Microsoft voice like ur-IN-GulNeural-Female
+        </p>
         {/* Translation Settings */}
         <Card className="bg-neutral-900 border-neutral-800">
           <CardContent className="p-4">
@@ -141,6 +165,24 @@ export default function TranslatePage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Loading State */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                      <CustomLoading
+        loading={
+          isLoading
+        }
+        title={"Video translate"}
+        message={
+          isLoading
+            ? "Translating video..."
+            : ""
+        }
+      />
+        </div>
+      )}
+
 
       {/* Translation Results */}
       {translationResult && (

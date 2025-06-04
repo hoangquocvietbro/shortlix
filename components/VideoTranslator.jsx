@@ -20,6 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner";
+import { Combobox } from "@/components/ui/combobox";
 
 const SOURCE_LANGUAGES = [
   { value: "Automatic detection", label: "Automatic detection" },
@@ -825,83 +826,56 @@ export function VideoTranslator({ videoUrl, onTranslate, isLoading }) {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Source Language</Label>
-                <Select
+                <Combobox
+                  options={SOURCE_LANGUAGES}
                   value={settings.sourceLanguage}
-                  onValueChange={(value) => 
+                  onChange={(value) => 
                     setSettings(prev => ({ ...prev, sourceLanguage: value }))
                   }
-                >
-                  <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-neutral-800 border-neutral-700">
-                    {SOURCE_LANGUAGES.map(lang => (
-                      <SelectItem key={lang.value} value={lang.value}>
-                        {lang.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  placeholder="Select source language..."
+                />
               </div>
 
               <div className="space-y-2">
                 <Label>Target Language</Label>
-                <Select
+                <Combobox
+                  options={TARGET_LANGUAGES}
                   value={settings.targetLanguage}
-                  onValueChange={(value) => 
+                  onChange={(value) => 
                     setSettings(prev => ({ ...prev, targetLanguage: value }))
                   }
-                >
-                  <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-neutral-800 border-neutral-700">
-                    {TARGET_LANGUAGES.map(lang => (
-                      <SelectItem key={lang.value} value={lang.value}>
-                        {lang.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  placeholder="Select target language..."
+                />
               </div>
             </div>
 
             {/* Whisper Model */}
             <div className="space-y-2">
               <Label>Whisper ASR Model</Label>
-              <Select
+              <Combobox
+                options={WHISPER_MODELS}
                 value={settings.whisperModel}
-                onValueChange={(value) => 
+                onChange={(value) => 
                   setSettings(prev => ({ ...prev, whisperModel: value }))
                 }
-              >
-                <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-neutral-800 border-neutral-700">
-                  {WHISPER_MODELS.map(model => (
-                    <SelectItem key={model.value} value={model.value}>
-                      {model.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                placeholder="Select whisper model..."
+              />
             </div>
 
             {/* Speakers */}
             <div className="space-y-2">
               <Label>Max Speakers</Label>
               <div className="flex items-center gap-2">
-              <Slider
-                value={[settings.maxSpeakers]}
-                min={1}
-                max={12}
-                step={1}
-                onValueChange={([value]) => 
-                  setSettings(prev => ({ ...prev, maxSpeakers: value }))
-                }
+                <Slider
+                  value={[settings.maxSpeakers]}
+                  min={1}
+                  max={12}
+                  step={1}
+                  onValueChange={([value]) => 
+                    setSettings(prev => ({ ...prev, maxSpeakers: value }))
+                  }
                   className="flex-1"
-              />
+                />
                 <span className="w-10 text-right font-mono">{settings.maxSpeakers}</span>
               </div>
             </div>
@@ -913,25 +887,17 @@ export function VideoTranslator({ videoUrl, onTranslate, isLoading }) {
                 {Array.from({ length: settings.maxSpeakers }, (_, i) => (
                   <div key={i} className="space-y-2">
                     <Label className="text-sm text-neutral-400">Speaker {i + 1}</Label>
-              <Select
+                    <Combobox
+                      options={TTS_SPEAKERS.map(speaker => ({ value: speaker, label: speaker }))}
                       value={settings.ttsSpeakers[i]}
-                      onValueChange={(value) => {
+                      onChange={(value) => {
                         const newTtsSpeakers = [...settings.ttsSpeakers];
                         newTtsSpeakers[i] = value;
                         setSettings(prev => ({ ...prev, ttsSpeakers: newTtsSpeakers }));
                       }}
-                    >
-                      <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white h-8 text-sm">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-neutral-800 border-neutral-700">
-                  {TTS_SPEAKERS.map(speaker => (
-                          <SelectItem key={speaker} value={speaker}>
-                            {speaker}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                      placeholder="Select speaker voice..."
+                      className="h-8 text-sm"
+                    />
                   </div>
                 ))}
               </div>
@@ -940,23 +906,14 @@ export function VideoTranslator({ videoUrl, onTranslate, isLoading }) {
             {/* Output Type */}
             <div className="space-y-2">
               <Label>Output Type</Label>
-              <Select
+              <Combobox
+                options={OUTPUT_TYPES}
                 value={settings.outputType}
-                onValueChange={(value) => 
+                onChange={(value) => 
                   setSettings(prev => ({ ...prev, outputType: value }))
                 }
-              >
-                <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-neutral-800 border-neutral-700">
-                  {OUTPUT_TYPES.map(type => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                placeholder="Select output type..."
+              />
             </div>
 
             {/* Checkboxes */}
@@ -1013,23 +970,14 @@ export function VideoTranslator({ videoUrl, onTranslate, isLoading }) {
             {/* Translation Process */}
             <div className="space-y-2">
               <Label>Translation Process</Label>
-              <Select
+              <Combobox
+                options={TRANSLATION_PROCESSES}
                 value={settings.translationProcess}
-                onValueChange={(value) => 
+                onChange={(value) => 
                   setSettings(prev => ({ ...prev, translationProcess: value }))
                 }
-              >
-                <SelectTrigger className="bg-neutral-800 border-neutral-700 text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-neutral-800 border-neutral-700">
-                  {TRANSLATION_PROCESSES.map(process => (
-                    <SelectItem key={process.value} value={process.value}>
-                      {process.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                placeholder="Select translation process..."
+              />
             </div>
 
             {/* Audio Settings */}
@@ -1037,16 +985,16 @@ export function VideoTranslator({ videoUrl, onTranslate, isLoading }) {
               <div className="space-y-2">
                 <Label>Volume Original Audio</Label>
                 <div className="flex items-center gap-2">
-                <Slider
-                  value={[settings.volumeOriginalAudio]}
-                  min={0}
-                  max={2.5}
-                  step={0.1}
-                  onValueChange={([value]) => 
-                    setSettings(prev => ({ ...prev, volumeOriginalAudio: value }))
-                  }
+                  <Slider
+                    value={[settings.volumeOriginalAudio]}
+                    min={0}
+                    max={2.5}
+                    step={0.1}
+                    onValueChange={([value]) => 
+                      setSettings(prev => ({ ...prev, volumeOriginalAudio: value }))
+                    }
                     className="flex-1"
-                />
+                  />
                   <span className="w-10 text-right font-mono">{settings.volumeOriginalAudio}</span>
                 </div>
               </div>
@@ -1054,16 +1002,16 @@ export function VideoTranslator({ videoUrl, onTranslate, isLoading }) {
               <div className="space-y-2">
                 <Label>Volume Translated Audio</Label>
                 <div className="flex items-center gap-2">
-                <Slider
-                  value={[settings.volumeTranslatedAudio]}
-                  min={0}
-                  max={2.5}
-                  step={0.1}
-                  onValueChange={([value]) => 
-                    setSettings(prev => ({ ...prev, volumeTranslatedAudio: value }))
-                  }
+                  <Slider
+                    value={[settings.volumeTranslatedAudio]}
+                    min={0}
+                    max={2.5}
+                    step={0.1}
+                    onValueChange={([value]) => 
+                      setSettings(prev => ({ ...prev, volumeTranslatedAudio: value }))
+                    }
                     className="flex-1"
-                />
+                  />
                   <span className="w-10 text-right font-mono">{settings.volumeTranslatedAudio}</span>
                 </div>
               </div>
