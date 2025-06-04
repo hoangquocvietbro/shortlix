@@ -883,7 +883,7 @@ export function VideoTranslator({ videoUrl, onTranslate, isLoading }) {
             {/* Dynamic TTS Speaker Selection */}
             <div className="space-y-4">
               <Label>Speaker Voices</Label>
-              <div className="grid grid-cols-2 gap-4">
+              <div>
                 {Array.from({ length: settings.maxSpeakers }, (_, i) => (
                   <div key={i} className="space-y-2">
                     <Label className="text-sm text-neutral-400">Speaker {i + 1}</Label>
