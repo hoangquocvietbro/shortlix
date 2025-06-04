@@ -19,15 +19,15 @@ function SelectStyle({ onUserSelect }) {
     },
     {
       name: "Fantasy Illustration",
-      image: "/fantasy-illustration.jpg",
+      image: "/fantasy-illustration-min.png",
     },
     {
       name: "Surrealist Art",
-      image: "/surrealist-art.jpg",
+      image: "/surrealist-art-min.png",
     },
     {
       name: "Water Color Art",
-      image: "/watercolor.jpg", // Retained
+      image: "/watercolor-min.png", // Retained
     },
     {
       name: "Cartoon Style",
@@ -51,7 +51,7 @@ function SelectStyle({ onUserSelect }) {
     },
     {
       name: "Nature Landscape",
-      image: "/nature-landscape.jpg",
+      image: "/nature-landscape-min.png",
     },
   ];
   return (
