@@ -52,6 +52,7 @@ function PlayerDialog({ playVideo, videoId }) {
   const handleVideoDataChange = (updatedVideoData) => {
     setVideoData(updatedVideoData);
     // API call to update video settings here
+
   };
   useEffect(() => {
     setOpenDialog(playVideo);
@@ -161,8 +162,8 @@ function PlayerDialog({ playVideo, videoId }) {
       await db.delete(VideoData).where(eq(VideoData.id, videoId));
 
       toast.success("Video removed successfully!");
-      setOpenDialog(false); // Close the dialog
       router.push("/dashboard"); // Redirect to dashboard
+      setOpenDialog(false); // Close the dialog
     } catch (error) {
       console.error("Error removing video:", error);
       toast.error("Failed to remove video.");
