@@ -327,13 +327,13 @@ function BuyCredits() {
         </span>{" "}
         video(s) with your current credits.
       </p>
-      <p className="text-gray-400 mt-1 font-semibold text-xs">
+      {/* <p className="text-gray-400 mt-1 font-semibold text-xs">
         You can use editor:{" "}
         <span className="text-white">
           {Math.floor((user?.credits || 0) / 10)}
         </span>{" "}
         time(s) with your current credits.
-      </p>
+      </p> */}
       <p className="text-gray-400 mt-1 font-semibold text-xs">
       Subscription Status:{" "}
         <span
@@ -397,12 +397,12 @@ function BuyCredits() {
                         e.stopPropagation();  // Prevent event bubbling
                         handlePiPayment(option);
                     }}
-                    className="text-center bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded"
+                    className="text-center bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded mr-1"
                   >
                     Pay with {`${option.amount}𝜋`}
                   </button> 
                   <p className="text-xs text-gray-500">
-                  For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
+                   For {`${option.amount}𝜋`} (~{costPerCredit}𝜋 per credit )  
                   </p>
               </CardFooter>
             </Card>

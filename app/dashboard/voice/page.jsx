@@ -172,25 +172,25 @@ function VoiceGeneration() {
                       >
                          <Trash2 className="h-4 w-4"/>
                     </button>
-                  <h2 className="text-gray-300">
+                  <h2 className="text-xl">
                     Title:{" "}
                     {voice.voiceTitle ||
                       voice.audioUrl.split("/").pop().split(".")[0] ||
                       "Not specified"}
                   </h2>
-                  <p className="text-gray-300">
+                  <p className="text-xl">
                     Generated on: {new Date(voice.createdAt).toLocaleDateString()}
                   </p>
-                  <p className="text-gray-300">
+                  <p className="text-xl">
                     Language: {voice.language || "Not specified"}
                   </p>
-                  <p className="text-gray-300">
+                  <p className="text-xl">
                     Gender: {voice.gender || "Not specified"}
                   </p>
-                  <p className="text-gray-300">
+                  <p className="text-xl">
                     Speech rate: {voice.rate || "Not specified"}
                   </p>
-                  <p className="text-gray-300">
+                  <p className="text-xl">
                     Pitch: {voice.pitch || "Not specified"}
                   </p>
                   <audio controls className="w-full my-5">
