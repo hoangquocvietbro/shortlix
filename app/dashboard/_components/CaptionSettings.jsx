@@ -40,7 +40,7 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
     ];
     return (
         <div>
-                <label htmlFor="showCaptions" className="mr-2 text-white text-xs">Show Captions:</label>
+                <label htmlFor="showCaptions" className="mr-2 text-white text-xs">Show Captions:</label><br></br>
                 <input width="200"
                     type="checkbox"
                     id="showCaptions"
@@ -78,7 +78,7 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
             <br></br>
             <label htmlFor="captionColor" className="mr-2 text-white">
                 Caption Color:
-            </label>
+            </label><br></br>
             <input
                 type="color"
                 id="captionColor"
@@ -95,14 +95,14 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
                 id="captionFont"
                 value={videoData.captionFont || fonts[0]} // Default to first font
                 onChange={(e) => onVideoDataChange({ ...videoData, captionFont: e.target.value })}
-                className="bg-neutral-700 text-white p-1 rounded"
+                className="bg-neutral-700 text-white p-1 rounded mb-1"
             >
                 {fonts.map((font) => (
                     <option key={font} value={font} style={{ fontFamily: font }}>
                         {font}
                     </option>
                 ))}
-            </select>
+            </select><br></br>
             {/* ... other settings ... */}
 
 
