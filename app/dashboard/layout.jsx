@@ -24,7 +24,7 @@ function DashboradLayout({ children }) {
     const result = await db
       .select()
       .from(Users)
-      .where(eq(Users.pi_username, "hoangquocvietbro"))//user?.pi_username));
+      .where(eq(Users.pi_username, user?.pi_username));
 
     const fetchedUser = result[0];
 
