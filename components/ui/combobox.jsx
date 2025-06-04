@@ -16,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "components/ui/popover"
+import "./combobox.css"
 
 export function Combobox({ 
   options, 
@@ -42,7 +43,7 @@ export function Combobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0 bg-neutral-800 border-neutral-700">
+      <PopoverContent className="w-full p-0 bg-neutral-800 border-neutral-700 popover-content">
         <Command className="bg-neutral-800 border-neutral-700">
           <CommandInput placeholder="Search..." className="text-white" />
           <CommandEmpty className="text-neutral-400">{emptyMessage}</CommandEmpty>
@@ -55,7 +56,7 @@ export function Combobox({
                   onChange(currentValue === value ? "" : currentValue)
                   setOpen(false)
                 }}
-                className="text-white hover:bg-neutral-700"
+                className="text-white hover:bg-neutral-700 cursor-pointer data-[selected=true]:bg-neutral-700"
               >
                 <Check
                   className={cn(

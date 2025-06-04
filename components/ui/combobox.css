@@ -1,0 +1,61 @@
+/* Fix z-index issues */
+[cmdk-root] {
+  z-index: 50;
+}
+
+[cmdk-dialog] {
+  z-index: 50;
+}
+
+[cmdk-list] {
+  z-index: 50;
+}
+
+/* Fix event propagation */
+[cmdk-group-items] {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 50;
+}
+
+[cmdk-item] {
+  pointer-events: auto !important;
+  cursor: pointer;
+  position: relative;
+  z-index: 50;
+}
+
+/* Fix component hierarchy */
+[cmdk-group] {
+  position: relative;
+  z-index: 50;
+}
+
+[cmdk-input-wrapper] {
+  position: relative;
+  z-index: 50;
+}
+
+/* Ensure proper stacking context */
+.popover-content {
+  position: relative;
+  z-index: 50;
+}
+
+/* Fix hover states */
+[cmdk-item][data-selected="true"] {
+  background-color: rgb(64 64 64) !important;
+}
+
+[cmdk-item]:hover {
+  background-color: rgb(64 64 64) !important;
+}
+
+/* Ensure proper event handling */
+[cmdk-item] * {
+  pointer-events: none;
+}
+
+[cmdk-item] {
+  pointer-events: auto;
+} 
