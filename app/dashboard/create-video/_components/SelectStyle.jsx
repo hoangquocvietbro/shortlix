@@ -31,7 +31,7 @@ function SelectStyle({ onUserSelect }) {
     },
     {
       name: "Cartoon Style",
-      image: "/cartoon.jpeg", // Retained
+      image: "/cartoon-min.png", // Retained
     },
     {
       name: "Comic Style",
@@ -39,11 +39,11 @@ function SelectStyle({ onUserSelect }) {
     },
     {
       name: "GTA Style",
-      image: "/gta.jpeg", // Retained
+      image: "/gta-min.png", // Retained
     },
     {
       name: "Abstract Art",
-      image: "/abstract-art.jpeg",
+      image: "/abstract-art-min.png",
     },
     {
       name: "Character Design",
