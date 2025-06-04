@@ -366,7 +366,7 @@ function BuyCredits() {
                 <CardTitle className="mt-5 mb-10 text-center font-bold text-xl">
                   Add {option.credits} Credits
                 </CardTitle>
-                <CardDescription className="mt-10 text-center">
+                <div className="mt-10 text-center text-sm">
                   Purchase {option.credits} credits for {`${option.amount}𝜋`}.
                   <div className="flex flex-row items-center justify-center mt-14 gap-2">
                     <Image
@@ -388,7 +388,7 @@ function BuyCredits() {
                     <strong className="text-primary">{option.credits}</strong>{" "}
                     voice(s).
                   </p>
-                </CardDescription>
+                </div>
               </CardHeader>
               <CardContent className="my-5 "></CardContent>
               <CardFooter>

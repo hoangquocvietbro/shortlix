@@ -49,6 +49,7 @@ function CaptionSettings({ videoData, onVideoDataChange }) {
                     className="bg-neutral-700 rounded"
                 />
             {/* ... (Other settings similarly structured) ... */}
+            <br></br>
             <label htmlFor="captionPosition" className="mr-2 text-white">Caption Position:</label>
             <select style={{width: 136}}
                 id="captionPosition"

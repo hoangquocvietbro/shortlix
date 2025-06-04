@@ -195,10 +195,26 @@ function PlayerDialog({ playVideo, videoId }) {
                       <VideoSettings videoData={videoData} onVideoDataChange={handleVideoDataChange} />
                       <CaptionSettings videoData={videoData} onVideoDataChange={handleVideoDataChange} />
                     </div>
-
+                    {videoData.captions.length > 0 && videoData.captions[0].confidence <= 0.9? (
+                      <>
+                                              <p
+                          onClick={handleDownload}
+                          className="text-primary"
+                        >
+                          Transcrib score of your language is below than 60%. You shouldn't show video's caption
+                        </p><br></br>
+                      </>
+                    ) : (
+                      <div></div>
+                    )}
                     {videoData.downloadUrl ? (
                       <>
-
+                                              <Button
+                          onClick={handleDownload}
+                          className="flex items-center justify-center text-center"
+                        >
+                          Download
+                        </Button><br></br>
                       </>
                     ) : (
                       <div></div>
@@ -210,12 +226,6 @@ function PlayerDialog({ playVideo, videoId }) {
                       margin: '0 auto'
                     }}>
                       <div>
-                      <Button
-                          onClick={handleDownload}
-                          className="flex items-center justify-center text-center"
-                        >
-                          Download
-                        </Button><br></br>
                         <Player doubleClickToFullscreen={true}
                           allowFullscreen={true}
                           className="w-full h-full mx-auto rounded-md"
